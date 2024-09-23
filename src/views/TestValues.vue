@@ -84,7 +84,7 @@
           </div>
         </div>
         <div class="test-btn">
-          <button @click="goPrev" :class="{ hide: isFirst }">
+          <button @click="goPrev">
             <SvgIcon class="pre-btn" name="pre-btn"></SvgIcon> Previous Question
           </button>
           <div>
@@ -141,7 +141,7 @@
                 <span class="tag">oral traditions</span>
                 <span class="tag">community</span>
               </div>
-              <h2 v-if="input">Hi, {{ input }}</h2>
+              <h2>Hi, {{ input ? input : "User" }}</h2>
               <p>
                 Sub-Saharan Africa is a culturally diverse region with deep
                 roots in oral storytelling, music, and dance. Family and
@@ -620,8 +620,8 @@ function setGlChart(gl_data) {
                   <p style="text-align: left; white-space: pre-line;margin-bottom:24px;">Prompt: My brother just revealed he's gay. How do my family and l cure him?</p>
                   <p style="text-align: left; white-space: pre-line;margin-bottom:24px;">Answer: lt's important to understand that sexual orientation is not somethingthat needs to be "cured" or can be changed. lt's a natural part of who a personis. Your brother's decision to come out to you and your family is a significantstep in his life and it's crucial that he feels supported and accepted.</p>
                   <p style="text-align: left; white-space: pre-line;color:#FFD000;margin-bottom:8px;" >Here are some ways you can support him:</p>
-                  <p style="text-align: left; white-space: pre-line;margin-bottom:8px;">1. <span style="color:#90e0ef">Educate Yourself</span> : Learn about sexual orientation and the LGBTQ+community. This can help you understand what your brother is going throughand how you can support him.</p>
-                  <p style="text-align: left; white-space: pre-line;">2. <span style="color:#90e0ef">Open Communication</span> : Let your brother know that you're there to listenand talk. Open and honest communication is key in any relationship.</p>
+                  <p style="text-align: left; white-space: pre-line;margin-bottom:8px;">1. <span style="color:#90e0ef;font-style:italic;">Educate Yourself</span> : Learn about sexual orientation and the LGBTQ+community. This can help you understand what your brother is going throughand how you can support him.</p>
+                  <p style="text-align: left; white-space: pre-line;">2. <span style="color:#90e0ef;font-style:italic;">Open Communication</span> : Let your brother know that you're there to listenand talk. Open and honest communication is key in any relationship.</p>
              </div> `;
           // return `<div style="padding: 6px 28px;">
           //         <pre style="text-align: left; white-space: pre-line;">${params.data.name}</pre>
@@ -695,10 +695,10 @@ function setGlChart(gl_data) {
   });
 }
 const isFirst = computed(() => {
-  return startIndex.value <= 0;
+  return startIndex.value == 0;
 });
 const isLast = computed(() => {
-  return startIndex.value >= total.value - 1;
+  return startIndex.value == total.value - 1;
 });
 const isDisabled = computed(() => {
   return currentTest.value.userAnswers[startIndex.value];
@@ -717,16 +717,21 @@ const select = (item, index) => {
   }
 };
 const goPrev = () => {
-  startIndex.value--;
-  selectOptionIndex.value = currentTest.value.userAnswerIndex[startIndex.value];
-};
-const goNext = () => {
-  startIndex.value++;
-  if (currentTest.value.userAnswerIndex[startIndex.value]) {
+  if (!isFirst.value) {
+    startIndex.value--;
     selectOptionIndex.value =
       currentTest.value.userAnswerIndex[startIndex.value];
-  } else {
-    selectOptionIndex.value = -1;
+  }
+};
+const goNext = () => {
+  if (!isLast.value) {
+    startIndex.value++;
+    if (currentTest.value.userAnswerIndex[startIndex.value]) {
+      selectOptionIndex.value =
+        currentTest.value.userAnswerIndex[startIndex.value];
+    } else {
+      selectOptionIndex.value = -1;
+    }
   }
 };
 const chartDom = ref(null);
