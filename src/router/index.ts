@@ -55,6 +55,7 @@ const router = createRouter({
 
 // 前端添加密码，防止release流程未走完，外部人员访问
 router.beforeEach((to, from, next) => {
+  console.log(from)
     if (!!to.meta && to.meta.requiresFrontEndAuth === false) {
         //这里判断用户是否登录，验证本地存储是否有token
         next();

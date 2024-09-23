@@ -167,9 +167,9 @@ button {
     max-width: 500px;
     max-height: 400px;
     overflow: auto;
-    background-color: #0A111F !important;
+    /* background-color: #0A111F !important;
     color: #fff !important;
-    border-color: #0A111F !important;
+    border-color: #0A111F !important; */
     white-space: pre-line;
     border-radius: 6px !important;
 }
