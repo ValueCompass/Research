@@ -1,0 +1,175 @@
+:root {
+    font-family: Segoe Pro;
+    line-height: 1.5;
+    font-weight: 400;
+}
+
+html {
+    font-size: 16px;
+}
+
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    min-width: 1280px;
+    min-height: 100vh;
+    background: rgba(24, 40, 69, 1);
+}
+
+.bg {
+    background: rgba(24, 40, 69, 1);
+}
+
+button:focus,
+button:focus-visible {
+    outline: none;
+}
+
+.card {
+    padding: 2em;
+}
+
+#app {
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+    font-family: Segoe UI;
+}
+
+.main-container {
+    width: 1200px;
+    margin: 0 auto;
+}
+
+.main-14-container {
+    width: 1400px;
+    margin: 0 auto;
+}
+
+.el-input {
+    --el-input-bg-color: rgba(24, 40, 69, 1) !important;
+    --el-input-border-color: rgba(255, 255, 255, 0.2) !important;
+    --el-input-placeholder-color: #fff !important;
+    --el-input-hover-border-color: rgba(255, 255, 255, 0.2) !important;
+    --el-input-focus-border: rgba(255, 255, 255, 0.2) !important;
+}
+
+.el-cascader .el-input.is-focus .el-input__wrapper {
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.2) inset !important;
+}
+
+.el-popper.is-light,
+.el-popper.is-light .el-popper__arrow:before {
+    background: #0a111f !important;
+}
+
+.el-cascader-menu {
+    color: #fff !important;
+    border: none !important;
+}
+
+.el-cascader-panel {
+    --el-cascader-node-background-hover: rgba(255, 255, 255, 0.2) !important;
+    --el-cascader-menu-selected-text-color: #fff !important;
+}
+
+.el-checkbox__inner {
+    background-color: rgba(10, 17, 31, 1) !important;
+}
+
+.el-select-dropdown__item {
+    width: 100%;
+}
+
+.el-select__wrapper {
+    background-color: rgba(24, 40, 69, 1) !important;
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.2) inset !important;
+}
+
+.el-select__placeholder {
+    color: #fff !important;
+}
+
+.el-radio {
+    --el-radio-text-color: #fff !important;
+    --el-radio-input-bg-color: #0A111F !important;
+    --el-radio-input-border-color: #1890FF !important;
+    --el-radio-input-border-color-hover: #1890FF !important;
+    color: #fff !important;
+}
+
+.el-select-dropdown__item.is-hovering {
+    background: rgba(255, 255, 255, 0.2) !important;
+}
+
+.el-radio__input.is-checked .el-radio__inner {
+    background: #0A111F !important;
+    border-color: #1890FF !important;
+    /* background: #1890FF !important; */
+}
+
+.el-radio__inner:after {
+    background-color: #1890FF !important;
+    width: 6px !important;
+    height: 6px !important;
+}
+
+.el-cascader__tags .el-tag {
+    background: #0A111F !important;
+    margin: 0px 0 0px 6px !important;
+}
+
+.el-tag.el-tag--info {
+    --el-tag-text-color: #fff !important;
+    --el-tag-hover-color: #fff !important;
+}
+
+.el-tag {
+    --el-tag-border-radius: 2px !important;
+    --el-tag-border-color: rgba(30, 30, 30, 0.12) !important;
+}
+
+.el-tag .el-tag__close:hover {
+    background-color: transparent !important;
+}
+
+.el-popper.is-customized {
+    /* Set padding to ensure the height is 32px */
+    padding: 6px 12px;
+    background: #1890ff;
+    color: #fff;
+}
+
+.el-popper.is-customized .el-popper__arrow::before {
+    background: #1890ff;
+}
+
+.el-tooltip__trigger:focus {
+    outline: none !important;
+}
+
+button {
+    background-color: #1093ff;
+    color: #fff;
+    font-size: 0.875em;
+    line-height: 1.57em;
+    padding: 0.36em 1.14em;
+    border: 1px solid #1093ff;
+    border-radius: 2px;
+    cursor: pointer;
+    &:hover {
+        background: #50b8ff;
+    }
+}
+
+.tooltip {
+    max-width: 500px;
+    max-height: 400px;
+    overflow: auto;
+    background-color: #0A111F !important;
+    color: #fff !important;
+    border-color: #0A111F !important;
+    white-space: pre-line;
+    border-radius: 6px !important;
+}
