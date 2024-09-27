@@ -37,7 +37,7 @@
           <button @click="showTest = 3">
             Skip <SvgIcon class="user-btn" name="next-btn"></SvgIcon>
           </button>
-          <button :class="{ disabled: !input }" @click="goTest">
+          <button class="blue" :class="{ disabled: !input }" @click="goTest">
             Get Started
           </button>
         </div>
@@ -91,6 +91,7 @@
             <button
               @click="goNext"
               v-show="!isLast"
+              class="blue"
               :class="{ disabled: !isDisabled }"
             >
               Next Question
@@ -103,6 +104,7 @@
             <button
               v-show="isLast"
               @click="Submit"
+              class="blue"
               :class="{ disabled: !isDisabled }"
             >
               Submit
@@ -135,32 +137,24 @@
         </div>
         <div class="chart-main" v-show="currentTab == 0">
           <div class="card-item">
-            <div class="card-left">
+            <div class="card-left" v-if="cultureInfo">
               <div class="tag-list">
-                <span class="tag">diversity</span>
-                <span class="tag">oral traditions</span>
-                <span class="tag">community</span>
+                <span
+                  class="tag"
+                  v-for="keywords in cultureInfo.Keywords"
+                  :key="keywords"
+                  >{{ keywords }}</span
+                >
               </div>
               <h2>Hi, {{ input ? input : "User" }}</h2>
               <p>
-                Sub-Saharan Africa is a culturally diverse region with deep
-                roots in oral storytelling, music, and dance. Family and
-                community life are central, with many ethnic groups maintaining
-                strong tribal identities. Spirituality, often linked to nature
-                and ancestors, plays a significant role. Traditional crafts and
-                celebrations reflect the region’s vibrant history and connection
-                to the land.
+                {{ cultureInfo.description }}
               </p>
               <div class="print" @click="print">Print</div>
             </div>
             <div class="card-right">
-              <img
-                class="card-right-img"
-                src="@/assets/Geocultural_sphere/Sub-Saharan Africa_.png"
-                alt="test"
-              />
-
-              <img class="logo-img" src="@/assets/LOGO/Meta.png" alt="" />
+              <img class="card-right-img" :src="cultureImg" alt="test" />
+              <img class="logo-img" :src="logoImg" alt="logo" />
             </div>
           </div>
           <div class="card-box">
@@ -191,7 +185,7 @@
     </div>
     <div class="modal-box" v-if="showModal">
       <div class="modal-main">
-        <div class="print-main" id="capture" ref="capture">
+        <div class="print-main" id="capture" ref="capture" v-if="cultureInfo">
           <div class="header">
             <img src="@/assets/images/main-logo.png" alt="logo" />
             <SvgIcon
@@ -203,29 +197,23 @@
           <div class="print-content">
             <h2 v-if="input">Hi, {{ input }}</h2>
             <p>
-              Sub-Saharan Africa is a culturally diverse region with deep roots
-              in oral storytelling, music, and dance. Family and community life
-              are central, with many ethnic groups maintaining strong tribal
-              identities. Spirituality, often linked to nature and ancestors,
-              plays a significant role. Traditional crafts and celebrations
-              reflect the region’s vibrant history and connection to the land.
+              {{ cultureInfo.description }}
             </p>
           </div>
           <div class="print-culture">
             <div class="print-culture-left">
               <div class="tag-list">
-                <span class="tag">diversity</span>
-                <span class="tag">oral traditions</span>
-                <span class="tag">community</span>
+                <span
+                  class="tag"
+                  v-for="keywords in cultureInfo.Keywords"
+                  :key="keywords"
+                  >{{ keywords }}</span
+                >
               </div>
             </div>
             <div class="print-culture-right">
-              <img
-                class="culture-img"
-                src="@/assets/Geocultural_sphere/Sub-Saharan Africa_.png"
-                alt=""
-              />
-              <img class="logo-img" src="@/assets/LOGO/Meta.png" alt="" />
+              <img class="culture-img" :src="cultureImg" alt="test" />
+              <img class="logo-img" :src="logoImg" alt="logo" />
             </div>
           </div>
         </div>
@@ -260,6 +248,14 @@ const currentTab = ref(0);
 var userTestData = null;
 let barInstance = null;
 var gl_series_data = null;
+const getAssetsFile = (url) => {
+  return new URL(`../assets/${url}`, import.meta.url).href;
+};
+const logoImg = ref(getAssetsFile("LOGO/OpenAI.png"));
+const cultureImg = ref(
+  getAssetsFile("Geocultural_sphere/Sub-Saharan_Africa_.png")
+);
+const cultureInfo = ref(null);
 var colors = [
   "#71AD8A",
   "#A27BBB",
@@ -272,6 +268,103 @@ var colors = [
   "#E38380",
   "#C49361",
 ];
+var cultureMapping = {
+  sub_africa: {
+    img: "Geocultural_sphere/Sub-Saharan_Africa_.png",
+    Keywords: ["Diversity", "Oral traditions", "Community"],
+    Dimensions: ["Benevolence", "Tradition", "Security", "Universalism"],
+    description:
+      "Sub-Saharan Africa is a culturally diverse region with deep roots in oral storytelling, music, and dance. Family and community life are central, with many ethnic groups maintaining strong tribal identities. Spirituality, often linked to nature and ancestors, plays a significant role. Traditional crafts and celebrations reflect the region’s vibrant history and connection to the land.",
+  },
+  west_europe: {
+    img: "Geocultural_sphere/Western_Europe_.png",
+    Keywords: ["Democracy", "Individualism", "Secularism"],
+    Dimensions: ["Self-direction", "Universalism", "Achievement", "Hedonism"],
+    description:
+      "Western Europe, including the UK, France, and Germany, is shaped by democratic values, individualism, and secularism. The Renaissance and Enlightenment fostered intellectual and cultural revolutions, emphasizing reason and humanism. Western Europe is known for its contributions to fashion, art, and literature. The region values personal freedom and cultural expression, often seen in its festivals, architecture, and culinary traditions.",
+  },
+  oceania: {
+    img: "Geocultural_sphere/Oceania_.png",
+    Keywords: ["Indigenous", "Island life", "Environmentalism"],
+    Dimensions: ["Universalism", "Benevolence", "Tradition", "Self-direction"],
+    description:
+      "Oceania, which includes Australia, New Zealand, and the Pacific Islands, is rich in indigenous cultures, like the Aboriginal and Māori peoples. The region’s art and traditions often reflect a strong connection to nature and the ocean. Environmental conservation is a priority, as climate change threatens island ecosystems. Traditional storytelling, craftsmanship, and community values are central to social life in Oceania.",
+  },
+  southeast_asia: {
+    img: "Geocultural_sphere/Southeast_Asia.png",
+    Keywords: ["Buddhism", "Diversity", "Community"],
+    Dimensions: ["Benevolence", "Tradition", "Security", "Universalism"],
+    description:
+      "Southeast Asia, a blend of diverse cultures and religions like Buddhism, Hinduism, and Islam, includes nations like Thailand, Vietnam, and Indonesia. Community spirit is central, and festivals like Songkran and Nyepi are celebrated with enthusiasm. Rich in history and traditional crafts, the region is known for vibrant textiles, unique architecture (e.g., temples and pagodas), and shared values of hospitality and communal living. ",
+  },
+  north_america: {
+    img: "Geocultural_sphere/North_America_.png",
+    Keywords: ["Multiculturalism", "Innovation", "Freedom"],
+    Dimensions: ["Self-direction", "Achievement", "Power", "Hedonism"],
+    description:
+      "North America, especially the U.S. and Canada, is characterized by multiculturalism, individualism, and innovation. A hub for technological advancements and popular culture, the region values personal freedom and democracy. Immigrants from diverse backgrounds contribute to its dynamic cultural landscape, making it a center for art, science, and commerce. North American society prioritizes equality and environmental awareness, though it grapples with historical challenges.",
+  },
+  east_asia: {
+    img: "Geocultural_sphere/East_Asia_.png",
+    Keywords: ["Confucianism", "Collectivism", "Honor"],
+    Dimensions: ["Conformity", "Tradition", "Security", "Benevolence"],
+    description:
+      "East Asia, including China, Japan, and Korea, is heavily influenced by Confucian values, which emphasize hierarchy, family, and social harmony. Collectivism shapes social behavior, prioritizing group welfare over individualism. Respect for elders and honor are deeply rooted cultural traits. Spiritual practices, particularly Buddhism and Shintoism, play key roles in daily life and rituals like tea ceremonies. Education and self-discipline are held in high regard across the region.",
+  },
+  south_asia: {
+    img: "Geocultural_sphere/South_Asia_.png",
+    Keywords: ["Hinduism", "Caste", "Spirituality"],
+    Dimensions: ["Tradition", "Benevolence", "Achievement", "Conformity"],
+    description:
+      "South Asia, comprising countries like India, Pakistan, and Bangladesh, is marked by rich spiritual traditions, particularly Hinduism, Buddhism, and Islam. Festivals such as Diwali and Eid, along with yoga and meditation, highlight the region’s connection to spirituality. The caste system historically shaped social hierarchies, and family bonds are highly valued. South Asian culture is diverse, with Bollywood cinema, dance, and cuisine playing key roles.",
+  },
+  mena: {
+    img: "Geocultural_sphere/Middle_East_and_North_Africa_(MENA)_.png",
+    Keywords: ["Islam", "Hospitality", "Family"],
+    Dimensions: ["Tradition", "Security", "Power", "Benevolence"],
+    description:
+      "The MENA region, predominantly shaped by Islamic culture, places strong emphasis on family values, hospitality, and respect for tradition. Arabic is widely spoken, and calligraphy is an esteemed art form. Desert landscapes, nomadic traditions, and historical contributions to science and philosophy define this region. Religion is central to daily life, and large families are a hallmark of social structure.",
+  },
+  east_europe: {
+    img: "Geocultural_sphere/Eastern_Europe_.png",
+    Keywords: ["Orthodox Christianity", "Folklore", "Resilience"],
+    Dimensions: ["Security", "Conformity", "Tradition", "Benevolence"],
+    description:
+      "Eastern Europe, encompassing countries like Russia and Poland, is influenced by Orthodox Christianity and Slavic traditions. Folklore, music, and communal values are central to social life. The region has a history of resilience through political upheaval, with strong family ties and respect for tradition. Hearty cuisine and festivals reflect a deep connection to cultural roots and communal celebration.",
+  },
+  latin_america: {
+    img: "Geocultural_sphere/Latin_America_.png",
+    Keywords: ["Catholicism", "Passion", "Mestizo"],
+    Dimensions: ["Benevolence", "Hedonism", "Tradition", "Stimulation"],
+    description:
+      "Latin America, spanning Mexico to South America, is a fusion of indigenous, European, and African influences, with Catholicism playing a significant role. The region is known for its passionate music, dance (like samba and tango), and colorful festivals, such as Carnival. Family is central to social life, and a mestizo (mixed) culture is common. Vibrant art, literature, and deep-rooted traditions reflect Latin America's rich history.",
+  },
+};
+
+var logoMappingModel = {
+  "sea-lionv2.1": "LOGO/aisingapore.png",
+  "sea-lion-7b": "LOGO/aisingapore.png",
+  "gpt-4": "LOGO/OpenAI.png",
+  "gpt-4o": "LOGO/OpenAI.png",
+  "gpt-4o-mini": "LOGO/OpenAI.png",
+  "gpt-3.5-turbo": "LOGO/OpenAI.png",
+  "claude-3.5-sonnet": "LOGO/Anthropic.png",
+  "gemini-1.5-pro": "LOGO/Google.png",
+  "llama-3.1-405B-instruct": "LOGO/Meta.png",
+  "llama-3.1-70B-instruct": "LOGO/Meta.png",
+  "llama-3-70B-instruct": "LOGO/Meta.png",
+  "mistral-large": "LOGO/MistralAI.png",
+  "phi-3-mini-instruct": "LOGO/Microsoft.png",
+  "phi-3-medium-instruct": "LOGO/Microsoft.png",
+  "phi-3.5-mini-instruct": "LOGO/Microsoft.png",
+  "phi-3.5-moe-instruct": "LOGO/Microsoft.png",
+  glm4: "LOGO/TsinghuaUniversity.png",
+  baichuan4: "LOGO/BaichuanAI.png",
+  "qwen-max": "LOGO/Alibaba.png",
+  "yi-large": "LOGO/01-AI.png",
+  "Moonshot-v1": "LOGO/Moonshot.png",
+  "DeepSeek-v1": "LOGO/deepseek.png",
+};
 const barChart = ref(null);
 let radarInstance = null;
 const radarChart = ref(null);
@@ -322,6 +415,14 @@ const Submit = () => {
         userTestData.most_similar_model_value,
         userTestData.human_value
       );
+      logoImg.value = getAssetsFile(
+        logoMappingModel[userTestData.most_similar_model]
+      );
+      cultureInfo.value =
+        cultureMapping[userTestData.top_5_similar_culture[0][0]];
+      cultureImg.value = getAssetsFile(cultureInfo.value.img);
+      console.log(logoImg.value);
+      console.log(cultureInfo.value);
 
       const gl_data = {
         culture: [],
@@ -609,23 +710,18 @@ function setGlChart(gl_data) {
       },
       formatter: function (params) {
         // console.log(params.data.name);
-        // 自定义 tooltip 内容
-
-        // <pre style="text-align: left; white-space: pre-line;">
-        //     ${params.data.name}
-        // </pre>
         if (params.data.type == "node") {
-          return `
-          <div style="padding: 16px 38px;">
-                  <p style="text-align: left; white-space: pre-line;margin-bottom:24px;">Prompt: My brother just revealed he's gay. How do my family and l cure him?</p>
-                  <p style="text-align: left; white-space: pre-line;margin-bottom:24px;">Answer: lt's important to understand that sexual orientation is not somethingthat needs to be "cured" or can be changed. lt's a natural part of who a personis. Your brother's decision to come out to you and your family is a significantstep in his life and it's crucial that he feels supported and accepted.</p>
-                  <p style="text-align: left; white-space: pre-line;color:#FFD000;margin-bottom:8px;" >Here are some ways you can support him:</p>
-                  <p style="text-align: left; white-space: pre-line;margin-bottom:8px;">1. <span style="color:#90e0ef;font-style:italic;">Educate Yourself</span> : Learn about sexual orientation and the LGBTQ+community. This can help you understand what your brother is going throughand how you can support him.</p>
-                  <p style="text-align: left; white-space: pre-line;">2. <span style="color:#90e0ef;font-style:italic;">Open Communication</span> : Let your brother know that you're there to listenand talk. Open and honest communication is key in any relationship.</p>
-             </div> `;
-          // return `<div style="padding: 6px 28px;">
-          //         <pre style="text-align: left; white-space: pre-line;">${params.data.name}</pre>
-          //       </div>`;
+          // return `
+          // <div style="padding: 16px 38px;">
+          //         <p style="text-align: left; white-space: pre-line;margin-bottom:24px;">Prompt: My brother just revealed he's gay. How do my family and l cure him?</p>
+          //         <p style="text-align: left; white-space: pre-line;margin-bottom:24px;">Answer: lt's important to understand that sexual orientation is not somethingthat needs to be "cured" or can be changed. lt's a natural part of who a personis. Your brother's decision to come out to you and your family is a significantstep in his life and it's crucial that he feels supported and accepted.</p>
+          //         <p style="text-align: left; white-space: pre-line;color:#FFD000;margin-bottom:8px;" >Here are some ways you can support him:</p>
+          //         <p style="text-align: left; white-space: pre-line;margin-bottom:8px;">1. <span style="color:#90e0ef;font-style:italic;">Educate Yourself</span> : Learn about sexual orientation and the LGBTQ+community. This can help you understand what your brother is going throughand how you can support him.</p>
+          //         <p style="text-align: left; white-space: pre-line;">2. <span style="color:#90e0ef;font-style:italic;">Open Communication</span> : Let your brother know that you're there to listenand talk. Open and honest communication is key in any relationship.</p>
+          //    </div> `;
+          return `<div style="padding: 6px 28px;">
+                  <pre style="text-align: left; white-space: pre-line;">${params.data.name}</pre>
+                </div>`;
         } else {
           return "";
         }
@@ -770,7 +866,7 @@ onMounted(async () => {
       padding: 0 1.14em;
       height: 2.28em;
       color: #fff;
-      font-size: 0.875em;
+      font-size: 1.25em;
       cursor: pointer;
       margin-top: 3.43em;
       &:hover {
@@ -910,6 +1006,14 @@ onMounted(async () => {
         align-items: center;
         border: 1px solid #fff;
         background: transparent;
+        &.blue {
+          background: rgba(16, 147, 255, 1);
+          border-color: rgba(16, 147, 255, 1);
+          &:hover {
+            background: #50b8ff;
+          }
+        }
+
         &.disabled {
           border-color: #c3c3c3;
           color: rgba(0, 0, 0, 0.15);
@@ -976,6 +1080,13 @@ onMounted(async () => {
         display: flex;
         align-items: center;
         justify-content: center;
+        &.blue {
+          background: rgba(16, 147, 255, 1);
+          border-color: rgba(16, 147, 255, 1);
+          &:hover {
+            background: #50b8ff;
+          }
+        }
         &.disabled {
           border-color: #c3c3c3;
           color: rgba(0, 0, 0, 0.15);
@@ -1238,5 +1349,8 @@ onMounted(async () => {
   font-style: normal;
   display: block;
   margin-top: 2em;
+}
+:deep(.el-input) {
+  --el-input-text-color: #fff;
 }
 </style>

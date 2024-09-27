@@ -69,6 +69,15 @@ button:focus-visible {
     border: none !important;
 }
 
+.el-popper.is-light,
+.el-popper.is-light .el-popper__arrow:before {
+    border: none !important;
+}
+
+.el-cascader__dropdown {
+    /* border: ; */
+}
+
 .el-cascader-panel {
     --el-cascader-node-background-hover: rgba(255, 255, 255, 0.2) !important;
     --el-cascader-menu-selected-text-color: #fff !important;
