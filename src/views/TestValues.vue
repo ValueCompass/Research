@@ -794,12 +794,17 @@ const isFirst = computed(() => {
   return startIndex.value == 0;
 });
 const isLast = computed(() => {
-  return startIndex.value == total.value - 1;
+  return startIndex.value >= total.value - 1;
 });
 const isDisabled = computed(() => {
   return currentTest.value.userAnswers[startIndex.value];
 });
+let flag = false;
 const select = (item, index) => {
+  if (flag) {
+    return;
+  }
+  flag = true;
   selectOptionIndex.value = index;
   percentage.value = ((startIndex.value + 1) / total.value) * 100;
   currentTest.value.userAnswers[startIndex.value] = item;
@@ -809,6 +814,7 @@ const select = (item, index) => {
     setTimeout(() => {
       startIndex.value++;
       selectOptionIndex.value = -1;
+      flag = false;
     }, 500);
   }
 };
