@@ -404,6 +404,9 @@ const toPrint = async () => {
 };
 const Submit = () => {
   showTest.value = 4;
+  console.log(currentTest.value.userAnswerIndex);
+  console.log(currentTest.value.userAnswers);
+  sendData();
   setTimeout(() => {
     axios.get("/value-compass.github.io/data/value_space.json").then((res) => {
       showTest.value = 5;
@@ -464,6 +467,27 @@ const Submit = () => {
     });
   }, 1000);
 };
+async function sendData() {
+  const inputList = currentTest.value.userAnswerIndex;
+
+  try {
+    const response = await fetch("http://127.0.0.1:5000/api/calculate", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ input: inputList }), // 将数组作为 JSON 发送
+    });
+
+    const data = await response.json();
+    console.log(data);
+    // document.getElementById("result").innerText = "Result: " + data.result;
+  } catch (error) {
+    console.error("Error:", error);
+    document.getElementById("result").innerText =
+      "Error connecting to backend.";
+  }
+}
 function setBarChart(data) {
   const yAxis = data.map((item) => {
     return item[0];
