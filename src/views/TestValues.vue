@@ -380,7 +380,6 @@ const toTest = () => {
   showTest.value = 2;
 };
 const goTest = () => {
-  console.log(input.value);
   showTest.value = 3;
   testNumber.value = 0;
 };
@@ -404,71 +403,15 @@ const toPrint = async () => {
 };
 const Submit = () => {
   showTest.value = 4;
-  console.log(currentTest.value.userAnswerIndex);
-  console.log(currentTest.value.userAnswers);
   sendData();
-  setTimeout(() => {
-    axios.get("/value-compass.github.io/data/value_space.json").then((res) => {
-      showTest.value = 5;
-      userTestData = res.data;
-      console.log(res.data);
-      mostSimilarModel.value = userTestData.most_similar_model;
-      setBarChart(userTestData.top_5_similar_culture);
-      setRadarChart(
-        userTestData.most_similar_model_value,
-        userTestData.human_value
-      );
-      logoImg.value = getAssetsFile(
-        logoMappingModel[userTestData.most_similar_model]
-      );
-      cultureInfo.value =
-        cultureMapping[userTestData.top_5_similar_culture[0][0]];
-      cultureImg.value = getAssetsFile(cultureInfo.value.img);
-      console.log(logoImg.value);
-      console.log(cultureInfo.value);
-
-      const gl_data = {
-        culture: [],
-        human: [
-          {
-            name: userTestData.tsne_human_caption,
-            value: userTestData.tsne_human,
-          },
-        ],
-        model: [],
-        node: [],
-      };
-      gl_data.culture = userTestData.tsne_cultures.map((item, index) => {
-        return {
-          name: userTestData.tsne_culture_caption[index],
-          value: item,
-        };
-      });
-      gl_data.model = userTestData.tsne_models.map((item, index) => {
-        return {
-          name: userTestData.tsne_model_caption[index],
-          value: item,
-          type: "model",
-          itemStyle: {
-            color: colors[index],
-            opacity: 1,
-          },
-        };
-      });
-      gl_data.node = userTestData.tsne_nodes.map((item, index) => {
-        return {
-          name: userTestData.tsne_node_captions[index],
-          value: item,
-          type: "node",
-          model: userTestData.tsne_model_caption[Math.floor(index / 30)],
-        };
-      });
-      setGlChart(gl_data);
-    });
-  }, 1000);
 };
 async function sendData() {
   const inputList = currentTest.value.userAnswerIndex;
+  // const inputList = [
+  //   1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5,
+  //   1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5,
+  // ];
+  console.log(inputList);
 
   try {
     const response = await fetch("http://127.0.0.1:5000/api/calculate", {
@@ -480,12 +423,63 @@ async function sendData() {
     });
 
     const data = await response.json();
+    showTest.value = 5;
+    userTestData = data;
     console.log(data);
-    // document.getElementById("result").innerText = "Result: " + data.result;
+    mostSimilarModel.value = userTestData.most_similar_model;
+    setBarChart(userTestData.top_5_similar_culture);
+    setRadarChart(
+      userTestData.most_similar_model_value,
+      userTestData.human_value
+    );
+    logoImg.value = getAssetsFile(
+      logoMappingModel[userTestData.most_similar_model]
+    );
+    cultureInfo.value =
+      cultureMapping[userTestData.top_5_similar_culture[0][0]];
+    cultureImg.value = getAssetsFile(cultureInfo.value.img);
+
+    const gl_data = {
+      culture: [],
+      human: [
+        {
+          name: userTestData.tsne_human_caption,
+          value: userTestData.tsne_human,
+        },
+      ],
+      model: [],
+      node: [],
+    };
+    gl_data.culture = userTestData.tsne_cultures.map((item, index) => {
+      return {
+        name: userTestData.tsne_culture_caption[index],
+        value: item,
+      };
+    });
+    gl_data.model = userTestData.tsne_models.map((item, index) => {
+      return {
+        name: userTestData.tsne_model_caption[index],
+        value: item,
+        type: "model",
+        itemStyle: {
+          color: colors[index],
+          opacity: 1,
+        },
+      };
+    });
+    gl_data.node = userTestData.tsne_nodes.map((item, index) => {
+      return {
+        name: userTestData.tsne_node_captions[index],
+        value: item,
+        type: "node",
+        model: userTestData.tsne_model_caption[Math.floor(index / 30)],
+      };
+    });
+    setGlChart(gl_data);
   } catch (error) {
     console.error("Error:", error);
-    document.getElementById("result").innerText =
-      "Error connecting to backend.";
+    // document.getElementById("result").innerText =
+    //   "Error connecting to backend.";
   }
 }
 function setBarChart(data) {
@@ -632,7 +626,6 @@ function setRadarChart(data1, data2) {
   radarInstance.setOption(option);
 }
 function setGlChart(gl_data) {
-  console.log(gl_data);
   chartInstance = echarts.init(chartDom.value);
   const usersyb = `path://M14.2558 21.7442L12 24L9.74416 21.7442C5.30941 20.7204 2 16.7443 2 12C2 6.48 6.48 2 12 2C17.52 2 22 6.48 22 12C22 16.7443 18.6906 20.7204 14.2558 21.7442ZM6.02332 15.4163C7.49083 17.6069 9.69511 19 12.1597 19C14.6243 19 16.8286 17.6069 18.2961 15.4163C16.6885 13.9172 14.5312 13 12.1597 13C9.78821 13 7.63095 13.9172 6.02332 15.4163ZM12 11C13.6569 11 15 9.65685 15 8C15 6.34315 13.6569 5 12 5C10.3431 5 9 6.34315 9 8C9 9.65685 10.3431 11 12 11Z`;
   const modelsyb = `path://M1 11C6.52285 11 11 6.52285 11 1H13C13 6.52285 17.4772 11 23 11V13C17.4772 13 13 17.4772 13 23H11C11 17.4772 6.52285 13 1 13V11Z`;
@@ -761,17 +754,28 @@ function setGlChart(gl_data) {
       type: "value",
     },
     grid3D: {
+      show: false,
       axisLine: {
+        // show: false,
         lineStyle: { color: "#fff" },
+      },
+      axisLabel: {
+        show: false,
+      },
+      axisTick: {
+        show: false,
       },
       axisPointer: {
         show: false,
-        lineStyle: { color: "#fff" },
+        // lineStyle: { color: "#fff" },
+      },
+      splitLine: {
+        show: false,
       },
       viewControl: {
         autoRotate: true,
         autoRotateSpeed: 4,
-        autoRotateAfterStill: 10,
+        // autoRotateAfterStill: 10,
         distance: 130,
       },
       top: "6%",
@@ -832,7 +836,6 @@ const select = (item, index) => {
   selectOptionIndex.value = index;
   percentage.value = ((startIndex.value + 1) / total.value) * 100;
   currentTest.value.userAnswers[startIndex.value] = item;
-  console.log(currentTest.value.userAnswers);
   currentTest.value.userAnswerIndex[startIndex.value] = index;
   if (!isLast.value) {
     setTimeout(() => {
