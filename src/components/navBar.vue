@@ -13,9 +13,9 @@
         <li>
           <router-link to="/Analysis">Value Analysis</router-link>
         </li>
-        <!-- <li>
+        <li>
           <router-link to="/Comparison">Value Comparison</router-link>
-        </li> -->
+        </li>
         <li>
           <router-link to="/TestValues">Test Your Values</router-link>
         </li>

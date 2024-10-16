@@ -19,15 +19,15 @@ const routes: Array<RouteRecordRaw> = [
       requiresFrontEndAuth: true
     },
   },
-  // {
-  //   path: '/Comparison',
-  //   name: 'Value Comparison',
-  //   component: () => import('../views/Comparison.vue'),
-  //   meta: {
-  //     keepAlive: true, //此页面需要缓存
-      // requiresFrontEndAuth: true
-  //   },
-  // },
+  {
+    path: '/Comparison',
+    name: 'Value Comparison',
+    component: () => import('../views/Comparison.vue'),
+    meta: {
+      keepAlive: true, //此页面需要缓存
+      requiresFrontEndAuth: true
+    },
+  },
   {
     path: '/TestValues',
     name: 'Test Your Values',
