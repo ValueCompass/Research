@@ -406,11 +406,11 @@ const Submit = () => {
   sendData();
 };
 async function sendData() {
-  const inputList = currentTest.value.userAnswerIndex;
-  // const inputList = [
-  //   1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5,
-  //   1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5,
-  // ];
+  // const inputList = currentTest.value.userAnswerIndex;
+  const inputList = [
+    1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5,
+    1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5,
+  ];
   console.log(inputList);
 
   try {
@@ -720,6 +720,7 @@ function setGlChart(gl_data) {
       className: "tooltip",
       hideDelay: 1000,
       enterable: true,
+      triggerOn: "click",
       backgroundColor: "#0A111F",
       borderColor: "#0A111F",
       textStyle: {
@@ -754,23 +755,24 @@ function setGlChart(gl_data) {
       type: "value",
     },
     grid3D: {
-      show: false,
+      // show: false,
       axisLine: {
         // show: false,
-        lineStyle: { color: "#fff" },
+        lineStyle: { color: "rgba(255,255,255,0.3)" },
       },
-      axisLabel: {
-        show: false,
-      },
-      axisTick: {
-        show: false,
-      },
+      // axisLabel: {
+      //   // show: false,
+      // },
+      // axisTick: {
+      //   // show: false,
+      // },
       axisPointer: {
         show: false,
         // lineStyle: { color: "#fff" },
       },
       splitLine: {
-        show: false,
+        // show: false,
+        lineStyle: { color: "rgba(255,255,255,0.3)" },
       },
       viewControl: {
         autoRotate: true,
@@ -868,7 +870,7 @@ let chartInstance = null;
 
 onMounted(async () => {
   await nextTick(); // 确保DOM已经渲染完成
-  // Submit();
+  Submit();
 });
 </script>
 
