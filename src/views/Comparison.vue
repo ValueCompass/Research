@@ -6,6 +6,7 @@
         <div class="compare-model-list">
           <ul>
             <li>
+              <span class="close-comparison"></span>
               <p class="name">GPT-4-Turbo</p>
               <p class="point-num">64.4<span class="point">points</span></p>
               <div class="top-item-content">
@@ -14,15 +15,19 @@
                   content="Proprietary"
                   placement="top"
                 >
-                  <span class="type-icon top-type-icon"></span>
+                  <span class="type-icon"></span>
                   <!-- <span
-                  class="type-close-icon top-type-icon"
+                  class="type-close-icon"
                 ></span> -->
                 </el-tooltip>
                 <span class="dev">OpenAl</span>
                 <span class="date">2023.06</span>
               </div>
             </li>
+            <div class="add-model">
+              <img src="@/assets/images/add-model.svg" alt="add-model" />
+              <p>Add</p>
+            </div>
           </ul>
         </div>
       </div>
@@ -125,26 +130,43 @@ onUnmounted(() => {});
     font-size: 2em;
     font-weight: 600;
     line-height: 1.3125em;
+    margin-bottom: 1.3125em;
   }
   .compare-model-list {
     ul {
       display: flex;
+      gap: 0.75em;
+      align-items: center;
       li {
+        // width: 10em;
+        // height: 7.5em;
         color: #fff;
         padding: 1.125em 1.5em;
         box-sizing: border-box;
         background: rgba(255, 255, 255, 0.05);
         border-radius: 0.75em;
         text-align: center;
-        width: 31%;
         border: 1px solid #4992ff;
+        position: relative;
+        .close-comparison {
+          display: inline-block;
+          width: 1.2em;
+          height: 1.2em;
+          background: url(@/assets/images/close-comparison.svg) no-repeat;
+          background-size: contain;
+          vertical-align: text-bottom;
+          position: absolute;
+          right: 0.5em;
+          top: 0.5em;
+        }
         .name {
           margin-right: 0.5em;
         }
         .point-num {
           font-size: 1.25em;
           font-weight: 600;
-          line-height: 1.625em;
+          line-height: 1.5em;
+          margin: 0.6em 0;
         }
         .point {
           font-size: 0.6em;
@@ -153,6 +175,49 @@ onUnmounted(() => {});
           margin-left: 0.4em;
           color: rgba(255, 255, 255, 0.8);
         }
+        .top-item-content {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          .dev {
+            width: 6em;
+            font-size: 1em;
+            // line-height: 1.5em;
+          }
+          .date {
+            font-size: 0.75em;
+            color: rgba(255, 255, 255, 0.8);
+            // line-height: 1.5em;
+          }
+        }
+        .type-icon {
+          display: inline-block;
+          width: 1.2em;
+          height: 1.2em;
+          background: url(@/assets/images/type-icon.svg) no-repeat;
+          background-size: contain;
+          vertical-align: text-bottom;
+        }
+        .type-close-icon {
+          display: inline-block;
+          width: 1.2em;
+          height: 1.2em;
+          background: url(@/assets/images/type-icon-close.svg) no-repeat;
+          background-size: contain;
+          vertical-align: text-bottom;
+        }
+      }
+      .add-model {
+        width: 10em;
+        height: 7.5em;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border: 3px dashed rgba(255, 255, 255, 0.2);
+        border-radius: 0.75em;
+        color: rgba(255, 255, 255, 0.2);
+        cursor: pointer;
       }
     }
   }
