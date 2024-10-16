@@ -150,7 +150,7 @@
               <p>
                 {{ cultureInfo.description }}
               </p>
-              <div class="print" @click="print">Print</div>
+              <div class="print" @click="print">Download</div>
             </div>
             <div class="card-right">
               <img class="card-right-img" :src="cultureImg" alt="test" />
@@ -219,7 +219,7 @@
         </div>
         <div class="print-btn">
           <button class="cancel" @click="showModal = false">Cancel</button>
-          <button class="print" @click="toPrint">Print</button>
+          <button class="print" @click="toPrint">Download</button>
         </div>
       </div>
     </div>
@@ -406,11 +406,11 @@ const Submit = () => {
   sendData();
 };
 async function sendData() {
-  // const inputList = currentTest.value.userAnswerIndex;
-  const inputList = [
-    1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5,
-    1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5,
-  ];
+  const inputList = currentTest.value.userAnswerIndex;
+  // const inputList = [
+  //   1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5,
+  //   1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5,
+  // ];
   console.log(inputList);
 
   try {
@@ -777,7 +777,7 @@ function setGlChart(gl_data) {
       viewControl: {
         autoRotate: true,
         autoRotateSpeed: 4,
-        // autoRotateAfterStill: 10,
+        autoRotateAfterStill: 1,
         distance: 130,
       },
       top: "6%",
@@ -870,7 +870,7 @@ let chartInstance = null;
 
 onMounted(async () => {
   await nextTick(); // 确保DOM已经渲染完成
-  Submit();
+  // Submit();
 });
 </script>
 

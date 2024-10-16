@@ -215,9 +215,9 @@ const fetchData = async () => {
   try {
     axios
       .all([
-        getAxiosData("/value-compass.github.io/data/models_info.json"),
-        getAxiosData("/value-compass.github.io/data/Schwartz_scores.json"),
-        getAxiosData("/value-compass.github.io/data/Schwartz_cases.json"),
+        getAxiosData("/data/models_info.json"),
+        getAxiosData("/data/Schwartz_scores.json"),
+        getAxiosData("/data/Schwartz_cases.json"),
       ])
       .then(
         axios.spread(function (modelInfos, Schwartz_datas, Schwartz_cases) {
@@ -245,10 +245,10 @@ const fetchOtherData = async () => {
   try {
     axios
       .all([
-        getAxiosData("/value-compass.github.io/data/Risk_scores.json"),
-        getAxiosData("/value-compass.github.io/data/Risk_cases.json"),
-        getAxiosData("/value-compass.github.io/data/MFT_scores.json"),
-        getAxiosData("/value-compass.github.io/data/MFT_cases.json"),
+        getAxiosData("/data/Risk_scores.json"),
+        getAxiosData("/data/Risk_cases.json"),
+        getAxiosData("/data/MFT_scores.json"),
+        getAxiosData("/data/MFT_cases.json"),
       ])
       .then(
         axios.spread(function (Risk_scores, Risk_cases, MFT_scores, MFT_cases) {

@@ -14,7 +14,8 @@ const pathResolve = (pathStr: string) => {
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: "/value-compass.github.io",
+  // base: "/value-compass.github.io",
+  base: "/",
   plugins: [
     vue(),
     createSvgIconsPlugin({
