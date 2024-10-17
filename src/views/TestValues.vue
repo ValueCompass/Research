@@ -274,70 +274,70 @@ var cultureMapping = {
     Keywords: ["Diversity", "Oral traditions", "Community"],
     Dimensions: ["Benevolence", "Tradition", "Security", "Universalism"],
     description:
-      "Sub-Saharan Africa is a culturally diverse region with deep roots in oral storytelling, music, and dance. Family and community life are central, with many ethnic groups maintaining strong tribal identities. Spirituality, often linked to nature and ancestors, plays a significant role. Traditional crafts and celebrations reflect the region’s vibrant history and connection to the land.",
+      "Sub-Saharan Africa echoes your moral essence the most! Sub-Saharan Africa is a culturally diverse region with deep roots in oral storytelling, music, and dance which you might fancy. Family and community life are vital, with many ethnic groups maintaining strong tribal identities. Spirituality, often linked to nature and ancestors, plays a significant role, and you may find it relatable! Traditional crafts and celebrations reflect the region’s vibrant history and connection to the land. Are you “down-to-earth” like this as well?",
   },
   west_europe: {
     img: "Geocultural_sphere/Western_Europe_.png",
     Keywords: ["Democracy", "Individualism", "Secularism"],
     Dimensions: ["Self-direction", "Universalism", "Achievement", "Hedonism"],
     description:
-      "Western Europe, including the UK, France, and Germany, is shaped by democratic values, individualism, and secularism. The Renaissance and Enlightenment fostered intellectual and cultural revolutions, emphasizing reason and humanism. Western Europe is known for its contributions to fashion, art, and literature. The region values personal freedom and cultural expression, often seen in its festivals, architecture, and culinary traditions.",
+      "Western Europe echoes your moral essence the most! Western Europe, including the UK, France, and Germany, is shaped by democratic values, individualism, and secularism you may uphold. The Renaissance and Enlightenment fostered intellectual and cultural revolutions, emphasizing reason and humanism. Western Europe is known for its contributions to fashion, art, and literature. The region values personal freedom and cultural expression like you might, often seen in its festivals, architecture, and culinary traditions. ",
   },
   oceania: {
     img: "Geocultural_sphere/Oceania_.png",
     Keywords: ["Indigenous", "Island life", "Environmentalism"],
     Dimensions: ["Universalism", "Benevolence", "Tradition", "Self-direction"],
     description:
-      "Oceania, which includes Australia, New Zealand, and the Pacific Islands, is rich in indigenous cultures, like the Aboriginal and Māori peoples. The region’s art and traditions often reflect a strong connection to nature and the ocean. Environmental conservation is a priority, as climate change threatens island ecosystems. Traditional storytelling, craftsmanship, and community values are central to social life in Oceania.",
+      "Oceania echoes your moral essence the most! Oceania, which includes Australia, New Zealand, and the Pacific Islands, is rich in indigenous cultures, like the Aboriginal and Māori peoples. The region’s art and traditions often reflect a strong connection to nature and the ocean – are you a nature type of person? Environmental conservation might be a priority to you, as climate change threatens island ecosystems. Traditional storytelling, craftsmanship, and community values are central to social life in Oceania; do you share these values?  ",
   },
   southeast_asia: {
     img: "Geocultural_sphere/Southeast_Asia.png",
     Keywords: ["Buddhism", "Diversity", "Community"],
     Dimensions: ["Benevolence", "Tradition", "Security", "Universalism"],
     description:
-      "Southeast Asia, a blend of diverse cultures and religions like Buddhism, Hinduism, and Islam, includes nations like Thailand, Vietnam, and Indonesia. Community spirit is central, and festivals like Songkran and Nyepi are celebrated with enthusiasm. Rich in history and traditional crafts, the region is known for vibrant textiles, unique architecture (e.g., temples and pagodas), and shared values of hospitality and communal living. ",
+      "Southeast Asia echoes your moral essence the most! A blend of diverse cultures and religions like Buddhism, Hinduism, and Islam, Southeast Asia includes nations like Thailand, Vietnam, and Indonesia. Community spirit may be central to you like it is to Southeast Asians, and festivals like Songkran and Nyepi are celebrated with enthusiasm. Rich in history and traditional crafts, the region is known for vibrant textiles, unique architecture (e.g., temples and pagodas), and shared values of hospitality and communal living you might embrace.  ",
   },
   north_america: {
     img: "Geocultural_sphere/North_America_.png",
     Keywords: ["Multiculturalism", "Innovation", "Freedom"],
     Dimensions: ["Self-direction", "Achievement", "Power", "Hedonism"],
     description:
-      "North America, especially the U.S. and Canada, is characterized by multiculturalism, individualism, and innovation. A hub for technological advancements and popular culture, the region values personal freedom and democracy. Immigrants from diverse backgrounds contribute to its dynamic cultural landscape, making it a center for art, science, and commerce. North American society prioritizes equality and environmental awareness, though it grapples with historical challenges.",
+      "North America echoes your moral essence the most! North America, especially the U.S. and Canada, is characterized by multiculturalism, individualism, and innovation. A hub for technological advancements and popular culture, the region values personal freedom and democracy which you may also honor. Immigrants from diverse backgrounds contribute to its dynamic cultural landscape, making it a center for art, science, and commerce. North American society prioritizes equality and environmental awareness, though it grapples with historical challenges.",
   },
   east_asia: {
     img: "Geocultural_sphere/East_Asia_.png",
     Keywords: ["Confucianism", "Collectivism", "Honor"],
     Dimensions: ["Conformity", "Tradition", "Security", "Benevolence"],
     description:
-      "East Asia, including China, Japan, and Korea, is heavily influenced by Confucian values, which emphasize hierarchy, family, and social harmony. Collectivism shapes social behavior, prioritizing group welfare over individualism. Respect for elders and honor are deeply rooted cultural traits. Spiritual practices, particularly Buddhism and Shintoism, play key roles in daily life and rituals like tea ceremonies. Education and self-discipline are held in high regard across the region.",
+      "East Asia echoes your moral essence the most! East Asia, including China, Japan, and Korea, is heavily influenced by Confucian values, which emphasize hierarchy, family, and social harmony like you might. Collectivism, like you may have demonstrated, shapes social behavior, prioritizing group welfare over individualism. Respect for elders and honor may deeply affect you. In East Asia, Spiritual practices, particularly Buddhism and Shintoism, play key roles in daily life and rituals like tea ceremonies. Finally, you may also highly regard education and self-discipline like other East Asians.  ",
   },
   south_asia: {
     img: "Geocultural_sphere/South_Asia_.png",
     Keywords: ["Hinduism", "Caste", "Spirituality"],
     Dimensions: ["Tradition", "Benevolence", "Achievement", "Conformity"],
     description:
-      "South Asia, comprising countries like India, Pakistan, and Bangladesh, is marked by rich spiritual traditions, particularly Hinduism, Buddhism, and Islam. Festivals such as Diwali and Eid, along with yoga and meditation, highlight the region’s connection to spirituality. The caste system historically shaped social hierarchies, and family bonds are highly valued. South Asian culture is diverse, with Bollywood cinema, dance, and cuisine playing key roles.",
+      "South Asia echoes your moral essence the most! Comprising countries like India, Pakistan, and Bangladesh, South Asia is marked by rich spiritual traditions, particularly Hinduism, Buddhism, and Islam. Festivals such as Diwali and Eid, along with yoga and meditation, highlight the region’s connection to spirituality you might resonate with. The caste system historically shaped social hierarchies, and you may also embody the region’s highly valued family bonds. South Asian culture is diverse, with things you might enjoy like Bollywood cinema, dance, and cuisine playing key roles.",
   },
   mena: {
     img: "Geocultural_sphere/Middle_East_and_North_Africa_(MENA)_.png",
     Keywords: ["Islam", "Hospitality", "Family"],
     Dimensions: ["Tradition", "Security", "Power", "Benevolence"],
     description:
-      "The MENA region, predominantly shaped by Islamic culture, places strong emphasis on family values, hospitality, and respect for tradition. Arabic is widely spoken, and calligraphy is an esteemed art form. Desert landscapes, nomadic traditions, and historical contributions to science and philosophy define this region. Religion is central to daily life, and large families are a hallmark of social structure.",
+      "The Middle East & North Africa (MENA) region echoes your moral essence the most! The MENA region, predominantly shaped by Islamic culture, places strong emphasis on family values, hospitality, and respect for tradition – things you may identify with!  Arabic is widely spoken, and calligraphy is an esteemed art form. Desert landscapes, nomadic traditions, and historical contributions to science and philosophy define this region. Religion is central to daily life like it might be to you, and large families are a hallmark of social structure.",
   },
   east_europe: {
     img: "Geocultural_sphere/Eastern_Europe_.png",
     Keywords: ["Orthodox Christianity", "Folklore", "Resilience"],
     Dimensions: ["Security", "Conformity", "Tradition", "Benevolence"],
     description:
-      "Eastern Europe, encompassing countries like Russia and Poland, is influenced by Orthodox Christianity and Slavic traditions. Folklore, music, and communal values are central to social life. The region has a history of resilience through political upheaval, with strong family ties and respect for tradition. Hearty cuisine and festivals reflect a deep connection to cultural roots and communal celebration.",
+      "Eastern Europe echoes your moral essence the most! Encompassing countries like Russia and Poland, Eastern Europe is influenced by Orthodox Christianity and Slavic traditions. Folklore, music, and communal values are central to social life like they may be to you. The region has a history of resilience through political upheaval, with strong family ties and respect for tradition. Hearty cuisine and festivals reflect a deep connection to cultural roots and communal celebration. Do you like the occasional festival feast?",
   },
   latin_america: {
     img: "Geocultural_sphere/Latin_America_.png",
     Keywords: ["Catholicism", "Passion", "Mestizo"],
     Dimensions: ["Benevolence", "Hedonism", "Tradition", "Stimulation"],
     description:
-      "Latin America, spanning Mexico to South America, is a fusion of indigenous, European, and African influences, with Catholicism playing a significant role. The region is known for its passionate music, dance (like samba and tango), and colorful festivals, such as Carnival. Family is central to social life, and a mestizo (mixed) culture is common. Vibrant art, literature, and deep-rooted traditions reflect Latin America's rich history.",
+      "Latin America echoes your moral essence the most! Spanning Mexico to South America, Latin America is a fusion of indigenous, European, and African influences, with Catholicism playing a significant role. The region is known for its passionate music, dance (like samba and tango) and colorful festivals such as the Carnival of Rio de Janeiro. Family is central to social life, and a mestizo (mixed) culture is common. Vibrant art, literature, and deep-rooted traditions reflect Latin America's rich history. Do you come from a diverse cultural background? ",
   },
 };
 
