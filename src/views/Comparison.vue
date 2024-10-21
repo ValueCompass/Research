@@ -59,39 +59,19 @@ import * as echarts from "echarts";
 
 const tabList = [
   {
-    name: "Schwartz Value Theory",
+    name: "Table",
     index: 0,
-    children: [
-      {
-        name: "Evaluation Results and cases",
-        index: 0,
-      },
-      {
-        name: "Distance between national values",
-        index: 1,
-      },
-    ],
   },
   {
-    name: "Moral Foundation Theory",
+    name: "Visualization",
     index: 1,
-    children: [
-      {
-        name: "Evaluation Results and cases",
-        index: 0,
-      },
-      {
-        name: "Distance between national values",
-        index: 1,
-      },
-    ],
   },
   {
-    name: "Diverse Safety Risks",
+    name: "Value Space",
     index: 2,
   },
   {
-    name: "LLMs’ Unique Values",
+    name: "Cultural Alignment",
     index: 3,
   },
 ];
