@@ -38,6 +38,10 @@ button:focus-visible {
 }
 
 .main-container {
+    /* max-width: 1720px;
+    padding-left: 1em;
+    padding-right: 1em;
+    width: 90%; */
     width: 1200px;
     margin: 0 auto;
 }
