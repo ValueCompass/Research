@@ -215,9 +215,9 @@ const fetchData = async () => {
   try {
     axios
       .all([
-        getAxiosData("/value-compass.github.io/data/models_info.json"),
-        getAxiosData("/value-compass.github.io/data/Schwartz_scores.json"),
-        getAxiosData("/value-compass.github.io/data/Schwartz_cases.json"),
+        getAxiosData("/data/models_info.json"),
+        getAxiosData("/data/Schwartz_scores.json"),
+        getAxiosData("/data/Schwartz_cases.json"),
       ])
       .then(
         axios.spread(function (modelInfos, Schwartz_datas, Schwartz_cases) {
@@ -245,10 +245,10 @@ const fetchOtherData = async () => {
   try {
     axios
       .all([
-        getAxiosData("/value-compass.github.io/data/Risk_scores.json"),
-        getAxiosData("/value-compass.github.io/data/Risk_cases.json"),
-        getAxiosData("/value-compass.github.io/data/MFT_scores.json"),
-        getAxiosData("/value-compass.github.io/data/MFT_cases.json"),
+        getAxiosData("/data/Risk_scores.json"),
+        getAxiosData("/data/Risk_cases.json"),
+        getAxiosData("/data/MFT_scores.json"),
+        getAxiosData("/data/MFT_cases.json"),
       ])
       .then(
         axios.spread(function (Risk_scores, Risk_cases, MFT_scores, MFT_cases) {
@@ -510,7 +510,23 @@ const submit = () => {
   currentModel.value = checkedModel.value;
   visible.value = false;
   currentModelInfo.value = modelInfo[currentModel.value];
-  setRadarChart(Schwartz_data[currentModel.value]);
+  // setRadarChart(Schwartz_data[currentModel.value]);
+  console.log(currentTab.value);
+  console.log(currentModel.value);
+  if (currentTab.value == 0) {
+    setRadarChart(Schwartz_data[currentModel.value]);
+    currentCase = getCaseData(Schwartz_case, currentModel.value);
+  } else if (currentTab.value == 1) {
+    setRadarChart(MFT_data[currentModel.value]);
+    currentCase = getCaseData(MFT_case, currentModel.value);
+  } else {
+    setRadarChart(Risk_data[currentModel.value]);
+    currentCase = getCaseData(Risk_case, currentModel.value);
+  }
+  console.log(currentCase);
+  chartMenu.value = Object.keys(currentCase);
+  currentChartTab.value = chartMenu.value[0];
+  currentCaseData.value = currentCase[currentChartTab.value];
 };
 
 const currentTab = ref(0);
@@ -641,7 +657,7 @@ onUnmounted(() => {
   display: flex;
   .chart-tab {
     width: calc(calc(100% - 1200px) / 2);
-    min-width: 13.125em;
+    min-width: 14em;
     .chart-tab-title {
       font-size: 1em;
       font-weight: 700;
