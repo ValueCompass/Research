@@ -510,7 +510,23 @@ const submit = () => {
   currentModel.value = checkedModel.value;
   visible.value = false;
   currentModelInfo.value = modelInfo[currentModel.value];
-  setRadarChart(Schwartz_data[currentModel.value]);
+  // setRadarChart(Schwartz_data[currentModel.value]);
+  console.log(currentTab.value);
+  console.log(currentModel.value);
+  if (currentTab.value == 0) {
+    setRadarChart(Schwartz_data[currentModel.value]);
+    currentCase = getCaseData(Schwartz_case, currentModel.value);
+  } else if (currentTab.value == 1) {
+    setRadarChart(MFT_data[currentModel.value]);
+    currentCase = getCaseData(MFT_case, currentModel.value);
+  } else {
+    setRadarChart(Risk_data[currentModel.value]);
+    currentCase = getCaseData(Risk_case, currentModel.value);
+  }
+  console.log(currentCase);
+  chartMenu.value = Object.keys(currentCase);
+  currentChartTab.value = chartMenu.value[0];
+  currentCaseData.value = currentCase[currentChartTab.value];
 };
 
 const currentTab = ref(0);
@@ -641,7 +657,7 @@ onUnmounted(() => {
   display: flex;
   .chart-tab {
     width: calc(calc(100% - 1200px) / 2);
-    min-width: 13.125em;
+    min-width: 14em;
     .chart-tab-title {
       font-size: 1em;
       font-weight: 700;
