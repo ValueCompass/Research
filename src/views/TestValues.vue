@@ -870,7 +870,7 @@ let chartInstance = null;
 
 onMounted(async () => {
   await nextTick(); // 确保DOM已经渲染完成
-  Submit();
+  // Submit();
 });
 </script>
 
