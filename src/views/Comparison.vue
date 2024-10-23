@@ -5,9 +5,9 @@
         <h2>Compare Pool</h2>
         <div class="compare-model-list">
           <ul>
-            <li>
+            <li v-for="item in checkedModelList" :key="item">
               <span class="close-comparison"></span>
-              <p class="name">GPT-4-Turbo</p>
+              <p class="name">{{ item }}</p>
               <p class="point-num">64.4<span class="point">points</span></p>
               <div class="top-item-content">
                 <el-tooltip
@@ -24,10 +24,45 @@
                 <span class="date">2023.06</span>
               </div>
             </li>
-            <div class="add-model">
+            <div
+              class="add-model"
+              v-popover="popoverRef"
+              @click="visible = true"
+            >
               <img src="@/assets/images/add-model.svg" alt="add-model" />
               <p>Add</p>
             </div>
+            <el-popover
+              ref="popoverRef"
+              :visible="visible"
+              placement="right-start"
+              :width="576"
+              trigger="click"
+              virtual-triggering
+              persistent
+            >
+              <div>
+                <el-radio-group v-model="checkedModel">
+                  <el-radio
+                    v-for="model in modellist"
+                    :key="model"
+                    :value="model"
+                  >
+                    {{ model }}
+                  </el-radio>
+                </el-radio-group>
+                <div
+                  style="
+                    display: flex;
+                    justify-content: flex-end;
+                    margin-top: 20px;
+                    padding-right: 20px;
+                  "
+                >
+                  <button @click="submit">Submit</button>
+                </div>
+              </div>
+            </el-popover>
           </ul>
         </div>
       </div>
@@ -88,15 +123,59 @@ const chartTabMenu = [
   "Conformity",
 ];
 
+var modelInfo = null;
+const checkedModel = ref("");
+const popoverRef = ref();
+const visible = ref(false);
+const modellist = ref([]);
+const checkedModelList = ref(["GPT-4-Turbo"]);
+
+const getAxiosData = (url) => {
+  return axios.get(url);
+};
+const fetchData = async () => {
+  try {
+    axios
+      .all([
+        getAxiosData("/data/models_info.json"),
+        getAxiosData("/data/Schwartz_scores.json"),
+        getAxiosData("/data/Schwartz_cases.json"),
+      ])
+      .then(
+        axios.spread(function (modelInfos, Schwartz_datas, Schwartz_cases) {
+          modelInfo = getKeyValue(modelInfos.data.data);
+          modellist.value = Object.keys(modelInfo);
+        })
+      );
+  } catch (error) {
+    console.error("Fetch error:", error);
+  }
+};
+fetchData();
+
 onMounted(async () => {});
 
 const currentTab = ref(0);
 const tabSwitch = (index) => {
   currentTab.value = index;
 };
+const submit = () => {
+  visible.value = false;
+  console.log(checkedModel.value);
+  checkedModelList.value.push(checkedModel.value);
+  checkedModel.value = "";
+};
 
 // 销毁ECharts实例
 onUnmounted(() => {});
+function getKeyValue(array) {
+  const result = array.reduce((acc, item) => {
+    const { model, ...rest } = item; // 提取name字段，其他字段放入rest
+    acc[model] = rest; // 将剩余字段放入对象
+    return acc;
+  }, {});
+  return result;
+}
 </script>
 
 <style scoped lang="scss">
@@ -246,5 +325,15 @@ onUnmounted(() => {});
       align-items: center;
     }
   }
+}
+:deep(.el-radio__label) {
+  width: 145px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+:deep(.el-radio) {
+  --el-checkbox-text-color: #fff;
+  margin-right: 1em;
 }
 </style>
