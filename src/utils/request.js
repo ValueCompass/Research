@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseUrl = `/data/`;
+const baseUrl = `./data/`;
 
 
 const getServiceUrl = (url) => {

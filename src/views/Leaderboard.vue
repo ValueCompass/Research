@@ -445,10 +445,10 @@ const fetchData = async () => {
   try {
     axios
       .all([
-        getAxiosData("/data/models_info.json"),
-        getAxiosData("/data/Schwartz_scores.json"),
-        getAxiosData("/data/Risk_scores.json"),
-        getAxiosData("/data/MFT_scores.json"),
+        getAxiosData("./data/models_info.json"),
+        getAxiosData("./data/Schwartz_scores.json"),
+        getAxiosData("./data/Risk_scores.json"),
+        getAxiosData("./data/MFT_scores.json"),
       ])
       .then(
         axios.spread(function (modelInfos, Schwartz_data, Risk_data, MFT_data) {

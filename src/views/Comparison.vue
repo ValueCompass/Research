@@ -137,9 +137,9 @@ const fetchData = async () => {
   try {
     axios
       .all([
-        getAxiosData("/data/models_info.json"),
-        getAxiosData("/data/Schwartz_scores.json"),
-        getAxiosData("/data/Schwartz_cases.json"),
+        getAxiosData("./data/models_info.json"),
+        getAxiosData("./data/Schwartz_scores.json"),
+        getAxiosData("./data/Schwartz_cases.json"),
       ])
       .then(
         axios.spread(function (modelInfos, Schwartz_datas, Schwartz_cases) {
