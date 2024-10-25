@@ -5,11 +5,17 @@
         <h2>Compare Pool</h2>
         <div class="compare-model-list">
           <ul>
-            <li v-for="item in checkedModelDetailList" :key="item" :style="{'border-color' : item.color}">
+            <li
+              v-for="item in checkedModelDetailList"
+              :key="item"
+              :style="{ 'border-color': item.color }"
+            >
               <span class="close-comparison"></span>
               <p class="name">{{ item.model_name }}</p>
               <!-- <p style="display: none">{{ modelInfo[item] }}</p> -->
-              <p class="point-num">{{item.model_info.points}}<span class="point">points</span></p>
+              <p class="point-num">
+                {{ item.model_info.points }}<span class="point">points</span>
+              </p>
               <div class="top-item-content">
                 <el-tooltip
                   effect="customized"
@@ -209,7 +215,8 @@
               <el-table-column
                 v-if="item != 'model_name'"
                 :prop="item"
-                :label="item.substring(0, 3)"
+                :label="item"
+                :formatter="formatter"
               />
             </template>
           </el-table>
@@ -217,30 +224,42 @@
           <el-table :data="MFT_table_data" border style="width: 100%">
             <el-table-column prop="model_name" label="Model" />
             <template v-for="(item, index) in MFT_table_columns" :key="index">
-              <el-table-column v-if="item != 'model_name'" :prop="item" :label="item" :formatter="formatter"  />
+              <el-table-column
+                v-if="item != 'model_name'"
+                :prop="item"
+                :label="item"
+                :formatter="formatter"
+              />
             </template>
           </el-table>
           <h4>Diverse Safety Risks</h4>
           <el-table :data="Risk_table_data" border style="width: 100%">
             <el-table-column prop="model_name" label="Model" />
             <template v-for="(item, index) in Risk_table_columns" :key="index">
-              <el-table-column v-if="item != 'model_name'" :prop="item" :label="item" />
+              <el-table-column
+                v-if="item != 'model_name'"
+                :prop="item"
+                :label="item"
+                :formatter="formatter"
+              />
             </template>
           </el-table>
           <h4>LLM Value System</h4>
         </div>
         <!-- echart -->
-        <div  v-show="currentTab == 1">
-          <VisualizationComponent ref="VisualizationComponentProps"></VisualizationComponent>
+        <div v-show="currentTab == 1">
+          <VisualizationComponent
+            ref="VisualizationComponentProps"
+          ></VisualizationComponent>
         </div>
-        
+
         <!-- Value Space -->
-        <div  v-show="currentTab == 2">
+        <div v-show="currentTab == 2">
           <ValueSpaceComponent></ValueSpaceComponent>
         </div>
         <!-- Cultural Alignment -->
-        <div  v-show="currentTab == 3">
-          <CulturalAlignmentComponent></CulturalAlignmentComponent>
+        <div v-show="currentTab == 3">
+          <CulturalAlignmentComponent ref="CulturalAlignmentComponentProps"></CulturalAlignmentComponent>
         </div>
       </div>
     </div>
@@ -255,8 +274,15 @@ import TableComponent from "../components/Comparison/Table.vue";
 import ValueSpaceComponent from "../components/Comparison/ValueSpace.vue";
 import CulturalAlignmentComponent from "../components/Comparison/CulturalAlignment.vue";
 
-const VisualizationComponentProps = ref(null)
-const colorList = ["rgba(16, 147, 255, 1)","rgba(172, 210, 145, 1)","rgba(113, 134, 201, 1)","rgba(162, 123, 187, 1)","rgba(225, 149, 208, 1)"]
+const VisualizationComponentProps = ref(null);
+const CulturalAlignmentComponentProps = ref(null)
+const colorList = [
+  "rgba(16, 147, 255, 1)",
+  "rgba(172, 210, 145, 1)",
+  "rgba(113, 134, 201, 1)",
+  "rgba(162, 123, 187, 1)",
+  "rgba(225, 149, 208, 1)",
+];
 
 const tabList = [
   {
@@ -268,13 +294,14 @@ const tabList = [
     index: 1,
   },
   {
-    name: "Value Space",
-    index: 2,
-  },
-  {
     name: "Cultural Alignment",
     index: 3,
   },
+  {
+    name: "Value Space",
+    index: 2,
+  },
+  
 ];
 const chartTabMenu = [
   "Benevolence",
@@ -333,7 +360,7 @@ const fetchData = async () => {
         ) {
           modelInfo_list = modelInfos.data.data;
           modelInfo.value = getKeyValue(modelInfos.data.data);
-          console.log(modelInfo_list,modelInfo.value)
+          console.log(modelInfo_list, modelInfo.value);
           Schwartz_data = getKeyValue(Schwartz_datas.data.data);
           Schwartz_case = Schwartz_cases.data.data;
           Risk_data = getKeyValue(Risk_scores.data.data);
@@ -351,14 +378,14 @@ const fetchData = async () => {
 
           checkedModelList.value.push(modellist.value[0]);
 
-          for(let key in modelInfo.value){
+          for (let key in modelInfo.value) {
             const point = getAvaData(key, []);
-            modelInfo.value[key].points = point.toFixed(5)
+            modelInfo.value[key].points = point.toFixed(5);
           }
           // modelInfo.value.forEach((item) => {
           //   const point = getAvaData(item.model, []);
           //   item.points = point.toFixed(5)
-            
+
           // });
           getModelDetail();
           console.log("###", modelInfo.value, modellist.value, Schwartz_data);
@@ -376,14 +403,21 @@ const fetchData = async () => {
 };
 fetchData();
 const formatter = (row, column) => {
-  if(column.label == 'model_name'){
-    return row[column.label]
-  }else{
-    
-    return row[column.label].toFixed(5)
+  console.log(row, column);
+  console.log(row[column.label]);
+  if (column.label == "model_name") {
+    return row[column.label];
+  } else {
+    console.log(row[column.label]);
+    return row[column.label].toFixed(5);
   }
-  
-}
+  // if(column.label == 'model_name'){
+  //   return row[column.label]
+  // }else{
+  //   console.log(row[column.label])
+  //   return row[column.label].toFixed(5)
+  // }
+};
 
 onMounted(async () => {});
 
@@ -394,8 +428,8 @@ const tabSwitch = (index) => {
 const submit = () => {
   visible.value = false;
   console.log(checkedModelList.value);
-  if(checkedModelList.value.length > 5){
-    alert("最多可添加5个model")
+  if (checkedModelList.value.length > 5) {
+    alert("最多可添加5个model");
   }
   getModelDetail();
   checkedModel.value = "";
@@ -409,33 +443,31 @@ const Schwartz_table_data = ref([]);
 const MFT_table_data = ref([]);
 const Risk_table_data = ref([]);
 const getModelDetail = () => {
-  checkedModelDetailList.value = []
-  if(checkedModelList.value.length > 5){
-    alert("最多可添加5个model")
+  checkedModelDetailList.value = [];
+  if (checkedModelList.value.length > 5) {
+    alert("最多可添加5个model");
   }
-  console.log("checkedModelList.value",checkedModelList.value)  // ["GPT-4-Turbo","GPT-4-Turbo"]
-  var colorHas = []   // colorList
+  console.log("checkedModelList.value", checkedModelList.value); // ["GPT-4-Turbo","GPT-4-Turbo"]
+  var colorHas = []; // colorList
   for (let i = 0; i < checkedModelList.value.length; i++) {
-    if(i >= 5){
+    if (i >= 5) {
       break;
     }
-    console.log(checkedModelDetailList.value)
-    let has = false
-    checkedModelDetailList.value.forEach(item=>{
-      console.log("item",item,checkedModelList.value[i])
-        if(item.model_name==checkedModelList.value[i]){
-            has = true
-        }else{
-        }
-        colorHas.push(item.color)
-    })
+    console.log(checkedModelDetailList.value);
+    let has = false;
+    checkedModelDetailList.value.forEach((item) => {
+      console.log("item", item, checkedModelList.value[i]);
+      if (item.model_name == checkedModelList.value[i]) {
+        has = true;
+      } else {
+      }
+      colorHas.push(item.color);
+    });
 
-    let newArr= colorList.filter((v) =>
-      colorHas.every((val) => val != v)
-    )
-    if(!has){
+    let newArr = colorList.filter((v) => colorHas.every((val) => val != v));
+    if (!has) {
       let obj = {};
-      obj.color = newArr[0]
+      obj.color = newArr[0];
       obj.model_name = checkedModelList.value[i];
       obj.model_info = modelInfo.value[checkedModelList.value[i]];
       obj.Schwartz_data = Schwartz_data[checkedModelList.value[i]];
@@ -445,7 +477,7 @@ const getModelDetail = () => {
     }
   }
 
-  console.log("checkedModelDetailList.value",checkedModelDetailList.value)
+  console.log("checkedModelDetailList.value", checkedModelDetailList.value);
   // checkedModelDetailList.value = [];
   Schwartz_table_data.value = [];
   MFT_table_data.value = [];
@@ -480,9 +512,17 @@ const getModelDetail = () => {
     MFT_obj.model_name = checkedModelList.value[i];
     MFT_table_data.value.push(MFT_obj);
 
-    // for echart
-    VisualizationComponentProps.value.setRadarChart(checkedModelDetailList.value)
+    
+
   }
+
+  // for echart
+    VisualizationComponentProps.value.setRadarChart(
+      checkedModelDetailList.value
+    );
+
+    // for setHotChart
+    CulturalAlignmentComponentProps.value.setHotChart(checkedModelList.value)
   console.log("checkedModelDetailList.value", checkedModelDetailList.value);
 };
 
@@ -836,7 +876,7 @@ const updateFilterHeight = () => {
           align-items: center;
           .dev {
             width: 6em;
-            font-size: .75em;
+            font-size: 0.75em;
             // line-height: 1.5em;
           }
           .date {
@@ -917,7 +957,7 @@ const updateFilterHeight = () => {
   }
   .chart-main {
     // flex-grow: 1;
-    overflow:hidden;
+    overflow: hidden;
     width: 75em;
     h4 {
       font-size: 1.2em;
