@@ -51,9 +51,9 @@
               persistent
             >
               <div>
-                <el-checkbox-group v-model="checkedModelList" :max="5">
+                <el-checkbox-group v-model="checkedModelNameList" :max="5">
                   <el-checkbox
-                    v-for="model in modellist"
+                    v-for="model in modelNameList"
                     :key="model"
                     :value="model"
                   >
@@ -91,116 +91,7 @@
         </ul>
       </div>
       <div class="chart-main" style="">
-        <div class="content-filter">
-          <el-select
-            v-model="value1"
-            placeholder="Measurement Date"
-            @change="dateChange"
-            style="width: 200px"
-          >
-            <el-radio-group v-model="value1" style="width: 100%">
-              <el-option
-                v-for="item in dates"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              >
-                <el-radio :value="item.value">{{ item.label }}</el-radio>
-              </el-option>
-            </el-radio-group>
-          </el-select>
-          <el-cascader
-            class="select"
-            v-model="value2"
-            :options="options"
-            :props="props"
-            style="width: 240px"
-            :show-all-levels="false"
-            :collapse-tags="true"
-            @change="handleChange"
-            placeholder="Measurement Dimension"
-          />
-          <span class="filter-btn" @click="resetFilter">Reset Filter</span>
-          <span
-            class="show-filter"
-            :class="{ 'is-show': showFilter }"
-            @click="showFilterFunc"
-          ></span>
-        </div>
-        <div class="panel-box" ref="panel">
-          <div class="panel-content">
-            <div class="title">Applied filters</div>
-            <div class="panel-row" v-show="value1">
-              <div class="filter-name">Measurement Date</div>
-              <div class="panel-tags">
-                <el-tag type="info" color="rgba(255, 255, 255, 0.2)">
-                  {{ value1 }}
-                </el-tag>
-              </div>
-            </div>
-            <div class="title">Measurement Dimension({{ filterCount }})</div>
-            <div class="panel-row" v-show="filterObj[1]">
-              <div class="filter-name">Schwartz Value Theory</div>
-              <div class="panel-tags">
-                <el-tag
-                  v-for="item in filterObj[1]"
-                  :key="item.key"
-                  closable
-                  type="info"
-                  @close="handleClose(item)"
-                  color="rgba(255, 255, 255, 0.2)"
-                >
-                  {{ item.name }}
-                </el-tag>
-              </div>
-            </div>
-            <div class="panel-row" v-show="filterObj[2]">
-              <div class="filter-name">Moral Foundation Theory</div>
-              <div class="panel-tags">
-                <el-tag
-                  v-for="item in filterObj[2]"
-                  :key="item.key"
-                  closable
-                  type="info"
-                  @close="handleClose(item)"
-                  color="rgba(255, 255, 255, 0.2)"
-                >
-                  {{ item.name }}
-                </el-tag>
-              </div>
-            </div>
-            <div class="panel-row" v-show="filterObj[3]">
-              <div class="filter-name">Diverse Safety Risks</div>
-              <div class="panel-tags">
-                <el-tag
-                  v-for="item in filterObj[3]"
-                  :key="item.key"
-                  closable
-                  type="info"
-                  @close="handleClose(item)"
-                  color="rgba(255, 255, 255, 0.2)"
-                >
-                  {{ item.name }}
-                </el-tag>
-              </div>
-            </div>
-            <div class="panel-row" v-show="filterObj[4]">
-              <div class="filter-name">LLMs' Unique Values</div>
-              <div class="panel-tags">
-                <el-tag
-                  v-for="item in filterObj[4]"
-                  :key="item.key"
-                  closable
-                  type="info"
-                  @close="handleClose(item)"
-                  color="rgba(255, 255, 255, 0.2)"
-                >
-                  {{ item.name }}
-                </el-tag>
-              </div>
-            </div>
-          </div>
-        </div>
+        <selectBoxComponent @fitterChange="fitterChange"></selectBoxComponent>
 
         <!-- table -->
         <div class="width:100%" v-show="currentTab == 0">
@@ -209,7 +100,7 @@
           <el-table :data="Schwartz_table_data" border style="width: 100%">
             <el-table-column prop="model_name" label="Model" />
             <template
-              v-for="(item, index) in Schwartz_table_columns"
+              v-for="(item, index) in Schwartz_table_columns_checked"
               :key="index"
             >
               <el-table-column
@@ -223,7 +114,10 @@
           <h4>Moral Foundations Theory</h4>
           <el-table :data="MFT_table_data" border style="width: 100%">
             <el-table-column prop="model_name" label="Model" />
-            <template v-for="(item, index) in MFT_table_columns" :key="index">
+            <template
+              v-for="(item, index) in MFT_table_columns_checked"
+              :key="index"
+            >
               <el-table-column
                 v-if="item != 'model_name'"
                 :prop="item"
@@ -235,7 +129,10 @@
           <h4>Diverse Safety Risks</h4>
           <el-table :data="Risk_table_data" border style="width: 100%">
             <el-table-column prop="model_name" label="Model" />
-            <template v-for="(item, index) in Risk_table_columns" :key="index">
+            <template
+              v-for="(item, index) in Risk_table_columns_checked"
+              :key="index"
+            >
               <el-table-column
                 v-if="item != 'model_name'"
                 :prop="item"
@@ -259,7 +156,9 @@
         </div>
         <!-- Cultural Alignment -->
         <div v-show="currentTab == 3">
-          <CulturalAlignmentComponent ref="CulturalAlignmentComponentProps"></CulturalAlignmentComponent>
+          <CulturalAlignmentComponent
+            ref="CulturalAlignmentComponentProps"
+          ></CulturalAlignmentComponent>
         </div>
       </div>
     </div>
@@ -273,9 +172,10 @@ import VisualizationComponent from "../components/Comparison/Visualization.vue";
 import TableComponent from "../components/Comparison/Table.vue";
 import ValueSpaceComponent from "../components/Comparison/ValueSpace.vue";
 import CulturalAlignmentComponent from "../components/Comparison/CulturalAlignment.vue";
+import selectBoxComponent from "../components/selectBox.vue";
 
 const VisualizationComponentProps = ref(null);
-const CulturalAlignmentComponentProps = ref(null)
+const CulturalAlignmentComponentProps = ref(null);
 const colorList = [
   "rgba(16, 147, 255, 1)",
   "rgba(172, 210, 145, 1)",
@@ -301,7 +201,6 @@ const tabList = [
     name: "Value Space",
     index: 2,
   },
-  
 ];
 const chartTabMenu = [
   "Benevolence",
@@ -323,14 +222,14 @@ var Risk_case = null;
 var MFT_data = null;
 var MFT_case = null;
 
-var modelInfo_list = null;
+var modelInfo_list = null; // [ {model: 'GPT-4-Turbo', developer: 'OpenAI', type: 'Close'}, ... ]
 // var modelInfo = null;
-const modelInfo = ref();
+const modelInfo = ref(); //  { 'GPT-4-Turbo': {developer: 'OpenAI', type: 'Close'},  'GPT-4o-mini' : {} }
 const checkedModel = ref([]);
 const popoverRef = ref();
 const visible = ref(false);
-const modellist = ref([]);
-const checkedModelList = ref([]);
+const modelNameList = ref([]); // [ 'GPT-4-Turbo', 'GPT-4-Turbo' ]
+const checkedModelNameList = ref([]);
 const checkedModelDetailList = ref([]);
 
 const getAxiosData = (url) => {
@@ -360,7 +259,6 @@ const fetchData = async () => {
         ) {
           modelInfo_list = modelInfos.data.data;
           modelInfo.value = getKeyValue(modelInfos.data.data);
-          console.log(modelInfo_list, modelInfo.value);
           Schwartz_data = getKeyValue(Schwartz_datas.data.data);
           Schwartz_case = Schwartz_cases.data.data;
           Risk_data = getKeyValue(Risk_scores.data.data);
@@ -374,27 +272,29 @@ const fetchData = async () => {
           const d = mergeObj(Schwartz_data, Risk_data, MFT_data);
           mergeData = d;
 
-          modellist.value = Object.keys(modelInfo.value);
-
-          checkedModelList.value.push(modellist.value[0]);
-
           for (let key in modelInfo.value) {
             const point = getAvaData(key, []);
             modelInfo.value[key].points = point.toFixed(5);
           }
-          // modelInfo.value.forEach((item) => {
-          //   const point = getAvaData(item.model, []);
-          //   item.points = point.toFixed(5)
-
-          // });
-          getModelDetail();
-          console.log("###", modelInfo.value, modellist.value, Schwartz_data);
+          modelNameList.value = Object.keys(modelInfo.value);
 
           Schwartz_table_columns.value = Object.keys(
-            Schwartz_data[modellist.value[0]]
+            Schwartz_data[modelNameList.value[0]]
           );
-          Risk_table_columns.value = Object.keys(Risk_data[modellist.value[0]]);
-          MFT_table_columns.value = Object.keys(MFT_data[modellist.value[0]]);
+          Schwartz_table_columns_checked.value = Schwartz_table_columns.value;
+          Risk_table_columns.value = Object.keys(
+            Risk_data[modelNameList.value[0]]
+          );
+          Risk_table_columns_checked.value = Risk_table_columns.value;
+          MFT_table_columns.value = Object.keys(
+            MFT_data[modelNameList.value[0]]
+          );
+          MFT_table_columns_checked.value = MFT_table_columns.value;
+
+          //  默认选中第一个model
+
+          checkedModelNameList.value.push(modelNameList.value[0]);
+          submit();
         })
       );
   } catch (error) {
@@ -403,12 +303,9 @@ const fetchData = async () => {
 };
 fetchData();
 const formatter = (row, column) => {
-  console.log(row, column);
-  console.log(row[column.label]);
   if (column.label == "model_name") {
     return row[column.label];
   } else {
-    console.log(row[column.label]);
     return row[column.label].toFixed(5);
   }
   // if(column.label == 'model_name'){
@@ -419,16 +316,14 @@ const formatter = (row, column) => {
   // }
 };
 
-onMounted(async () => {});
-
 const currentTab = ref(0);
 const tabSwitch = (index) => {
   currentTab.value = index;
 };
 const submit = () => {
   visible.value = false;
-  console.log(checkedModelList.value);
-  if (checkedModelList.value.length > 5) {
+  console.log(checkedModelNameList.value);
+  if (checkedModelNameList.value.length > 5) {
     alert("最多可添加5个model");
   }
   getModelDetail();
@@ -439,25 +334,29 @@ const Schwartz_table_columns = ref([]);
 const MFT_table_columns = ref([]);
 const Risk_table_columns = ref([]);
 
+const Schwartz_table_columns_checked = ref([]);
+const MFT_table_columns_checked = ref([]);
+const Risk_table_columns_checked = ref([]);
+
 const Schwartz_table_data = ref([]);
 const MFT_table_data = ref([]);
 const Risk_table_data = ref([]);
 const getModelDetail = () => {
   checkedModelDetailList.value = [];
-  if (checkedModelList.value.length > 5) {
+  if (checkedModelNameList.value.length > 5) {
     alert("最多可添加5个model");
   }
-  console.log("checkedModelList.value", checkedModelList.value); // ["GPT-4-Turbo","GPT-4-Turbo"]
+  console.log("checkedModelNameList.value", checkedModelNameList.value); // ["GPT-4-Turbo","GPT-4-Turbo"]
   var colorHas = []; // colorList
-  for (let i = 0; i < checkedModelList.value.length; i++) {
+  for (let i = 0; i < checkedModelNameList.value.length; i++) {
     if (i >= 5) {
       break;
     }
     console.log(checkedModelDetailList.value);
     let has = false;
     checkedModelDetailList.value.forEach((item) => {
-      console.log("item", item, checkedModelList.value[i]);
-      if (item.model_name == checkedModelList.value[i]) {
+      console.log("item", item, checkedModelNameList.value[i]);
+      if (item.model_name == checkedModelNameList.value[i]) {
         has = true;
       } else {
       }
@@ -468,11 +367,11 @@ const getModelDetail = () => {
     if (!has) {
       let obj = {};
       obj.color = newArr[0];
-      obj.model_name = checkedModelList.value[i];
-      obj.model_info = modelInfo.value[checkedModelList.value[i]];
-      obj.Schwartz_data = Schwartz_data[checkedModelList.value[i]];
-      obj.Risk_data = Risk_data[checkedModelList.value[i]];
-      obj.MFT_data = MFT_data[checkedModelList.value[i]];
+      obj.model_name = checkedModelNameList.value[i];
+      obj.model_info = modelInfo.value[checkedModelNameList.value[i]];
+      obj.Schwartz_data = Schwartz_data[checkedModelNameList.value[i]];
+      obj.Risk_data = Risk_data[checkedModelNameList.value[i]];
+      obj.MFT_data = MFT_data[checkedModelNameList.value[i]];
       checkedModelDetailList.value.push(obj);
     }
   }
@@ -483,46 +382,28 @@ const getModelDetail = () => {
   MFT_table_data.value = [];
   Risk_table_data.value = [];
   for (let i = 0; i < checkedModelDetailList.value.length; i++) {
-    // let obj = {};
-    // console.log(Schwartz_data, Risk_data, MFT_data);
-    // console.log("Schwartz_data", Schwartz_data);
-    // obj.model_name = checkedModelList.value[i];
-    // obj.model_info = modelInfo.value[checkedModelList.value[i]];
-    // obj.Schwartz_data = Schwartz_data[checkedModelList.value[i]];
-    // obj.Risk_data = Risk_data[checkedModelList.value[i]];
-    // obj.MFT_data = MFT_data[checkedModelList.value[i]];
-
-    // checkedModelDetailList.value.push(obj);
-
-    //
-
     // for table
     let Schwartz_obj = {};
-    Schwartz_obj = Schwartz_data[checkedModelList.value[i]];
-    Schwartz_obj.model_name = checkedModelList.value[i];
+    Schwartz_obj = Schwartz_data[checkedModelNameList.value[i]];
+    Schwartz_obj.model_name = checkedModelNameList.value[i];
     Schwartz_table_data.value.push(Schwartz_obj);
 
     let Risk_obj = {};
-    Risk_obj = Risk_data[checkedModelList.value[i]];
-    Risk_obj.model_name = checkedModelList.value[i];
+    Risk_obj = Risk_data[checkedModelNameList.value[i]];
+    Risk_obj.model_name = checkedModelNameList.value[i];
     Risk_table_data.value.push(Risk_obj);
 
     let MFT_obj = {};
-    MFT_obj = MFT_data[checkedModelList.value[i]];
-    MFT_obj.model_name = checkedModelList.value[i];
+    MFT_obj = MFT_data[checkedModelNameList.value[i]];
+    MFT_obj.model_name = checkedModelNameList.value[i];
     MFT_table_data.value.push(MFT_obj);
-
-    
-
   }
 
   // for echart
-    VisualizationComponentProps.value.setRadarChart(
-      checkedModelDetailList.value
-    );
+  VisualizationComponentProps.value.setRadarChart(checkedModelDetailList.value);
 
-    // for setHotChart
-    CulturalAlignmentComponentProps.value.setHotChart(checkedModelList.value)
+  // for setHotChart
+  CulturalAlignmentComponentProps.value.setHotChart(checkedModelNameList.value);
   console.log("checkedModelDetailList.value", checkedModelDetailList.value);
 };
 
@@ -530,159 +411,6 @@ const getModelDetail = () => {
 onUnmounted(() => {});
 
 let mergeData = null;
-
-const props = { multiple: true };
-const value2 = ref([]);
-const showFilter = ref(false);
-const panel = ref(null);
-const filterCount = ref(0);
-// const checkSelect = ref("");
-let filterObj = reactive({});
-const options = [
-  {
-    value: 0,
-    label: "Universal",
-  },
-  {
-    value: 1,
-    label: "Schwartz Value Theory",
-    children: [
-      {
-        value: 0,
-        label: "Achievement",
-      },
-      {
-        value: 1,
-        label: "Benevolence",
-      },
-      {
-        value: 2,
-        label: "Conformity",
-      },
-      {
-        value: 3,
-        label: "Hedonism",
-      },
-      {
-        value: 4,
-        label: "Power",
-      },
-      {
-        value: 5,
-        label: "Security",
-      },
-      {
-        value: 6,
-        label: "Self-direction",
-      },
-      {
-        value: 7,
-        label: "Stimulation",
-      },
-      {
-        value: 8,
-        label: "Tradition",
-      },
-      {
-        value: 9,
-        label: "Universalism",
-      },
-    ],
-  },
-  {
-    value: 2,
-    label: "Moral Foundation Theory",
-    children: [
-      {
-        value: 0,
-        label: "Authority",
-      },
-      {
-        value: 1,
-        label: "Care",
-      },
-      {
-        value: 2,
-        label: "Fairness",
-      },
-      {
-        value: 3,
-        label: "Loyalty",
-      },
-      {
-        value: 4,
-        label: "Sanctity",
-      },
-    ],
-  },
-  {
-    value: 3,
-    label: "Diverse Safety Risks",
-    children: [
-      {
-        value: 0,
-        label: "Misinformation Harms",
-      },
-      {
-        value: 1,
-        label: "Representation & Toxicity Harms",
-      },
-      {
-        value: 2,
-        label: "Socioeconomic Harms",
-      },
-      {
-        value: 3,
-        label: "Human Autonomy & Integrity Harms",
-      },
-      {
-        value: 4,
-        label: "Malicious Use",
-      },
-      {
-        value: 5,
-        label: "Information & Safety Harms",
-      },
-    ],
-  },
-  {
-    value: 4,
-    label: "LLMs' Unique Values",
-    children: [
-      {
-        value: 0,
-        label: "User-Oriented",
-      },
-      {
-        value: 1,
-        label: "Self-Competent",
-      },
-      {
-        value: 2,
-        label: "Idealistic",
-      },
-      {
-        value: 3,
-        label: "Social",
-      },
-      {
-        value: 4,
-        label: "Ethical",
-      },
-      {
-        value: 5,
-        label: "Professional",
-      },
-    ],
-  },
-];
-const value1 = ref("2024/7");
-const dates = [
-  {
-    value: "2024/7",
-    label: "2024/7",
-  },
-];
 
 function getAvaData(model, filterArr) {
   const modelData = mergeData[model];
@@ -727,76 +455,47 @@ function mergeObj(obj1, obj2, obj3) {
   return merged;
 }
 
-const handleClose = (tag) => {
-  value2.value = value2.value.filter(
-    (item) => item[0] !== tag.parent || item[1] !== tag.key
-  );
-  handleChange(value2.value);
-};
-const dateChange = (value) => {
-  // checkSelect.value = dates[value].label;
-  nextTick(() => {
-    updateFilterHeight();
-  });
-};
-const handleChange = (value) => {
-  filterCount.value = value.length;
-  filterObj = {};
-  const filterArr = [];
-  if (value.length > 0) {
-    value.forEach((item) => {
-      filterObj[item[0]] = filterObj[item[0]] || [];
-      if (item[1] || item[1] == 0) {
-        filterObj[item[0]].push({
-          name: options[item[0]].children[item[1]].label,
-          key: item[1],
-          parent: item[0],
-        });
-        filterArr.push(options[item[0]].children[item[1]].label);
-      }
+const fitterChange = (filerData) => {
+  console.log("filerData", filerData);
+  // const Schwartz_table_columns_checked = ref([]);
+  // const MFT_table_columns_checked = ref([]);
+  // const Risk_table_columns_checked = ref([]);
+  if (filerData[1]) {
+    Schwartz_table_columns_checked.value = filerData[1].map((v) => {
+      return v.name;
     });
-  }
-  const arr = [];
-  modelInfo_list.forEach((item) => {
-    const point = getAvaData(item.model, filterArr);
-    arr.push({
-      modelName: item.model,
-      developer: item.developer,
-      points: point.toFixed(5),
-      type: item.type,
-      releaseDate: item["release date"].split(" ")[0],
-    });
-  });
-  arr.sort((a, b) => b.points - a.points);
-  arr.map((item, index) => {
-    item.place = index + 1;
-    return item;
-  });
-
-  nextTick(() => {
-    updateFilterHeight();
-  });
-};
-const resetFilter = () => {
-  value2.value = [];
-  // value1.value = "";
-  handleChange(value2.value);
-  nextTick(() => {
-    updateFilterHeight();
-  });
-};
-const showFilterFunc = () => {
-  showFilter.value = !showFilter.value;
-  if (panel.value.style.maxHeight) {
-    panel.value.style.maxHeight = null;
   } else {
-    panel.value.style.maxHeight = panel.value.scrollHeight + "px";
+    Schwartz_table_columns_checked.value = Schwartz_table_columns.value;
   }
-};
-const updateFilterHeight = () => {
-  if (showFilter.value) {
-    panel.value.style.maxHeight = panel.value.scrollHeight + "px";
+
+  if (filerData[2]) {
+    MFT_table_columns_checked.value = filerData[2].map((v) => {
+      return v.name;
+    });
+  } else {
+    MFT_table_columns_checked.value = MFT_table_columns.value;
   }
+
+  if (filerData[3]) {
+    Risk_table_columns_checked.value = filerData[3].map((v) => {
+      return v.name;
+    });
+  } else {
+    Risk_table_columns_checked.value = Risk_table_columns.value;
+  }
+
+  // for echart
+  VisualizationComponentProps.value.setRadarChart(
+    checkedModelDetailList.value,
+    {
+      Schwartz_data: Schwartz_table_columns_checked.value,
+      MFT_data: MFT_table_columns_checked.value,
+      Risk_data: Risk_table_columns_checked.value,
+    }
+  );
+  // chartDom1.value.setRadarChart(modelList, "Schwartz_data", filerData && filerData[1] || null);
+  // chartDom2.value.setRadarChart(modelList, "MFT_data",filerData && filerData[2] || null);
+  // chartDom3.value.setRadarChart(modelList, "Risk_data",filerData && filerData[3] || null);
 };
 </script>
 
@@ -979,72 +678,5 @@ const updateFilterHeight = () => {
 :deep(.el-checkbox) {
   --el-checkbox-text-color: #fff;
   margin-right: 1em;
-}
-
-.content-filter {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  position: relative;
-
-  .filter-btn {
-    font-size: 0.875em;
-    font-weight: 400;
-    line-height: 1.57em;
-    color: rgba(16, 147, 255, 1);
-    margin-left: 1.9em;
-    cursor: pointer;
-  }
-  .show-filter {
-    width: 1.5em;
-    height: 1.5em;
-    background: url(@/assets/images/filter-show.svg) no-repeat;
-    background-size: contain;
-    cursor: pointer;
-    position: absolute;
-    right: 0;
-
-    &.is-show {
-      background: url(@/assets/images/filter-hide.svg) no-repeat;
-      background-size: contain;
-    }
-  }
-}
-
-.panel-box {
-  overflow: hidden;
-  max-height: 0;
-  transition: max-height 0.3s ease-out;
-  margin-top: 0.75em;
-  color: #fff;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-  .panel-content {
-    padding: 0 0 1.5em;
-    .title {
-      font-size: 0.875em;
-      font-weight: 600;
-      line-height: 1.7em;
-      margin-top: 0.75em;
-    }
-    .panel-row {
-      margin-top: 0.75em;
-      display: flex;
-      .filter-name {
-        width: 12.85em;
-        font-size: 0.875em;
-        font-weight: 600;
-        line-height: 1.57em;
-        text-align: right;
-        margin-right: 0.75em;
-      }
-      .panel-tags {
-        flex: 1;
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        gap: 0.75em;
-      }
-    }
-  }
 }
 </style>

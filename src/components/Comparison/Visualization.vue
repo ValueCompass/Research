@@ -3,10 +3,7 @@
     <div class="">
       <div class="model-title">
         <div v-for="(item, index) in modelsList" :key="index">
-          <span
-            :style="{ 'background-color': item.color }"
-            style=""
-          ></span>
+          <span :style="{ 'background-color': item.color }" style=""></span>
           <span>{{ item.model_name }}</span>
         </div>
       </div>
@@ -57,13 +54,23 @@ const modelsList = ref(null);
 
 let chartInstance = null;
 
-const setRadarChart = (modelList) => {
+const setRadarChart = (modelList, filerData) => {
   modelsList.value = modelList;
-  console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", modelsList.value);
-  chartDom1.value.setRadarChart(modelList, "Schwartz_data");
-  chartDom2.value.setRadarChart(modelList, "MFT_data");
-  chartDom3.value.setRadarChart(modelList, "Risk_data");
-
+  chartDom1.value.setRadarChart(
+    modelList,
+    "Schwartz_data",
+    filerData ? filerData["Schwartz_data"] : null
+  );
+  chartDom2.value.setRadarChart(
+    modelList,
+    "MFT_data",
+    filerData ? filerData["MFT_data"] : null
+  );
+  chartDom3.value.setRadarChart(
+    modelList,
+    "Risk_data",
+    filerData ? filerData["Risk_data"] : null
+  );
 };
 
 defineExpose({
@@ -108,23 +115,24 @@ defineExpose({
 // });
 </script>
 <style lang="scss" scoped>
-.model-title{
+.model-title {
   margin-top: 40px;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-    &>div{
-      padding: 0 10px;
-      span:nth-child(1){
-        transform: translateY(3px);
-        width: 12px; height: 18px; display: inline-block;
-        margin-right: 8px;
-      }
+  & > div {
+    padding: 0 10px;
+    span:nth-child(1) {
+      transform: translateY(3px);
+      width: 12px;
+      height: 18px;
+      display: inline-block;
+      margin-right: 8px;
     }
   }
+}
 .echart-list {
-  
   padding-top: 30px;
   display: flex;
   flex-direction: row;

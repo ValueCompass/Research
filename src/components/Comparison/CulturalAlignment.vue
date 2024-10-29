@@ -28,30 +28,43 @@ import * as echarts from "echarts";
 const chartDom = ref(null);
 let chartInstance = null;
 const allHeatMapData = ref();
+const allHeatMapDataObject = ref();
 let countries = [];
+
+function getKeyValue(array) {
+  const result = array.reduce((acc, item) => {
+    const { model, ...rest } = item; // 提取name字段，其他字段放入rest
+    acc[model] = rest; // 将剩余字段放入对象
+    return acc;
+  }, {});
+  return result;
+}
 
 const getAllHeatMapData = async () => {
   return axios.get("./data/value_sim_heatmap.json").then((value_space_data) => {
     console.log(value_space_data.data);
     allHeatMapData.value = value_space_data.data;
+    const obj = {};
+    for (let i = 0; i < value_space_data.data.models.length; i++) {
+      obj[value_space_data.data.models[i]] =
+        value_space_data.data.cosine_sim_matrix[i];
+    }
+    console.log(obj);
+    allHeatMapDataObject.value = obj;
   });
 };
 const setHotChart = (modelNameList) => {
   let allHeatMapDataFilter = [];
   if (modelNameList) {
     let cosine_sim_matrixArr = [];
-    let modelsArr = [];
-    for (var i = 0; i < allHeatMapData.value.models.length; i++) {
-      if (modelNameList.indexOf(allHeatMapData.value.models[i]) != -1) {
-        cosine_sim_matrixArr.push(allHeatMapData.value.cosine_sim_matrix[i]);
-        modelsArr.push(allHeatMapData.value.models[i]);
-      }
-      allHeatMapDataFilter = {
-        cosine_sim_matrix: cosine_sim_matrixArr,
-        models: modelsArr,
-        countries: countries,
-      };
+    for (var i = 0; i < modelNameList.length; i++) {
+      cosine_sim_matrixArr.push(allHeatMapDataObject.value[modelNameList[i]]);
     }
+    allHeatMapDataFilter = {
+      cosine_sim_matrix: cosine_sim_matrixArr,
+      models: modelNameList,
+      countries: countries,
+    };
   } else {
     allHeatMapDataFilter = allHeatMapData.value;
   }
@@ -64,7 +77,7 @@ const setHotChart = (modelNameList) => {
       hotData.push([i, j, allHeatMapDataFilter.cosine_sim_matrix[i][j]]);
     }
   }
-  const days = allHeatMapDataFilter.models;
+  const modelNames = allHeatMapDataFilter.models;
   const data = hotData.map(function (item) {
     return [item[1], item[0], item[2].toFixed(5) || "-"];
   });
@@ -74,7 +87,7 @@ const setHotChart = (modelNameList) => {
     yAxis: {
       type: "category",
 
-      data: days,
+      data: modelNames,
 
       splitArea: {
         show: true,
@@ -117,23 +130,11 @@ onMounted(async () => {
 
   // prettier-ignore
 
-  // const days = ['GPT-4-Turbo', 'GPT-3.5-Turbo', 'Claude 2','Mistral-7B-Instruct', 'Llama-2-7b-chat',];
-  const days = allHeatMapData.value.models
+  // const modelNames = ['GPT-4-Turbo', 'GPT-3.5-Turbo', 'Claude 2','Mistral-7B-Instruct', 'Llama-2-7b-chat',];
+  const modelNames = allHeatMapData.value.models
 
   // prettier-ignore
-  var hotData = []
-  for (let i = 0; i < allHeatMapData.value.cosine_sim_matrix.length; i++) {
-    for (let j = 0; j < allHeatMapData.value.countries.length; j++) {
-      hotData.push([i, j, allHeatMapData.value.cosine_sim_matrix[i][j]]);
-    }
-  }
 
-  const data = hotData.map(function (item) {
-    return [item[1], item[0], item[2].toFixed(5) || "-"];
-  });
-  console.log(hotData, "hotData", data);
-
-  console.log(data);
   chartInstance = echarts.init(chartDom.value);
   const option = {
     tooltip: {
@@ -167,7 +168,7 @@ onMounted(async () => {
     yAxis: {
       type: "category",
 
-      data: days,
+      data: modelNames,
 
       splitArea: {
         show: true,
@@ -191,6 +192,7 @@ onMounted(async () => {
       left: "center",
 
       bottom: "15%",
+      // color: ["#083669", "#4795C3", "#eeeeee", "#E0785F", "#690320"],
       color: ["#083669", "#4795C3", "#eeeeee", "#E0785F", "#690320"],
       textStyle: { color: "#fff" },
     },

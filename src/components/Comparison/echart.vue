@@ -9,7 +9,6 @@
             style="width: 400px; height: 400px"
           ></div>
         </div>
-       
       </div>
     </div>
   </div>
@@ -29,9 +28,15 @@ import * as echarts from "echarts";
 const chartDom = ref(null);
 let chartInstance = null;
 
-const setRadarChart = (modelList,weiduname) => {
-  console.log(modelList, "echart");
-  let Schwartz_indicator = Object.keys(modelList[0][weiduname])  // Object.keys(modelList[0].Schwartz_data)
+const setRadarChart = (modelList, MeasurementDimensionName, filerData) => {
+  let keys = [];
+  if (filerData) {
+    keys = filerData;
+  } else {
+    keys = Object.keys(modelList[0][MeasurementDimensionName]);
+  }
+
+  let Schwartz_indicator = keys // Object.keys(modelList[0].Schwartz_data)
     .filter((item) => item != "model_name")
     .map((item, index) => {
       return {
@@ -47,7 +52,9 @@ const setRadarChart = (modelList,weiduname) => {
   for (let i = 0; i < modelList.length; i++) {
     let item = [];
     for (let j = 0; j < Schwartz_indicator.length; j++) {
-      item.push(modelList[i][weiduname][Schwartz_indicator[j].name]);
+      item.push(
+        modelList[i][MeasurementDimensionName][Schwartz_indicator[j].name]
+      );
     }
     Schwartz_data.push({
       value: item,
