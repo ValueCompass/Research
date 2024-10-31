@@ -6,7 +6,7 @@
           <div
             class="chart"
             ref="chartDom"
-            style="width: 1200px; height: 600px"
+            style="width: 1200px; height: 600px;margin:0 auto"
           ></div>
         </div>
       </div>
@@ -94,9 +94,9 @@ const setHotChart = (modelNameList) => {
       },
 
       axisLabel: {
-        color: "#fff",
+        color: "#000",
 
-        fontSize: 12,
+        fontSize: 16,
       },
     },
     series: [
@@ -159,9 +159,9 @@ onMounted(async () => {
       },
 
       axisLabel: {
-        color: "#fff",
+        color: "#000",
 
-        fontSize: 14,
+        fontSize: 16,
       },
     },
 
@@ -175,8 +175,8 @@ onMounted(async () => {
       },
 
       axisLabel: {
-        color: "#fff",
-        fontSize: 14,
+        color: "#000",
+        fontSize: 16,
       },
     },
 
@@ -194,7 +194,7 @@ onMounted(async () => {
       bottom: "15%",
       // color: ["#083669", "#4795C3", "#eeeeee", "#E0785F", "#690320"],
       color: ["#083669", "#4795C3", "#eeeeee", "#E0785F", "#690320"],
-      textStyle: { color: "#fff" },
+      textStyle: { color: "#000" },
     },
 
     // series: [

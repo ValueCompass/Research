@@ -1,7 +1,18 @@
 <template>
   <div>
-    <div class="main-container">
-      <h1>Overall Rankings and Scores of LLMs</h1>
+    <div class="main-container" style="padding: 0 70px">
+      <div class="des">
+        <h1>Value Compass Leaderboard</h1>
+        <p>
+          Welcome to a comprehensive LLM value assessment platform,
+          distinguished by its interdisciplinary value perspectives and robust
+          evaluation framework. <br />
+          With fine-grained value comparisons and illustrative examples, this
+          platform empowers you to find the LLM that best aligns with your own
+          values.
+        </p>
+        <h4>Overall Rankings and Scores of LLMs</h4>
+      </div>
       <div class="content">
         <div class="content-filter">
           <el-select
@@ -113,7 +124,7 @@
             </div>
           </div>
         </div>
-        <div class="filer-top" v-if="top3">
+        <!-- <div class="filer-top" v-if="top3">
           <div class="top-item">
             <div class="top-medal">
               <img src="@/assets/images/silver-medal.png" alt="silver medal" />
@@ -125,9 +136,6 @@
             </div>
             <p>
               <span class="name">{{ top2.modelName }}</span>
-              <!-- <el-tooltip effect="customized" content="Compare" placement="top">
-                <SvgIcon class="add-icon" name="add-icon"></SvgIcon>
-              </el-tooltip> -->
             </p>
             <p>{{ top2.points }}<span class="point">points</span></p>
             <div class="top-item-content">
@@ -160,9 +168,6 @@
             </div>
             <p>
               <span class="name">{{ top1.modelName }}</span>
-              <!-- <el-tooltip effect="customized" content="Compare" placement="top">
-                <SvgIcon class="add-icon" name="add-icon"></SvgIcon>
-              </el-tooltip> -->
             </p>
             <p>{{ top1.points }}<span class="point">points</span></p>
             <div class="top-item-content">
@@ -195,9 +200,6 @@
             </div>
             <p>
               <span class="name">{{ top3.modelName }}</span>
-              <!-- <el-tooltip effect="customized" content="Compare" placement="top">
-                <SvgIcon class="add-icon" name="add-icon"></SvgIcon>
-              </el-tooltip> -->
             </p>
             <p>{{ top3.points }}<span class="point">points</span></p>
             <div class="top-item-content">
@@ -219,7 +221,7 @@
               <span class="date">{{ top3.releaseDate }}</span>
             </div>
           </div>
-        </div>
+        </div> -->
         <div class="filter-table">
           <el-table
             :data="tableData"
@@ -228,7 +230,25 @@
           >
             <el-table-column prop="place" label="Place" sortable width="120">
               <template #default="scope">
-                <span class="table-color">{{ scope.row.place }}</span>
+                <img
+                  v-if="scope.row.place == 2"
+                  style="width: 1.9em"
+                  src="@/assets/images/silver-medal.png"
+                  alt="silver medal"
+                />
+                <img
+                  v-else-if="scope.row.place == 1"
+                  style="width: 1.9em"
+                  src="@/assets/images/gold-medal.png"
+                  alt="silver medal"
+                />
+                <img
+                  v-else-if="scope.row.place == 3"
+                  style="width: 1.9em"
+                  src="@/assets/images/bronze-medal.png"
+                  alt="silver medal"
+                />
+                <span v-else class="table-color">{{ scope.row.place }}</span>
                 <SvgIcon
                   color="#FFD000"
                   class="top-icon"
@@ -486,7 +506,7 @@ const fetchData = async () => {
           top2.value = Object.assign({}, arr[1]);
           top3.value = Object.assign({}, arr[2]);
 
-          tableData.value = arr.slice(3);
+          tableData.value = arr;
         })
       );
   } catch (error) {
@@ -590,7 +610,7 @@ const handleChange = (value) => {
   top2.value = Object.assign({}, arr[1]);
   top3.value = Object.assign({}, arr[2]);
 
-  tableData.value = arr.slice(3);
+  tableData.value = arr;
   nextTick(() => {
     updateFilterHeight();
   });
@@ -619,13 +639,27 @@ const updateFilterHeight = () => {
 </script>
 
 <style scoped lang="scss">
-h1 {
-  font-size: 2.5em;
-  font-weight: 600;
-  line-height: 1.625em;
-  color: rgba(255, 255, 255, 1);
+.des {
   text-align: center;
+  line-height: 1.8;
+
+  h1 {
+    font-size: 2.5em;
+    font-weight: 600;
+    color: rgba(16, 147, 255, 1);
+
+    margin: 0.5em 0 0.8em;
+  }
+  h4 {
+    font-size: 1.6em;
+    font-weight: 600;
+    margin: 1.5em 0 1em;
+  }
+  p {
+    font-size: 1.12em;
+  }
 }
+
 .content {
   margin-top: 3.56em;
   font-family: Segoe UI;
@@ -665,8 +699,7 @@ h1 {
     max-height: 0;
     transition: max-height 0.3s ease-out;
     margin-top: 0.75em;
-    color: #fff;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    border-bottom: 1px solid var(--gary-color);
     .panel-content {
       padding: 0 0 1.5em;
       .title {
@@ -708,7 +741,6 @@ h1 {
     .table-color {
       font-weight: bold;
       font-size: 1.125em;
-      color: #fff;
     }
   }
   .filer-top {
@@ -754,7 +786,6 @@ h1 {
           font-weight: 400;
           line-height: 1.3em;
           margin-left: 0.4em;
-          color: rgba(255, 255, 255, 0.8);
         }
       }
       .top-item-content {
@@ -769,7 +800,6 @@ h1 {
         }
         .date {
           font-size: 0.75em;
-          color: rgba(255, 255, 255, 0.8);
           line-height: 1.5em;
         }
       }
@@ -806,14 +836,24 @@ h1 {
 }
 .el-table {
   --el-table-border: none;
-  --el-table-header-bg-color: #182845;
-  --el-table-bg-color: #182845;
-  --el-table-tr-bg-color: #121f37;
-  --el-table-text-color: rgba(255, 255, 255, 0.8);
-  --el-table-header-text-color: #fff;
-  --el-table-row-hover-bg-color: #0a111f;
+  --el-table-header-bg-color: var(--bg-color);
+  --el-table-bg-color: transparent;
+  --el-table-tr-bg-color: var(--gary-color);
+  --el-table-text-color: var(--text-color);
+  --el-table-header-text-color: var(--text-color);
+  --el-table-row-hover-bg-color: var(--gary-color);
   --el-table-border-color: transparent;
   font-size: 1em;
+
+  // --el-table-border: none;
+  // --el-table-header-bg-color: red;
+  // --el-table-bg-color: #182845;
+  // --el-table-tr-bg-color: #121f37;
+  // --el-table-text-color: rgba(255, 255, 255, 0.8);
+  // --el-table-header-text-color: #fff;
+  // --el-table-row-hover-bg-color: #0a111f;
+  // --el-table-border-color: transparent;
+  // font-size: 1em;
 }
 :deep(.el-radio-group) {
   width: 100%;

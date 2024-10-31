@@ -1,16 +1,19 @@
 <template>
-  <div class="bg">
-    <div class="main-container">
+  <div class="bg comparison-template main-container">
+    <div>
       <div class="title-content">
         <h2>Compare Pool</h2>
         <div class="compare-model-list">
           <ul>
             <li
-              v-for="item in checkedModelDetailList"
+              v-for="(item, index) in checkedModelDetailList"
               :key="item"
               :style="{ 'border-color': item.color }"
             >
-              <span class="close-comparison"></span>
+              <span
+                class="close-comparison"
+                @click="closeModel(item.model_name, index)"
+              ></span>
               <p class="name">{{ item.model_name }}</p>
               <!-- <p style="display: none">{{ modelInfo[item] }}</p> -->
               <p class="point-num">
@@ -33,7 +36,11 @@
                 }}</span>
               </div>
             </li>
+            <div v-if="checkedModelDetailList.length >= 5" class="max-num-tip">
+              <p style="">The maximum number of comparisons supported is 5</p>
+            </div>
             <div
+              v-if="checkedModelDetailList.length < 5"
               class="add-model"
               v-popover="popoverRef"
               @click="visible = true"
@@ -76,9 +83,27 @@
         </div>
       </div>
     </div>
+    <p
+      style="
+        font-size: 2em;
+        font-weight: 600;
+        text-align: center;
+        margin: 1.5em;
+      "
+    >
+      Comparison Direction
+    </p>
     <div class="chart-box">
       <div class="chart-tab">
-        <div class="chart-tab-title">Evaluation Results</div>
+        <el-tabs v-model="currentTab" @tab-click="tabSwitch">
+          <el-tab-pane
+            v-for="tab in tabList"
+            :key="tab.index"
+            :label="'&nbsp;&nbsp;&nbsp;' + tab.name + '&nbsp;&nbsp;&nbsp;'"
+            :name="tab.index"
+          ></el-tab-pane>
+        </el-tabs>
+        <!-- <div class="chart-tab-title">Evaluation Results</div>
         <ul>
           <li
             :class="{ active: currentTab == tab.index }"
@@ -88,15 +113,18 @@
           >
             <span class="lead"></span>{{ tab.name }}
           </li>
-        </ul>
+        </ul> -->
       </div>
       <div class="chart-main" style="">
-        <selectBoxComponent @fitterChange="fitterChange"></selectBoxComponent>
+        <selectBoxComponent
+          v-show="currentTab == 0 || currentTab == 1"
+          @fitterChange="fitterChange"
+        ></selectBoxComponent>
 
         <!-- table -->
-        <div class="width:100%" v-show="currentTab == 0">
+        <div class="table-box" v-show="currentTab == 0">
           <!-- <TableComponent :Schwartz_table_data="Schwartz_table_data"  :Schwartz_table_columns="Schwartz_table_columns"  :MFT_table_data="MFT_table_data"  :MFT_table_columns="MFT_table_columns"  :Risk_table_data="Risk_table_data"  :Risk_table_columns="Risk_table_columns"></TableComponent> -->
-          <h4>Schwartz Theory of Basic Values</h4>
+
           <el-table :data="Schwartz_table_data" border style="width: 100%">
             <el-table-column prop="model_name" label="Model" />
             <template
@@ -111,7 +139,8 @@
               />
             </template>
           </el-table>
-          <h4>Moral Foundations Theory</h4>
+          <h4>Schwartz Theory of Basic Values</h4>
+
           <el-table :data="MFT_table_data" border style="width: 100%">
             <el-table-column prop="model_name" label="Model" />
             <template
@@ -126,7 +155,8 @@
               />
             </template>
           </el-table>
-          <h4>Diverse Safety Risks</h4>
+          <h4>Moral Foundations Theory</h4>
+
           <el-table :data="Risk_table_data" border style="width: 100%">
             <el-table-column prop="model_name" label="Model" />
             <template
@@ -141,7 +171,8 @@
               />
             </template>
           </el-table>
-          <h4>LLM Value System</h4>
+          <h4>Diverse Safety Risks</h4>
+          <!-- <h4>LLM Value System</h4> -->
         </div>
         <!-- echart -->
         <div v-show="currentTab == 1">
@@ -151,11 +182,11 @@
         </div>
 
         <!-- Value Space -->
-        <div v-show="currentTab == 2">
+        <div v-show="currentTab == 3">
           <ValueSpaceComponent></ValueSpaceComponent>
         </div>
         <!-- Cultural Alignment -->
-        <div v-show="currentTab == 3">
+        <div v-show="currentTab == 2">
           <CulturalAlignmentComponent
             ref="CulturalAlignmentComponentProps"
           ></CulturalAlignmentComponent>
@@ -195,11 +226,11 @@ const tabList = [
   },
   {
     name: "Cultural Alignment",
-    index: 3,
+    index: 2,
   },
   {
     name: "Value Space",
-    index: 2,
+    index: 3,
   },
 ];
 const chartTabMenu = [
@@ -318,7 +349,8 @@ const formatter = (row, column) => {
 
 const currentTab = ref(0);
 const tabSwitch = (index) => {
-  currentTab.value = index;
+  console.log(index);
+  currentTab.value = index.index;
 };
 const submit = () => {
   visible.value = false;
@@ -328,6 +360,11 @@ const submit = () => {
   }
   getModelDetail();
   checkedModel.value = "";
+};
+
+const closeModel = (modelName, index) => {
+  checkedModelNameList.value.splice(index, 1);
+  submit();
 };
 
 const Schwartz_table_columns = ref([]);
@@ -500,24 +537,29 @@ const fitterChange = (filerData) => {
 </script>
 
 <style scoped lang="scss">
+.comparison-template {
+  // width: 80%;
+  // max-width: 1500px;
+  // margin: 0 auto;
+  // min-width: 1200px;
+}
 .el-table {
   // --el-table-border: none;
-  --el-table-header-bg-color: transparent;
+  --el-table-header-bg-color: var(--gary-color);
   --el-table-bg-color: transparent;
   --el-table-tr-bg-color: transparent;
   --el-table-text-color: var(--text-color);
-  --el-table-header-text-color: #fff;
+  --el-table-header-text-color: var(--text-color);
   --el-table-row-hover-bg-color: #0a111f;
-  --el-table-border-color: rgba(255, 255, 255, 0.2);
+  --el-table-border-color: var(--border-color);
   --el-table-row-hover-bg-color: transparent;
   font-size: 1em;
 }
 .title-content {
   margin-top: 3.56em;
-  background: rgba(18, 31, 55, 1);
+  background: var(--gary-color);
   padding: 2.25em 3em;
   border-radius: 0.375em;
-  color: #fff;
   h2 {
     font-size: 2em;
     font-weight: 600;
@@ -532,9 +574,8 @@ const fitterChange = (filerData) => {
       align-items: center;
       align-items: stretch;
       li {
-        // width: 10em;
+        width: 13em;
         // height: 7.5em;
-        color: #fff;
         padding: 1.125em 1.5em;
         box-sizing: border-box;
         background: rgba(255, 255, 255, 0.05);
@@ -567,7 +608,7 @@ const fitterChange = (filerData) => {
           font-weight: 400;
           line-height: 1.3em;
           margin-left: 0.4em;
-          color: rgba(255, 255, 255, 0.8);
+          opacity: 0.8;
         }
         .top-item-content {
           display: flex;
@@ -580,7 +621,7 @@ const fitterChange = (filerData) => {
           }
           .date {
             font-size: 0.75em;
-            color: rgba(255, 255, 255, 0.8);
+            opacity: 0.8;
             // line-height: 1.5em;
           }
         }
@@ -608,31 +649,37 @@ const fitterChange = (filerData) => {
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        border: 3px dashed rgba(255, 255, 255, 0.2);
+        border: 3px dashed rgba(194, 194, 194, 1);
         border-radius: 0.75em;
-        color: rgba(255, 255, 255, 0.2);
+        color: rgba(194, 194, 194, 1);
         cursor: pointer;
+      }
+      .max-num-tip {
+        width: 8em;
+        min-height: 7.5em;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        line-height: 1.8;
+        text-align: center;
       }
     }
   }
 }
 .chart-box {
-  margin-top: 4.5em;
-  padding: 0 4em 4.5em;
-  display: flex;
+  // margin-top: 4.5em;
+  padding: 0 0 4.5em;
+  // display: flex;
   .chart-tab {
-    width: calc(calc(100% - 1200px) / 2);
-    min-width: 13.125em;
     .chart-tab-title {
       font-size: 1em;
       font-weight: 700;
-      color: #fff;
     }
     ul {
       li {
         font-size: 1em;
         font-weight: 400;
-        color: rgba(255, 255, 255, 0.8);
         margin-top: 1.5em;
         display: flex;
         align-items: center;
@@ -656,13 +703,17 @@ const fitterChange = (filerData) => {
   }
   .chart-main {
     // flex-grow: 1;
-    overflow: hidden;
-    width: 75em;
-    h4 {
-      font-size: 1.2em;
-      margin: 2em 0 1em;
-      font-weight: 600;
+    width: 100%;
+    .table-box {
+      margin-top: 2em;
+      h4 {
+        font-size: 1.2em;
+        margin: 1em 0 2.5em;
+        font-weight: 600;
+        text-align: center;
+      }
     }
+
     .chart-main-chart {
       display: flex;
       align-items: center;
@@ -678,5 +729,13 @@ const fitterChange = (filerData) => {
 :deep(.el-checkbox) {
   --el-checkbox-text-color: #fff;
   margin-right: 1em;
+}
+
+:deep(.el-tabs__header) {
+  --el-font-size-base: 20px;
+  .el-tabs__item {
+    padding: 0;
+    color: var(--sub-text-color);
+  }
 }
 </style>

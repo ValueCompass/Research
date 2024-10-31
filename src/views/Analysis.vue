@@ -1,6 +1,6 @@
 <template>
-  <div class="bg">
-    <div class="main-container">
+  <div class="bg main-container">
+    <div class="">
       <div class="title-content">
         <div class="model">
           <el-tooltip
@@ -291,7 +291,7 @@ function setRadarChart(data) {
   const indicator = Object.keys(data).map((item, index) => {
     return {
       name: item,
-      color: index == 0 ? "#ffd000" : "#fff",
+      color: index == 0 ? "rgba(16, 147, 255, 1)" : "black",
       axisLabel: { show: index == 0 ? true : false },
       min: -1,
       max: 1,
@@ -302,13 +302,13 @@ function setRadarChart(data) {
     radar: {
       splitArea: {
         areaStyle: {
-          color: ["rgba(0,0,0,0.1)", "rgba(0,0,0,0.3)"],
+          color: ["rgba(0,0,0,0.05)", "rgba(0,0,0,0.03)"],
         },
       },
       splitNumber: 5,
       axisName: {
         fontSize: 14,
-        color: "#fff",
+        color: "black",
         formatter: function (value) {
           return value.split("&").join("&\n"); // 将换行符拆分为数组
         },
@@ -344,7 +344,7 @@ function setRadarHighlight(data, item) {
   const indicator = Object.keys(data).map((indica, index) => {
     return {
       name: indica,
-      color: item == indica ? "#ffd000" : "#fff",
+      color: item == indica ? "rgba(16, 147, 255, 1)" : "black",
       axisLabel: { show: index == 0 ? true : false },
       min: -1,
       max: 1,
@@ -354,13 +354,13 @@ function setRadarHighlight(data, item) {
     radar: {
       splitArea: {
         areaStyle: {
-          color: ["rgba(0,0,0,0.1)", "rgba(0,0,0,0.3)"],
+          color: ["rgba(0,0,0,0.05)", "rgba(0,0,0,0.03)"],
         },
       },
       splitNumber: 5,
       axisName: {
         fontSize: 14,
-        color: "#fff",
+        color: "black",
         formatter: function (value) {
           return value.split("&").join("&\n"); // 将换行符拆分为数组
         },
@@ -378,7 +378,7 @@ onMounted(async () => {
     radar: {
       splitArea: {
         areaStyle: {
-          color: ["rgba(0,0,0,0.1)", "rgba(0,0,0,0.3)"],
+          color: ["rgba(0,0,0,0.05)", "rgba(0,0,0,0.03)"],
         },
       },
       axisLabel: {
@@ -387,11 +387,11 @@ onMounted(async () => {
       },
       axisName: {
         fontSize: 14,
-        color: "#fff",
+        color: "black",
       },
       triggerEvent: true,
       indicator: [
-        { name: "Benevolence", max: 1, color: "#ffd000" },
+        { name: "Benevolence", max: 1, color: "rgba(16, 147, 255, 1)" },
         { name: "Achievement", max: 1, axisLabel: { show: false } },
         { name: "Universalism", max: 1, axisLabel: { show: false } },
         { name: "Tradition", max: 1, axisLabel: { show: false } },
@@ -410,7 +410,7 @@ onMounted(async () => {
   //     // 修改雷达图的颜色
   //     const radar = chartInstance.getOption().radar[0];
   //     const indicator = radar.indicator.map((item) => {
-  //       if (item.name == params.name && item.color !== "#ffd000") {
+  //       if (item.name == params.name && item.color !== "rgba(16, 147, 255, 1)") {
   //         item.color = "green";
   //       }
   //       return item;
@@ -419,7 +419,7 @@ onMounted(async () => {
   //       radar: {
   //         splitArea: {
   //           areaStyle: {
-  //             color: ["rgba(0,0,0,0.1)", "rgba(0,0,0,0.3)"],
+  //             color: ["rgba(0,0,0,0.05)", "rgba(0,0,0,0.03)"],
   //           },
   //         },
   //         axisName: {
@@ -437,11 +437,11 @@ onMounted(async () => {
       // 修改雷达图的颜色
       const radar = chartInstance.getOption().radar[0];
       const indicator = radar.indicator.map((item) => {
-        if (item.name != params.name && item.color == "#ffd000") {
+        if (item.name != params.name && item.color == "rgba(16, 147, 255, 1)") {
           delete item.color;
         }
-        if (item.name == params.name && item.color !== "#ffd000") {
-          item.color = "#ffd000";
+        if (item.name == params.name && item.color !== "rgba(16, 147, 255, 1)") {
+          item.color = "rgba(16, 147, 255, 1)";
           currentChartTab.value = item.name;
           currentCaseData.value = currentCase[currentChartTab.value];
         }
@@ -451,12 +451,12 @@ onMounted(async () => {
         radar: {
           splitArea: {
             areaStyle: {
-              color: ["rgba(0,0,0,0.1)", "rgba(0,0,0,0.3)"],
+              color: ["rgba(0,0,0,0.05)", "rgba(0,0,0,0.03)"],
             },
           },
           axisName: {
             fontSize: 14,
-            color: "#fff",
+            color: "black",
           },
           triggerEvent: true,
           indicator: indicator,
@@ -468,7 +468,7 @@ onMounted(async () => {
     if (params.componentType === "radar" && params.targetType == "axisName") {
       const radar = chartInstance.getOption().radar[0];
       const indicator = radar.indicator.map((item) => {
-        if (item.name == params.name && item.color !== "#ffd000") {
+        if (item.name == params.name && item.color !== "rgba(16, 147, 255, 1)") {
           delete item.color;
         }
         return item;
@@ -477,12 +477,12 @@ onMounted(async () => {
         radar: {
           splitArea: {
             areaStyle: {
-              color: ["rgba(0,0,0,0.1)", "rgba(0,0,0,0.3)"],
+              color: ["rgba(0,0,0,0.05)", "rgba(0,0,0,0.03)"],
             },
           },
           axisName: {
             fontSize: 14,
-            color: "#fff",
+            color: "black",
           },
           triggerEvent: true,
           indicator: indicator,
@@ -559,10 +559,9 @@ onUnmounted(() => {
 <style scoped lang="scss">
 .title-content {
   margin-top: 3.56em;
-  background: rgba(18, 31, 55, 1);
+  background: var(--gary-color);
   padding: 2.25em 3em;
   border-radius: 0.375em;
-  color: #fff;
   .model {
     display: flex;
     justify-content: space-between;
@@ -577,6 +576,7 @@ onUnmounted(() => {
         height: 0.75em;
         margin-left: 0.3em;
         cursor: pointer;
+        color: var(--text-color) !important;
       }
     }
     .model-btn {
@@ -604,7 +604,7 @@ onUnmounted(() => {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      border: 1px solid var(--border-color);
       border-radius: 0.375em;
       padding: 0.2em 0.5em;
       cursor: pointer;
@@ -614,7 +614,6 @@ onUnmounted(() => {
     font-size: 0.875em;
     font-weight: 400;
     line-height: 1.29em;
-    color: rgba(255, 255, 255, 0.8);
     margin-top: 1.36em;
   }
   .model-props {
@@ -629,10 +628,10 @@ onUnmounted(() => {
         width: 1.5em;
         height: 1.5em;
         margin-right: 0.375em;
+        color: var(--text-color) !important;
       }
       .prop-name {
         font-size: 1.125em;
-        color: rgba(255, 255, 255, 0.8);
         margin-right: 0.375em;
       }
       .prop-content {
@@ -642,9 +641,7 @@ onUnmounted(() => {
         overflow: hidden; /* 超出部分隐藏 */
         text-overflow: ellipsis;
         font-size: 1.125em;
-        color: #fff;
         a {
-          color: #fff;
           text-decoration: underline;
         }
       }
@@ -653,21 +650,18 @@ onUnmounted(() => {
 }
 .chart-box {
   margin-top: 4.5em;
-  padding: 0 4em 4.5em;
+  padding: 0 0 4.5em;
   display: flex;
   .chart-tab {
-    width: calc(calc(100% - 1200px) / 2);
-    min-width: 14em;
+    width: 10em;
     .chart-tab-title {
       font-size: 1em;
       font-weight: 700;
-      color: #fff;
     }
     ul {
       li {
         font-size: 1em;
         font-weight: 400;
-        color: rgba(255, 255, 255, 0.8);
         margin-top: 1.5em;
         display: flex;
         align-items: center;
@@ -690,16 +684,20 @@ onUnmounted(() => {
     }
   }
   .chart-main {
+    flex: 1;
+    overflow: hidden;
     .chart-main-chart {
       display: flex;
       align-items: center;
       .chart {
-        width: 37.5em;
-        height: 28em;
+        width: 54%;
+        height: 30em;
+        min-width: 640px;
         // flex: 1;
       }
       .chart-text-main {
-        width: 37.5em;
+        flex: 1;
+        overflow: hidden;
         .chart-menu {
           width: 100%;
           display: flex;
@@ -708,25 +706,24 @@ onUnmounted(() => {
           li {
             font-size: 1em;
             line-height: 1.5em;
-            color: #fff;
             padding: 0.25em 0;
             cursor: pointer;
 
             &.active {
-              color: #ffd000;
-              border-bottom: 2px solid #ffd000;
+              color: rgba(16, 147, 255, 1);
+              border-bottom: 2px solid rgba(16, 147, 255, 1);
             }
           }
         }
         .chart-content {
           width: 100%;
-          background: #121f37;
+          background: var(--gary-color);
           border-radius: 0.375em;
           margin-top: 0.75em;
           padding-bottom: 2em;
 
           .title {
-            color: #ffd000;
+            color: rgba(16, 147, 255, 1);
             font-size: 1em;
           }
           .chart-content-desc {
@@ -741,7 +738,6 @@ onUnmounted(() => {
             p {
               width: 31.43em;
               font-size: 0.875em;
-              color: #fff;
               line-height: 1.57em;
             }
           }
@@ -752,7 +748,6 @@ onUnmounted(() => {
       font-size: 1em;
       font-weight: 600;
       text-align: center;
-      color: #fff;
       margin-top: 1em;
     }
     .chart-main-bar {

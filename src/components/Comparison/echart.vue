@@ -6,7 +6,7 @@
           <div
             class="chart"
             ref="chartDom"
-            style="width: 400px; height: 400px"
+            style="width: 880px; height: 600px;margin:0 auto"
           ></div>
         </div>
       </div>
@@ -41,7 +41,7 @@ const setRadarChart = (modelList, MeasurementDimensionName, filerData) => {
     .map((item, index) => {
       return {
         name: item,
-        // color: index == 0 ? "#ffd000" : "#fff",
+        color: index == 0 ? "#000" : "#000",
         axisLabel: { show: index == 0 ? true : false },
         min: -1,
         max: 1,
@@ -76,13 +76,13 @@ const setRadarChart = (modelList, MeasurementDimensionName, filerData) => {
     radar: {
       splitArea: {
         areaStyle: {
-          color: ["rgba(0,0,0,0.1)", "rgba(0,0,0,0.3)"],
+          color: ["rgba(0,0,0,0.05)", "rgba(0,0,0,0.03)"],
         },
       },
       splitNumber: 5,
       axisName: {
-        fontSize: 14,
-        color: "#fff",
+        fontSize: 16,
+        color: "black",
         // formatter: function (value) {
         //   return value.split("&").join("&\n"); // 将换行符拆分为数组
         // },
@@ -115,7 +115,7 @@ onMounted(async () => {
     radar: {
       splitArea: {
         areaStyle: {
-          color: ["rgba(0,0,0,0.1)", "rgba(0,0,0,0.3)"],
+          color: ["rgba(0,0,0,0.05)", "rgba(0,0,0,0.03)"],
         },
       },
       axisLabel: {

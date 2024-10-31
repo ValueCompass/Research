@@ -6,7 +6,7 @@
           <div class="card-item">
             <div
               class="chart"
-              style="width: 1100px; height: 800px"
+              style="width: 1200px; height: 800px"
               ref="chartDom"
             ></div>
           </div>

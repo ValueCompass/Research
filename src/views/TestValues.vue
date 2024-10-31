@@ -893,7 +893,6 @@ onMounted(async () => {
       font-size: 1.25em;
       font-weight: 600;
       line-height: 1.3em;
-      color: rgba(255, 255, 255, 0.8);
       margin: 2.4em 0;
     }
     button {
@@ -916,7 +915,6 @@ onMounted(async () => {
   display: flex;
   .test-main {
     width: 800px;
-    color: #fff;
     margin: 0 auto;
     h2 {
       font-size: 1.8em;
@@ -930,7 +928,6 @@ onMounted(async () => {
       font-weight: 400;
       line-height: 1.3em;
       text-align: left;
-      color: rgba(255, 255, 255, 0.8);
     }
     .progress {
       margin-top: 3em;
@@ -973,7 +970,7 @@ onMounted(async () => {
             width: 2.625em;
             height: 2.625em;
             border-radius: 50%;
-            border: 2px solid #fff;
+            border: 2px solid var(--text-color);
           }
           p {
             font-size: 0.875em;
@@ -1036,14 +1033,15 @@ onMounted(async () => {
         cursor: pointer;
         font-size: 0.875em;
         line-height: 1.57em;
-        color: #fff;
+        color: var(--theme-color);
         display: flex;
         align-items: center;
-        border: 1px solid #fff;
+        border: 1px solid var(--theme-color);
         background: transparent;
         &.blue {
           background: rgba(16, 147, 255, 1);
           border-color: rgba(16, 147, 255, 1);
+          color: #fff;
           &:hover {
             background: #50b8ff;
           }
@@ -1072,13 +1070,11 @@ onMounted(async () => {
   }
   .test-user-main {
     width: 800px;
-    color: #fff;
     margin: 0 auto;
     padding-top: 8em;
     .intro {
       font-size: 1.25em;
       line-height: 1.3em;
-      color: rgba(255, 255, 255, 0.8);
       margin-bottom: 4.8em;
     }
     .input-box {
@@ -1109,7 +1105,8 @@ onMounted(async () => {
       button {
         width: 10em;
         height: 2.29em;
-        border: 1px solid #fff;
+        border: 1px solid var(--theme-color);
+        color: var(--theme-color);
         background: transparent;
         font-size: 0.875em;
         display: flex;
@@ -1118,6 +1115,7 @@ onMounted(async () => {
         &.blue {
           background: rgba(16, 147, 255, 1);
           border-color: rgba(16, 147, 255, 1);
+          color: #fff;
           &:hover {
             background: #50b8ff;
           }
@@ -1363,7 +1361,6 @@ onMounted(async () => {
       button {
         width: 145px;
         height: 32px;
-        font-family: Segoe UI;
         font-size: 14px;
         font-weight: 400;
         line-height: 22px;

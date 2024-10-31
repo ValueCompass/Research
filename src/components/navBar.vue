@@ -1,5 +1,5 @@
 <template>
-  <div class="header-component">
+  <div class="header-component main-container">
     <div class="nav">
       <router-link to="/">
         <div class="logo-container">
@@ -31,7 +31,7 @@ export default {
 </script>
 <style scoped lang="scss">
 .header-component {
-  padding: 1.875em 13.3em 1.875em 9em;
+  padding: 1.875em 0 1.875em;
   font-size: 1em;
   & > .nav {
     display: flex;
@@ -56,7 +56,7 @@ export default {
         text-align: center;
         cursor: pointer;
         a {
-          color: #fff;
+          color: var(--text-color);
         }
         .router-link-exact-active {
           color: #1093ff;

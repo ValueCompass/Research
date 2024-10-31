@@ -138,16 +138,15 @@ defineExpose({
   flex-direction: row;
   flex-wrap: wrap;
   & > div {
-    width: 50%;
+    width: 100%;
     padding: 20px 5%;
     box-sizing: border-box;
     p {
       text-align: center;
-      margin-bottom: 20px;
     }
     font-weight: 600;
-    font-size: 1.1em;
-    margin-bottom: 40px;
+    font-size: 1.2em;
+    margin-bottom: 30px;
   }
 }
 </style>

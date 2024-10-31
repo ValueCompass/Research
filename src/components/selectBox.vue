@@ -43,7 +43,7 @@
         <div class="panel-row" v-show="value1">
           <div class="filter-name">Measurement Date</div>
           <div class="panel-tags">
-            <el-tag type="info" color="rgba(255, 255, 255, 0.2)">
+            <el-tag type="info">
               {{ value1 }}
             </el-tag>
           </div>
@@ -58,7 +58,7 @@
               closable
               type="info"
               @close="handleClose(item)"
-              color="rgba(255, 255, 255, 0.2)"
+             
             >
               {{ item.name }}
             </el-tag>
@@ -73,7 +73,7 @@
               closable
               type="info"
               @close="handleClose(item)"
-              color="rgba(255, 255, 255, 0.2)"
+             
             >
               {{ item.name }}
             </el-tag>
@@ -88,7 +88,7 @@
               closable
               type="info"
               @close="handleClose(item)"
-              color="rgba(255, 255, 255, 0.2)"
+             
             >
               {{ item.name }}
             </el-tag>
@@ -103,7 +103,7 @@
               closable
               type="info"
               @close="handleClose(item)"
-              color="rgba(255, 255, 255, 0.2)"
+             
             >
               {{ item.name }}
             </el-tag>
@@ -370,6 +370,7 @@ const updateFilterHeight = () => {
     line-height: 1.57em;
     color: rgba(16, 147, 255, 1);
     margin-left: 1.9em;
+    margin-right: 3em;
     cursor: pointer;
   }
   .show-filter {
@@ -393,7 +394,6 @@ const updateFilterHeight = () => {
   max-height: 0;
   transition: max-height 0.3s ease-out;
   margin-top: 0.75em;
-  color: #fff;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   .panel-content {
     padding: 0 0 1.5em;
@@ -434,4 +434,7 @@ const updateFilterHeight = () => {
   --el-checkbox-text-color: #fff;
   margin-right: 1em;
 }
+
+
+
 </style>

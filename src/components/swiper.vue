@@ -15,13 +15,15 @@
         </p>
         <p class="title">{{ "Case" + (index + 1) + "-" + item.label }} Score</p>
         <div class="chart-content-desc">
-          <img src="@/assets/images/Avatar-Q.png" alt="Q" />
+          <!-- <img src="@/assets/images/Avatar-Q.png" alt="Q" /> -->
+          <span class="span">Q</span>
           <p>
             {{ item.prompt }}
           </p>
         </div>
         <div class="chart-content-desc">
-          <img src="@/assets/images/Avatar-A.png" alt="A" />
+          <!-- <img src="@/assets/images/Avatar-A.png" alt="A" /> -->
+          <span class="span">Q</span>
           <p class="highlight" v-html="item.highlight"></p>
         </div>
       </div>
@@ -93,25 +95,28 @@ export default {
   }
   .title {
     font-size: 1em;
-    color: #fff;
     line-height: 2em;
     span {
-      color: #ffd000;
+      color: var(--theme-color);
     }
   }
   .chart-content-desc {
     display: flex;
     margin-top: 1.625em;
-    img {
-      display: block;
+    img,.span {
+      display: inline-block;
       width: 1.875em;
       height: 1.875em;
+      line-height: 1.875em;
       margin-right: 1.625em;
+      background: rgba(194, 194, 194, 1);
+      font-weight: bold;
+      text-align: center;
     }
     p {
-      width: 31.43em;
+      flex: 1;
+      overflow: hidden;
       font-size: 0.875em;
-      color: #fff;
       line-height: 1.8em;
     }
   }
@@ -120,7 +125,7 @@ export default {
 :deep(.swiper-pagination-bullet) {
   width: 1em;
   height: 3px;
-  background-color: #fff;
+  background-color: var(--text-color);
   opacity: 0.3;
   border-radius: 1px;
 }
@@ -132,14 +137,14 @@ export default {
 :deep(.swiper-button-next) {
   width: 22px;
   height: 22px;
-  color: #fff;
+  color: var(--text-color);
 }
 :deep(.swiper-button-prev:after),
 :deep(.swiper-button-next:after) {
   font-size: 1em;
 }
 :deep(.highlight i) {
-  color: #90e0ef;
+  color: rgba(0, 79, 143, 1);
   font-weight: 500;
   line-height: 1.8em;
 }
