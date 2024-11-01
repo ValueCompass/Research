@@ -7,21 +7,36 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    CulturalAlignment: typeof import('./src/components/Comparison/CulturalAlignment.vue')['default']
+    Echart: typeof import('./src/components/Comparison/echart.vue')['default']
     ElCascader: typeof import('element-plus/es')['ElCascader']
+    ElCheckbox: typeof import('element-plus/es')['ElCheckbox']
+    ElCheckboxGroup: typeof import('element-plus/es')['ElCheckboxGroup']
+    ElInput: typeof import('element-plus/es')['ElInput']
+    ElMenu: typeof import('element-plus/es')['ElMenu']
+    ElMenuItem: typeof import('element-plus/es')['ElMenuItem']
     ElOption: typeof import('element-plus/es')['ElOption']
+    ElPopover: typeof import('element-plus/es')['ElPopover']
+    ElProgress: typeof import('element-plus/es')['ElProgress']
     ElRadio: typeof import('element-plus/es')['ElRadio']
     ElRadioGroup: typeof import('element-plus/es')['ElRadioGroup']
     ElSelect: typeof import('element-plus/es')['ElSelect']
     ElTable: typeof import('element-plus/es')['ElTable']
     ElTableColumn: typeof import('element-plus/es')['ElTableColumn']
+    ElTabPane: typeof import('element-plus/es')['ElTabPane']
+    ElTabs: typeof import('element-plus/es')['ElTabs']
     ElTag: typeof import('element-plus/es')['ElTag']
     ElTooltip: typeof import('element-plus/es')['ElTooltip']
-    Loading: typeof import('./src/components/loading.vue')['default']
-    NavBar: typeof import('./src/components/navBar.vue')['default']
-    RadarChart: typeof import('./src/components/radar-chart.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SaveImage: typeof import('./src/components/saveImage.vue')['default']
-    Swiper: typeof import('./src/components/swiper.vue')['default']
+    SelectBox: typeof import('./src/components/selectBox.vue')['default']
+    SvgIcon: typeof import('./src/components/svgIcon.vue')['default']
+    Table: typeof import('./src/components/Comparison/Table.vue')['default']
+    ValueSpace: typeof import('./src/components/Comparison/ValueSpace.vue')['default']
+    Visualization: typeof import('./src/components/Comparison/Visualization.vue')['default']
+  }
+  export interface ComponentCustomProperties {
+    vPopover: typeof import('element-plus/es')['ElPopoverDirective']
   }
 }
