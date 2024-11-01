@@ -23,7 +23,7 @@
         v-model="value2"
         :options="options"
         :props="props"
-        style="width: 240px"
+        style="width: 240px;margin-left: 20px"
         :show-all-levels="false"
         :collapse-tags="true"
         @change="handleChange"

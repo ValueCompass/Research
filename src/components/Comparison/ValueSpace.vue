@@ -6,7 +6,7 @@
           <div class="card-item">
             <div
               class="chart"
-              style="width: 1200px; height: 800px"
+              style="width: 1100px; height: 800px"
               ref="chartDom"
             ></div>
           </div>
@@ -54,7 +54,7 @@ function setGlChart(gl_data) {
         show: true,
         formatter: "{b}",
         textStyle: {
-          color: "#fff",
+          color: "rgba(47, 47, 47, 1)",
           fontSize: 16,
           backgroundColor: "rgba(255,255,255,0)",
         },
@@ -86,7 +86,7 @@ function setGlChart(gl_data) {
       show: true,
       width: "1100",
       textStyle: {
-        color: "#fff",
+        color: "rgba(47, 47, 47, 1)",
       },
     },
     tooltip: {
@@ -132,7 +132,7 @@ function setGlChart(gl_data) {
       // show: false,
       axisLine: {
         // show: false,
-        lineStyle: { color: "rgba(255,255,255,0.3)" },
+        lineStyle: { color: "rgba(0,0,0,0.1)" },
       },
       // axisLabel: {
       //   // show: false,
@@ -146,7 +146,7 @@ function setGlChart(gl_data) {
       },
       splitLine: {
         // show: false,
-        lineStyle: { color: "rgba(255,255,255,0.3)" },
+        lineStyle: { color: "rgba(0,0,0,0.1)" },
       },
       viewControl: {
         autoRotate: true, //自动旋转
@@ -260,7 +260,7 @@ onMounted(async () => {
   .card-item {
     padding: 20px;
     padding: 1.5em 3em;
-    background-color: #121f37;
+    background-color: #fff;
     margin: 0 auto;
     border-radius: 6px;
     display: flex;

@@ -24,21 +24,14 @@ import {
 } from "vue";
 import axios from "axios";
 import * as echarts from "echarts";
+import{getKeyValue} from "@/utils/common.js"
+
 
 const chartDom = ref(null);
 let chartInstance = null;
 const allHeatMapData = ref();
 const allHeatMapDataObject = ref();
 let countries = [];
-
-function getKeyValue(array) {
-  const result = array.reduce((acc, item) => {
-    const { model, ...rest } = item; // 提取name字段，其他字段放入rest
-    acc[model] = rest; // 将剩余字段放入对象
-    return acc;
-  }, {});
-  return result;
-}
 
 const getAllHeatMapData = async () => {
   return axios.get("./data/value_sim_heatmap.json").then((value_space_data) => {
@@ -79,7 +72,7 @@ const setHotChart = (modelNameList) => {
   }
   const modelNames = allHeatMapDataFilter.models;
   const data = hotData.map(function (item) {
-    return [item[1], item[0], item[2].toFixed(5) || "-"];
+    return [item[1], item[0], (item[2]*100).toFixed(3) || "-"];
   });
   console.log(hotData, "hotData", data);
 
@@ -110,6 +103,17 @@ const setHotChart = (modelNameList) => {
         label: {
           show: true,
         },
+        emphasis: {
+
+        itemStyle: {
+
+          shadowBlur: 10,
+
+          shadowColor: 'rgba(0, 0, 0, 0.5)'
+
+        }
+
+      }
       },
     ],
   });
@@ -183,7 +187,7 @@ onMounted(async () => {
     visualMap: {
       min: 0,
 
-      max: 1,
+      max: 100,
 
       calculable: true,
 

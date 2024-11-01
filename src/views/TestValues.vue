@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div class="main-14-container" v-show="showTest == 1">
+  <div  class="main-container" style="padding:0 80px">
+    <div v-show="showTest == 1">
       <div class="test-container">
         <div class="test-intro">
           <h1>
@@ -1081,12 +1081,13 @@ onMounted(async () => {
       width: 27em;
       margin: 0 auto;
       .input {
-        --el-input-bg-color: #121f37 !important;
-        --el-input-border-color: rgba(255, 255, 255, 0.2) !important;
-        --el-input-placeholder-color: rgba(255, 255, 255, 0.2) !important;
-        --el-input-hover-border-color: rgba(255, 255, 255, 0.2) !important;
-        --el-input-focus-border: rgba(255, 255, 255, 0.2) !important;
-        --el-input-focus-border-color: rgba(255, 255, 255, 0.2) !important;
+        --el-input-text-color: var(--text-color);
+        --el-input-bg-color: var(--bg-color) !important;
+        --el-input-border-color: rgba(194, 194, 194, 1) !important;
+        --el-input-placeholder-color: rgba(194, 194, 194, 1) !important;
+        --el-input-hover-border-color: rgba(194, 194, 194, 1) !important;
+        --el-input-focus-border: rgba(194, 194, 194, 1) !important;
+        --el-input-focus-border-color: rgba(194, 194, 194, 1) !important;
       }
       p {
         font-size: 1.25em;
@@ -1137,7 +1138,6 @@ onMounted(async () => {
   }
   .loading-main {
     width: 800px;
-    color: #fff;
     margin: 0 auto;
     padding-top: 8em;
     text-align: center;
@@ -1154,7 +1154,6 @@ onMounted(async () => {
     }
   }
   .result-main {
-    color: #fff;
     margin: 0 auto;
     padding: 0 4em 4.5em;
     display: flex;
@@ -1164,13 +1163,11 @@ onMounted(async () => {
       .chart-tab-title {
         font-size: 1em;
         font-weight: 700;
-        color: #fff;
       }
       ul {
         li {
           font-size: 1em;
           font-weight: 400;
-          color: rgba(255, 255, 255, 0.8);
           margin-top: 1.5em;
           display: flex;
           align-items: center;
@@ -1382,7 +1379,5 @@ onMounted(async () => {
   display: block;
   margin-top: 2em;
 }
-:deep(.el-input) {
-  --el-input-text-color: #fff;
-}
+
 </style>

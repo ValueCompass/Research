@@ -135,6 +135,8 @@ import { ref, watch, onMounted, onUnmounted, nextTick } from "vue";
 import axios from "axios";
 import * as echarts from "echarts";
 import swiper from "../components/swiper.vue";
+import{getKeyValue} from "../utils/common.js"
+
 
 const chartDom = ref(null);
 // const barChart = ref(null);
@@ -265,14 +267,7 @@ const fetchOtherData = async () => {
 fetchData();
 fetchOtherData();
 
-function getKeyValue(array) {
-  const result = array.reduce((acc, item) => {
-    const { model, ...rest } = item; // 提取name字段，其他字段放入rest
-    acc[model] = rest; // 将剩余字段放入对象
-    return acc;
-  }, {});
-  return result;
-}
+
 function getCaseData(arr, model) {
   const arr1 = arr.filter((item) => {
     return item.model == model;

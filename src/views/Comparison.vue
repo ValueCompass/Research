@@ -123,7 +123,7 @@
 
         <!-- table -->
         <div class="table-box" v-show="currentTab == 0">
-          <!-- <TableComponent :Schwartz_table_data="Schwartz_table_data"  :Schwartz_table_columns="Schwartz_table_columns"  :MFT_table_data="MFT_table_data"  :MFT_table_columns="MFT_table_columns"  :Risk_table_data="Risk_table_data"  :Risk_table_columns="Risk_table_columns"></TableComponent> -->
+          <!-- <TableComponent ref="TableComponentRef"></TableComponent> -->
 
           <el-table :data="Schwartz_table_data" border style="width: 100%">
             <el-table-column prop="model_name" label="Model" />
@@ -204,9 +204,11 @@ import TableComponent from "../components/Comparison/Table.vue";
 import ValueSpaceComponent from "../components/Comparison/ValueSpace.vue";
 import CulturalAlignmentComponent from "../components/Comparison/CulturalAlignment.vue";
 import selectBoxComponent from "../components/selectBox.vue";
+import{getKeyValue,mergeObj,getAvaData} from "../utils/common.js"
 
 const VisualizationComponentProps = ref(null);
 const CulturalAlignmentComponentProps = ref(null);
+const TableComponentRef = ref(null)
 const colorList = [
   "rgba(16, 147, 255, 1)",
   "rgba(172, 210, 145, 1)",
@@ -304,8 +306,8 @@ const fetchData = async () => {
           mergeData = d;
 
           for (let key in modelInfo.value) {
-            const point = getAvaData(key, []);
-            modelInfo.value[key].points = point.toFixed(5);
+            const point = getAvaData(key, [],mergeData);
+            modelInfo.value[key].points = (point*100).toFixed(3);
           }
           modelNameList.value = Object.keys(modelInfo.value);
 
@@ -337,7 +339,7 @@ const formatter = (row, column) => {
   if (column.label == "model_name") {
     return row[column.label];
   } else {
-    return row[column.label].toFixed(5);
+    return (row[column.label]*100).toFixed(3);
   }
   // if(column.label == 'model_name'){
   //   return row[column.label]
@@ -435,6 +437,14 @@ const getModelDetail = () => {
     MFT_obj.model_name = checkedModelNameList.value[i];
     MFT_table_data.value.push(MFT_obj);
   }
+  // 
+  // TableComponentRef.value.setTableData(
+  //   Schwartz_table_data.value,
+  //   Risk_table_data.value,
+  //   MFT_table_data.value,
+  //   Schwartz_table_columns_checked.value,
+  //   Risk_table_columns_checked.value,
+  //   MFT_table_columns_checked.value )
 
   // for echart
   VisualizationComponentProps.value.setRadarChart(checkedModelDetailList.value);
@@ -449,48 +459,10 @@ onUnmounted(() => {});
 
 let mergeData = null;
 
-function getAvaData(model, filterArr) {
-  const modelData = mergeData[model];
-  let point = 0;
-  let num = 0;
-  if (filterArr.length > 0) {
-    filterArr.forEach((item) => {
-      if (modelData[item]) {
-        point += modelData[item];
-        num++;
-      }
-    });
-    point = point / num;
-  } else {
-    const data = Object.values(modelData);
-    point = data.reduce((accumulator, currentValue) => {
-      return accumulator + currentValue;
-    }, 0);
-    point = point / data.length;
-  }
-  return point;
-}
 
-function getKeyValue(array) {
-  const result = array.reduce((acc, item) => {
-    const { model, ...rest } = item; // 提取name字段，其他字段放入rest
-    acc[model] = rest; // 将剩余字段放入对象
-    return acc;
-  }, {});
-  return result;
-}
-function mergeObj(obj1, obj2, obj3) {
-  const objects = [obj1, obj2, obj3];
 
-  const merged = objects.reduce((acc, curr) => {
-    Object.entries(curr).forEach(([key, value]) => {
-      acc[key] = acc[key] || {}; // 初始化累积对象的键
-      acc[key] = { ...acc[key], ...value }; // 合并当前对象的值
-    });
-    return acc;
-  }, {});
-  return merged;
-}
+
+
 
 const fitterChange = (filerData) => {
   console.log("filerData", filerData);
@@ -520,6 +492,15 @@ const fitterChange = (filerData) => {
   } else {
     Risk_table_columns_checked.value = Risk_table_columns.value;
   }
+
+
+  // TableComponentRef.value.setTableData(
+  //   Schwartz_table_data.value,
+  //   Risk_table_data.value,
+  //   MFT_table_data.value,
+  //   Schwartz_table_columns_checked.value,
+  //   Risk_table_columns_checked.value,
+  //   MFT_table_columns_checked.value )
 
   // for echart
   VisualizationComponentProps.value.setRadarChart(
@@ -727,7 +708,7 @@ const fitterChange = (filerData) => {
   text-overflow: ellipsis;
 }
 :deep(.el-checkbox) {
-  --el-checkbox-text-color: #fff;
+  --el-checkbox-text-color: var(--text-color);
   margin-right: 1em;
 }
 
@@ -736,6 +717,10 @@ const fitterChange = (filerData) => {
   .el-tabs__item {
     padding: 0;
     color: var(--sub-text-color);
+    font-size: 1.125em;
+    &.is-active{
+      color: rgba(16, 147, 255, 1);
+    }
   }
 }
 </style>
