@@ -59,7 +59,12 @@ const setHotChart = (modelNameList) => {
       countries: countries,
     };
   } else {
-    allHeatMapDataFilter = allHeatMapData.value;
+    // allHeatMapDataFilter = allHeatMapData.value;
+    allHeatMapDataFilter = {
+      cosine_sim_matrix: [allHeatMapData.value.cosine_sim_matrix[0]],
+      models: [allHeatMapData.value.models[0]],
+      countries: countries,
+    };
   }
 
   console.log("modelNameList", modelNameList, allHeatMapDataFilter);
@@ -197,7 +202,8 @@ onMounted(async () => {
 
       bottom: "15%",
       // color: ["#083669", "#4795C3", "#eeeeee", "#E0785F", "#690320"],
-      color: ["#083669", "#4795C3", "#eeeeee", "#E0785F", "#690320"],
+      // color: ["#083669", "#4795C3", "#eeeeee", "#E0785F", "#690320"],
+      color: ["#690320", "#E0785F", "#eeeeee", "#4795C3", "#083669"],
       textStyle: { color: "#000" },
     },
 

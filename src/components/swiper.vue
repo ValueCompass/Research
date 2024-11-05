@@ -11,7 +11,7 @@
     >
       <div class="swiper-main">
         <p class="title">
-          <span>Care/Harm Score：</span>{{ item.score.toFixed(4) }}
+          <span>Score：</span>{{ item.score.toFixed(4) }}
         </p>
         <p class="title">{{ "Case" + (index + 1) + "-" + item.label }} Score</p>
         <div class="chart-content-desc">

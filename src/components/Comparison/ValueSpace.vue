@@ -54,7 +54,7 @@ function setGlChart(gl_data) {
         show: true,
         formatter: "{b}",
         textStyle: {
-          color: "rgba(47, 47, 47, 1)",
+          color: "#fff",
           fontSize: 16,
           backgroundColor: "rgba(255,255,255,0)",
         },
@@ -86,7 +86,7 @@ function setGlChart(gl_data) {
       show: true,
       width: "1100",
       textStyle: {
-        color: "rgba(47, 47, 47, 1)",
+        color: "#fff",
       },
     },
     tooltip: {
@@ -132,7 +132,7 @@ function setGlChart(gl_data) {
       // show: false,
       axisLine: {
         // show: false,
-        lineStyle: { color: "rgba(0,0,0,0.1)" },
+        lineStyle: { color: "rgba(255,255,255,0.3)" },
       },
       // axisLabel: {
       //   // show: false,
@@ -146,7 +146,7 @@ function setGlChart(gl_data) {
       },
       splitLine: {
         // show: false,
-        lineStyle: { color: "rgba(0,0,0,0.1)" },
+        lineStyle: { color: "rgba(255,255,255,0.3)" },
       },
       viewControl: {
         autoRotate: true, //自动旋转
@@ -260,7 +260,7 @@ onMounted(async () => {
   .card-item {
     padding: 20px;
     padding: 1.5em 3em;
-    background-color: #fff;
+    background-color: #121f37;
     margin: 0 auto;
     border-radius: 6px;
     display: flex;
