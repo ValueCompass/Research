@@ -204,11 +204,11 @@ import TableComponent from "../components/Comparison/Table.vue";
 import ValueSpaceComponent from "../components/Comparison/ValueSpace.vue";
 import CulturalAlignmentComponent from "../components/Comparison/CulturalAlignment.vue";
 import selectBoxComponent from "../components/selectBox.vue";
-import{getKeyValue,mergeObj,getAvaData} from "../utils/common.js"
+import { getKeyValue, mergeObj, getAvaData } from "../utils/common.js";
 
 const VisualizationComponentProps = ref(null);
 const CulturalAlignmentComponentProps = ref(null);
-const TableComponentRef = ref(null)
+const TableComponentRef = ref(null);
 const colorList = [
   "rgba(16, 147, 255, 1)",
   "rgba(172, 210, 145, 1)",
@@ -306,8 +306,8 @@ const fetchData = async () => {
           mergeData = d;
 
           for (let key in modelInfo.value) {
-            const point = getAvaData(key, [],mergeData);
-            modelInfo.value[key].points = (point*100).toFixed(3);
+            const point = getAvaData(key, [], mergeData);
+            modelInfo.value[key].points = (point * 100).toFixed(3);
           }
           modelNameList.value = Object.keys(modelInfo.value);
 
@@ -339,7 +339,7 @@ const formatter = (row, column) => {
   if (column.label == "model_name") {
     return row[column.label];
   } else {
-    return (row[column.label]*100).toFixed(3);
+    return (row[column.label] * 100).toFixed(3);
   }
   // if(column.label == 'model_name'){
   //   return row[column.label]
@@ -365,6 +365,9 @@ const submit = () => {
 };
 
 const closeModel = (modelName, index) => {
+  if (checkedModelNameList.value.length <= 1) {
+    return;
+  }
   checkedModelNameList.value.splice(index, 1);
   submit();
 };
@@ -437,7 +440,7 @@ const getModelDetail = () => {
     MFT_obj.model_name = checkedModelNameList.value[i];
     MFT_table_data.value.push(MFT_obj);
   }
-  // 
+  //
   // TableComponentRef.value.setTableData(
   //   Schwartz_table_data.value,
   //   Risk_table_data.value,
@@ -458,11 +461,6 @@ const getModelDetail = () => {
 onUnmounted(() => {});
 
 let mergeData = null;
-
-
-
-
-
 
 const fitterChange = (filerData) => {
   console.log("filerData", filerData);
@@ -492,7 +490,6 @@ const fitterChange = (filerData) => {
   } else {
     Risk_table_columns_checked.value = Risk_table_columns.value;
   }
-
 
   // TableComponentRef.value.setTableData(
   //   Schwartz_table_data.value,
@@ -718,7 +715,7 @@ const fitterChange = (filerData) => {
     padding: 0;
     color: var(--sub-text-color);
     font-size: 1.125em;
-    &.is-active{
+    &.is-active {
       color: rgba(16, 147, 255, 1);
     }
   }

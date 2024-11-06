@@ -257,17 +257,25 @@
     <div class="modal-box" v-if="showModal">
       <div class="modal-main">
         <div class="print-main" id="capture" ref="capture">
-          <!-- <div class="header">
-            <img src="@/assets/images/main-logo.png" alt="logo" />
-            <SvgIcon
-              class="close"
-              name="close"
-              @click="showModal = false"
-            ></SvgIcon>
-          </div> -->
+          <div class="header">
+            <h2>Hi, {{ input ? input : "User" }}</h2>
+            <div>
+              <img src="@/assets/images/main-logo.png" alt="logo" />
+              <img
+                class="QRCodeImg"
+                src="@/assets/images/QRCodeImg.png"
+                alt=""
+              />
+              <!-- <SvgIcon
+                class="close"
+                name="close"
+                @click="showModal = false"
+              ></SvgIcon> -->
+            </div>
+          </div>
           <div class="print-content card-print">
             <div class="card-left">
-              <h2>Hi, {{ input ? input : "User" }}</h2>
+              <!-- <h2>Hi, {{ input ? input : "User" }}</h2> -->
               <h3>Your Core Values are</h3>
               <div class="tag-list">
                 <span
@@ -510,7 +518,9 @@ const print = () => {
 
 const toPrint = async () => {
   try {
-    const canvas = await html2canvas(capture.value);
+    const canvas = await html2canvas(capture.value, {
+      scale: 2, // 缩放比例 这个数值根据具体需求调整
+    });
     const img = canvas.toDataURL("image/png");
 
     const link = document.createElement("a");
@@ -1267,7 +1277,8 @@ function softmax(z) {
       color: rgba(102, 102, 102, 1);
       text-transform: capitalize;
       text-align: right;
-      line-height: 2;
+      line-height: 1.2;
+      padding: 0.3em 0;
     }
   }
   .card-bottom {
@@ -1299,76 +1310,7 @@ function softmax(z) {
     }
   }
 }
-.print-content {
-  font-size: 16px;
-  .card-left {
-    width: 50.3%;
-    .tag-list {
-      display: flex;
-      gap: 0.5em;
-      .tag {
-        font-size: 1em;
-      }
-    }
-    h2 {
-      font-size: 1.5em;
-    }
-    h3 {
-      font-size: 1.125em;
-    }
-    p {
-      font-size: 1em;
-    }
-  }
-  .card-right {
-    position: relative;
-    width: 42.44%;
-    padding-right: 1.8m;
-    .card-right-img {
-      width: 100%;
-    }
-    .logo-img {
-      width: 3em;
-      position: absolute;
-      right: 0;
-      top: 0;
-    }
-    p {
-      font-size: 1em;
-    }
-  }
-  .card-bottom {
-    margin-top: 0.5em;
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-    & > div:nth-child(1) {
-      width: 140px;
-      img {
-        width: 120px;
-      }
-    }
-    & > div:nth-child(2) {
-      width: calc(100% - 140px);
-    }
-    p:nth-child(1) {
-      font-size: 1.125em;
-      font-weight: 600;
-      margin-bottom: 0.8em;
-    }
-    p {
-      font-size: 1em;
-    }
-    .model-name-span {
-      background: rgba(150, 200, 224, 1);
-      color: rgba(0, 79, 143, 1);
-      padding: 0.3em 0.5em;
-      display: inline-block;
-    }
-  }
-}
+
 .modal-box {
   position: fixed;
   width: 100%;
@@ -1384,7 +1326,7 @@ function softmax(z) {
     margin: 0 auto;
     .print-main {
       display: flex;
-      align-items: center;
+      flex-wrap: wrap;
       font-size: 16px;
       box-sizing: border-box;
       width: 874px;
@@ -1393,53 +1335,99 @@ function softmax(z) {
       padding: 30px 60px;
       color: #000;
       .header {
+        width: 100%;
         display: flex;
         justify-content: space-between;
         align-items: center;
+        padding-block: 1em;
+        align-items: flex-end;
+        h2 {
+          font-size: 1.5em;
+          font-weight: 600;
+        }
         img {
-          width: 120px;
+          width: 114px;
+        }
+        img.QRCodeImg {
+          width: 45px;
+          margin-left: 50px;
         }
         .close {
           width: 1em;
           height: 1em;
         }
       }
-      // .print-content {
-
-      //   h2,h3 {
-      //     font-size: 1.25em;
-      //     font-weight: 600;
-      //     margin:1.2em 0 1em;
-      //   }
-      //   h3{
-      //     margin: 0;
-      //     padding-right: .5em;
-      //   }
-      //   p {
-      //     font-size: 1.125em;
-      //     margin: 1.5em 0 0;
-      //     line-height: 1.375em;
-      //   }
-      //   .tag-list {
-      //       display: flex;
-      //       gap: 0.5em;
-      //     .tag {
-      //         display: inline-block;
-      //         font-size: 1.25em;
-      //         padding: 0.33em 0.66em;
-      //         background-color: rgba(172, 210, 145, 1);
-      //         color: rgba(47, 72, 30, 1);
-      //         border-radius: 2px;
-      //         font-weight: 600;
-      //     }
-      //   }
-      //   .top{
-      //     display: flex;
-      //     flex-direction: row;
-      //     flex-wrap: nowrap;
-      //     align-items: center;
-      //   }
-      // }
+      .print-content {
+        font-size: 16px;
+        .card-left {
+          width: 61%;
+          .tag-list {
+            display: flex;
+            gap: 0.5em;
+            .tag {
+              font-size: 1em;
+            }
+          }
+          h2 {
+            font-size: 1.5em;
+          }
+          h3 {
+            font-size: 1.125em;
+            margin-top: 0;
+          }
+          p {
+            font-size: 1.125em;
+          }
+        }
+        .card-right {
+          position: relative;
+          width: 35.81%;
+          .card-right-img {
+            width: 100%;
+          }
+          .logo-img {
+            width: 3em;
+            position: absolute;
+            right: 0;
+            top: 0;
+          }
+          p {
+            font-size: 1em;
+            text-align: left;
+          }
+        }
+        .card-bottom {
+          margin-top: 0.5em;
+          width: 100%;
+          display: flex;
+          flex-direction: row;
+          flex-wrap: wrap;
+          align-items: center;
+          & > div:nth-child(1) {
+            width: 140px;
+            img {
+              width: 120px;
+            }
+          }
+          & > div:nth-child(2) {
+            width: calc(100% - 140px);
+          }
+          p:nth-child(1) {
+            font-size: 1.125em;
+            font-weight: 600;
+            margin-bottom: 0.8em;
+          }
+          p {
+            font-size: 1em;
+          }
+          .model-name-span {
+            background: rgba(150, 200, 224, 1);
+            color: rgba(0, 79, 143, 1);
+            padding: 0.3em 0.5em;
+            display: inline-block;
+          }
+        }
+      }
       // .print-culture {
       //   display: flex;
       //   justify-content: space-between;
