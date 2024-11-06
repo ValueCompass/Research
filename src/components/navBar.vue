@@ -50,7 +50,7 @@ export default {
       flex-direction: row;
       li {
         margin-left: 3em;
-        font-size: 1.125em;
+        font-size: 1.25em;
         font-weight: 600;
         line-height: 1.33em;
         text-align: center;

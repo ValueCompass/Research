@@ -30,17 +30,26 @@ export default defineConfig({
     }),
   ],
   server: {
-    port: 8080, // 使用的端口号
-    open: true, // 是否自动打开浏览器
-    watch: {
-      usePolling: true, // 实时监听
-      interval: 1000 // 监听的间隔时间(ms)
-    },
+    // port: 8080, // 使用的端口号
+    // open: true, // 是否自动打开浏览器
+    // watch: {
+    //   usePolling: true, // 实时监听
+    //   interval: 1000 // 监听的间隔时间(ms)
+    // },
+    proxy: {
+      "/api": { // “/api” 以及前置字符串会被替换为真正域名
+        target: "http://20.163.194.92:5000/", // 请求域名
+        secure: false, // 请求是否为https
+        changeOrigin: true, // 是否跨域
+        rewrite: (path) => path.replace(/^\/api/, "")
+      }
+    }
   },
   resolve: {
     alias: {
       '@': pathResolve('./src')
     }
-  }
+  },
+  
 })
 

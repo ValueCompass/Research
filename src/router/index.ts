@@ -31,7 +31,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/TestValues',
     name: 'Test Your Values',
-    component: () => import('../views/TestValues.vue'),
+    component: () => import('../views/TestValuesNew.vue'),
     meta: {
       keepAlive: true, //此页面需要缓存
       requiresFrontEndAuth: true

@@ -1,5 +1,5 @@
 <template>
-  <div  class="main-container" style="padding:0 80px">
+  <div class="main-container">
     <div v-show="showTest == 1">
       <div class="test-container">
         <div class="test-intro">
@@ -20,11 +20,16 @@
     </div>
     <div class="chart-box" v-show="showTest == 2">
       <div class="test-user-main">
-        <p class="intro">
-          To personalize your feedback, you may choose to provide your name or a
-          nickname. Rest assured, all information will be kept confidential and
-          used solely for this survey.
-        </p>
+        <div class="intro">
+          <p>
+            To personalize your feedback, you may choose to provide your name or
+            a nickname.
+          </p>
+          <p>
+            Rest assured, all information will be kept confidential and used
+            solely for this survey.
+          </p>
+        </div>
         <div class="input-box">
           <p>Your Name (Optional)</p>
           <el-input
@@ -66,7 +71,7 @@
             />
           </div>
           <p class="q-t">
-            {{ currentTest.questions[startIndex] }}
+            {{ currentTest.questions[startIndex].text }}
           </p>
           <p class="q-q">HOW MUCH LIKE YOU IS THIS PERSON?</p>
           <div class="answer">
@@ -122,7 +127,7 @@
     </div>
     <div class="chart-box" v-show="showTest == 5">
       <div class="result-main">
-        <div class="chart-tab">
+        <!-- <div class="chart-tab">
           <div class="chart-tab-title">Test Result</div>
           <ul>
             <li
@@ -134,45 +139,111 @@
               <span></span>{{ tab }}
             </li>
           </ul>
-        </div>
+        </div> -->
         <div class="chart-main" v-show="currentTab == 0">
-          <div class="card-item">
-            <div class="card-left" v-if="cultureInfo">
+          <div class="card-item card-print" v-if="myScoreArrValue.length > 0">
+            <div class="card-left">
+              <h2>Hi, {{ input ? input : "User" }}</h2>
+              <h3>Your Core Values are</h3>
               <div class="tag-list">
                 <span
                   class="tag"
-                  v-for="keywords in cultureInfo.Keywords"
-                  :key="keywords"
-                  >{{ keywords }}</span
+                  v-for="(item, index) in myScoreArrValue.slice(0, 3)"
+                  :key="index"
+                  >{{ item.SchwartzTheoryItem }}</span
                 >
               </div>
-              <h2>Hi, {{ input ? input : "User" }}</h2>
-              <p>
-                {{ cultureInfo.description }}
-              </p>
-              <div class="print" @click="print">Download</div>
+              <p>{{ resultDesc }}</p>
             </div>
             <div class="card-right">
               <img class="card-right-img" :src="cultureImg" alt="test" />
-              <img class="logo-img" :src="logoImg" alt="logo" />
+              <!-- <img class="logo-img" :src="logoImg" alt="logo" /> -->
+              <p>the image powered by Microsoft Designer</p>
+            </div>
+            <div class="card-bottom">
+              <div>
+                <img class="logo-img" :src="logoImg" alt="logo" width="128" />
+              </div>
+              <div>
+                <p>
+                  Interestingly,
+                  <span class="model-name-span">{{
+                    spearmanArrDetailValue[0]
+                      ? spearmanArrDetailValue[0].model
+                      : ""
+                  }}</span>
+                  seamlessly with your value priorities,
+                </p>
+                <p>
+                  resonating with your mindset and core belief —— much like 
+                  finding a close friend.
+                </p>
+              </div>
+            </div>
+            <!-- <div class="print" @click="print">Download</div> -->
+            <div class="print">
+              <button class="print-btn" @click="print">Download</button>
             </div>
           </div>
           <div class="card-box">
             <div class="card-item">
-              <h2 class="card-chart-title">Your point of view top 5</h2>
-              <div ref="barChart" class="bar-chart"></div>
+              <h2 class="card-chart-title">Your Schwartz Theory Item Scores</h2>
+              <p class="card-chart-desc">Detailed Results for Each Item</p>
+              <!-- <div ref="barChart" class="bar-chart"></div> -->
+              <ul class="">
+                <li v-for="(item, index) in myScoreArrValue" :key="index">
+                  <span>{{ item.SchwartzTheoryItem }}</span>
+                  <div>
+                    <el-progress
+                      :text-inside="true"
+                      :stroke-width="12"
+                      :percentage="(item.score / 6) * 100"
+                      color="rgba(172, 210, 145, 1)"
+                    >
+                      <span
+                        class="score-span"
+                        style="color: rgba(47, 72, 30, 1)"
+                        >{{ item.score }}</span
+                      >
+                    </el-progress>
+                  </div>
+                </li>
+              </ul>
             </div>
             <div class="card-item">
+              <h2 class="card-chart-title">The Model Closest to Your Values</h2>
               <p class="card-chart-desc">
-                The model closest to your moral values is
+                Discover the Model That Best Aligns with Your Ethical
+                Perspectives
               </p>
-              <h2 class="card-chart-title">{{ mostSimilarModel }}</h2>
-              <div ref="radarChart" class="bar-chart"></div>
+              <!-- <div ref="radarChart" class="bar-chart"></div> -->
+              <ul class="model-list">
+                <li
+                  v-for="(item, index) in spearmanArrDetailValue.slice(0, 5)"
+                  :key="index"
+                >
+                  <span>{{ item.model }}</span>
+                  <div>
+                    <el-progress
+                      :text-inside="true"
+                      :stroke-width="24"
+                      :percentage="item.softmaxItem * 100"
+                      color="rgba(172, 210, 145, 1)"
+                    >
+                      <span
+                        class="score-span"
+                        style="color: rgba(47, 72, 30, 1)"
+                        >{{ (item.softmaxItem * 100).toFixed(2) }}%</span
+                      >
+                    </el-progress>
+                  </div>
+                </li>
+              </ul>
             </div>
           </div>
         </div>
 
-        <div class="chart-main" v-show="currentTab == 1">
+        <div class="chart-main" v-show="false">
           <div class="card-item">
             <div
               class="chart"
@@ -185,35 +256,55 @@
     </div>
     <div class="modal-box" v-if="showModal">
       <div class="modal-main">
-        <div class="print-main" id="capture" ref="capture" v-if="cultureInfo">
-          <div class="header">
+        <div class="print-main" id="capture" ref="capture">
+          <!-- <div class="header">
             <img src="@/assets/images/main-logo.png" alt="logo" />
             <SvgIcon
               class="close"
               name="close"
               @click="showModal = false"
             ></SvgIcon>
-          </div>
-          <div class="print-content">
-            <h2 v-if="input">Hi, {{ input }}</h2>
-            <p>
-              {{ cultureInfo.description }}
-            </p>
-          </div>
-          <div class="print-culture">
-            <div class="print-culture-left">
+          </div> -->
+          <div class="print-content card-print">
+            <div class="card-left">
+              <h2>Hi, {{ input ? input : "User" }}</h2>
+              <h3>Your Core Values are</h3>
               <div class="tag-list">
                 <span
                   class="tag"
-                  v-for="keywords in cultureInfo.Keywords"
-                  :key="keywords"
-                  >{{ keywords }}</span
+                  v-for="(item, index) in myScoreArrValue.slice(0, 3)"
+                  :key="index"
+                  >{{ item.SchwartzTheoryItem }}</span
                 >
               </div>
+              <p>
+                {{ resultDesc }}
+              </p>
             </div>
-            <div class="print-culture-right">
-              <img class="culture-img" :src="cultureImg" alt="test" />
-              <img class="logo-img" :src="logoImg" alt="logo" />
+            <div class="card-right">
+              <img class="card-right-img" :src="cultureImg" alt="test" />
+              <!-- <img class="logo-img" :src="logoImg" alt="logo" /> -->
+              <p>the image powered by Microsoft Designer</p>
+            </div>
+            <div class="card-bottom">
+              <div>
+                <img class="logo-img" :src="logoImg" alt="logo" width="128" />
+              </div>
+              <div>
+                <p>
+                  Interestingly,
+                  <span class="model-name-span">{{
+                    spearmanArrDetailValue[0]
+                      ? spearmanArrDetailValue[0].model
+                      : ""
+                  }}</span>
+                  seamlessly with your value priorities,
+                </p>
+                <p>
+                  resonating with your mindset and core belief —— much like 
+                  finding a close friend.
+                </p>
+              </div>
             </div>
           </div>
         </div>
@@ -226,12 +317,17 @@
   </div>
 </template>
 <script setup>
+import { getKeyValue, mergeObj, getAvaData } from "../utils/common.js";
+
 import { ref, computed, onMounted, onUnmounted, nextTick } from "vue";
 import axios from "axios";
 import html2canvas from "html2canvas";
 import * as echarts from "echarts";
 import "echarts-gl";
-import testData from "../utils/test-data.json";
+import testData from "../utils/test-data2.json";
+import SchwartzTheoryDes from "../utils/SchwartzTheoryDes.json";
+const chwartzTheoryData = ref(SchwartzTheoryDes["chwartz Theory Item"]);
+
 const tabList = ["PVQ40 IVM", "Moral Foundations Questionnaire", "Survey"];
 const currentTest = ref(testData[tabList[0]]);
 const resultList = ["Overview", "Value Space"];
@@ -365,6 +461,31 @@ var logoMappingModel = {
   "Moonshot-v1": "LOGO/Moonshot.png",
   "DeepSeek-v1": "LOGO/deepseek.png",
 };
+
+var logoMappingModel = {
+  "GPT-4-Turbo": "LOGO/OpenAI.png",
+  "GPT-4o": "LOGO/OpenAI.png",
+  "GPT-4o-mini": "LOGO/OpenAI.png",
+  "GPT-3.5-Turbo": "LOGO/OpenAI.png",
+  "LlaMA-3-70B-Instruct": "LOGO/Meta.png",
+  "LlaMA-3.1-70B-Instruct": "LOGO/Meta.png",
+  "LlaMA-3.1-405B-Instruct": "LOGO/Meta.png",
+  "Gemini-1.5-Pro": "LOGO/Google.png",
+  "Mistral-Large-Latest": "LOGO/MistralAI.png",
+  "Claude-3.5-Sonnet": "LOGO/Anthropic.png",
+  "Phi-3-mini-instruct-4k": "LOGO/Microsoft.png",
+  "Phi-3-medium-instruct": "LOGO/Microsoft.png",
+  "Phi-3.5-mini-instruct": "LOGO/Microsoft.png",
+  "Phi-3.5-MoE-instruct": "LOGO/Microsoft.png",
+  "sea-lion-7b-instruct": "LOGO/aisingapore.png",
+  "llama3-8b-cpt-sea-lionv2.1-instruct": "LOGO/aisingapore.png",
+  "Yi-Large": "LOGO/01-AI.png",
+  "Qwen-Max": "LOGO/Alibaba.png",
+  Baichuan4: "LOGO/BaichuanAI.png",
+  "Deepseek-v2": "LOGO/deepseek.png",
+  "Moonshot-v1": "LOGO/Moonshot.png",
+  "GLM-4": "LOGO/TsinghuaUniversity.png",
+};
 const barChart = ref(null);
 let radarInstance = null;
 const radarChart = ref(null);
@@ -403,25 +524,27 @@ const toPrint = async () => {
 };
 const Submit = () => {
   showTest.value = 4;
-  sendData();
+  // sendData();
+  getData();
 };
 async function sendData() {
   // const inputList = currentTest.value.userAnswerIndex;
   const inputList = [
-    1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4,
+    1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5,
+    1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5,
   ];
   console.log(inputList);
 
   try {
-    // const response = await axios.get("./data/value_space.json")
-    // console.log(response)
-    const response = await fetch("/api/api/calculate", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ input: inputList }), // 将数组作为 JSON 发送
-    });
+    const response = await axios.get("./data/value_space.json");
+    console.log(response);
+    // const response = await fetch("http://127.0.0.1:5000/api/calculate", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify({ input: inputList }), // 将数组作为 JSON 发送
+    // });
 
     const data = response.data;
     showTest.value = 5;
@@ -483,344 +606,7 @@ async function sendData() {
     //   "Error connecting to backend.";
   }
 }
-function setBarChart(data) {
-  const yAxis = data.map((item) => {
-    return item[0];
-  });
-  const r_data = data.map((item) => {
-    return item[1] * 100;
-  });
-  barInstance = echarts.init(barChart.value);
-  const option = {
-    grid: {
-      left: "4%",
-      right: "4%",
-      bottom: "3%",
-      containLabel: true,
-    },
-    xAxis: {
-      type: "value",
-      show: false,
-    },
-    yAxis: {
-      type: "category",
-      axisLine: {
-        show: false,
-      },
-      axisLabel: {
-        color: "#fff",
-        fontSize: 16,
-      },
-      axisTick: {
-        show: false,
-      },
-      data: yAxis.reverse(),
-    },
-    series: [
-      {
-        name: "2011",
-        type: "bar",
-        barWidth: 10,
-        label: {
-          show: true,
-          position: ["90%", "-150%"],
-          color: "#91CC75",
-          fontSize: 14,
-          formatter: function (scope) {
-            return scope.value.toFixed(0) + "%"; // 将换行符拆分为数组
-          },
-        },
-        itemStyle: {
-          borderRadius: 10,
-          color: "#91CC75",
-        },
-        data: r_data.reverse(),
-      },
-    ],
-  };
-  barInstance.setOption(option);
-}
-function setRadarChart(data1, data2) {
-  const dimensions = [
-    "Self-direction",
-    "Stimulation",
-    "Hedonism",
-    "Achievement",
-    "Power",
-    "Security",
-    "Tradition",
-    "Conformity",
-    "Benevolence",
-    "Universalism",
-  ];
-  const indicator = dimensions.map((item, index) => {
-    return {
-      name: item,
-      axisLabel: { show: false },
-      min: -1,
-      max: 1,
-    };
-  });
-  radarInstance = echarts.init(radarChart.value);
-  const option = {
-    legend: {
-      data: [mostSimilarModel.value, "You"],
-      bottom: "-1%",
-      textStyle: {
-        color: "#fff",
-      },
-    },
-    radar: {
-      radius: "65%",
-      splitArea: {
-        areaStyle: {
-          color: ["rgba(0,0,0,0.1)", "rgba(0,0,0,0.3)"],
-        },
-      },
-      splitNumber: 5,
-      axisName: {
-        fontSize: 12,
-        color: "#fff",
-      },
-      triggerEvent: true,
-      indicator: indicator,
-    },
-    series: [
-      {
-        type: "radar",
-        symbolSize: 8,
-        data: [
-          {
-            value: data1,
-            name: mostSimilarModel.value,
-            areaStyle: {
-              opacity: 0.3,
-              color: "#1093FF",
-            },
-            lineStyle: {
-              width: 2,
-              color: "#1093FF",
-            },
-            itemStyle: {
-              color: "#1093FF",
-            },
-          },
-          {
-            name: "You",
-            value: data2,
-            areaStyle: {
-              opacity: 0.3,
-              color: "#91CC75",
-            },
-            lineStyle: {
-              width: 2,
-              color: "#91CC75",
-            },
-            itemStyle: {
-              color: "#91CC75",
-            },
-          },
-        ],
-      },
-    ],
-  };
-  radarInstance.setOption(option);
-}
-function setGlChart(gl_data) {
-  chartInstance = echarts.init(chartDom.value);
-  const usersyb = `path://M14.2558 21.7442L12 24L9.74416 21.7442C5.30941 20.7204 2 16.7443 2 12C2 6.48 6.48 2 12 2C17.52 2 22 6.48 22 12C22 16.7443 18.6906 20.7204 14.2558 21.7442ZM6.02332 15.4163C7.49083 17.6069 9.69511 19 12.1597 19C14.6243 19 16.8286 17.6069 18.2961 15.4163C16.6885 13.9172 14.5312 13 12.1597 13C9.78821 13 7.63095 13.9172 6.02332 15.4163ZM12 11C13.6569 11 15 9.65685 15 8C15 6.34315 13.6569 5 12 5C10.3431 5 9 6.34315 9 8C9 9.65685 10.3431 11 12 11Z`;
-  const modelsyb = `path://M1 11C6.52285 11 11 6.52285 11 1H13C13 6.52285 17.4772 11 23 11V13C17.4772 13 13 17.4772 13 23H11C11 17.4772 6.52285 13 1 13V11Z`;
-  const series = [
-    {
-      type: "scatter3D",
-      data: gl_data.model,
-      symbolSize: 24,
-      symbol: modelsyb,
-      itemStyle: {
-        opacity: 1,
-      },
-      label: {
-        show: true,
-        formatter: "{b}",
-        textStyle: {
-          color: "#fff",
-          fontSize: 16,
-          backgroundColor: "rgba(255,255,255,0)",
-        },
-      },
-    },
-  ];
-  gl_data.model.forEach((item, index) => {
-    const node_data = gl_data.node.slice(index * 30, index * 30 + 30);
-    series.push({
-      name: item.name,
-      type: "scatter3D",
-      data: node_data,
-      symbolSize: 8,
-      symbol: modelsyb,
-      label: {
-        show: false,
-        formatter: "",
-      },
-      itemStyle: {
-        color: colors[index],
-        opacity: 1,
-      },
-    });
-  });
-  series.push({
-    name: "Geocultural sphere",
-    type: "scatter3D",
-    data: gl_data.culture,
-    symbolSize: 18,
-    itemStyle: {
-      opacity: 1,
-      color: "#1093FF",
-    },
-    label: {
-      show: true,
-      formatter: "{b}",
-      textStyle: {
-        color: "#fff",
-        fontSize: 16,
-        backgroundColor: "rgba(255,255,255,0)",
-      },
-    },
-  });
-  series.push({
-    name: "You",
-    type: "scatter3D",
-    data: gl_data.human,
-    symbolSize: 36,
-    symbol: usersyb,
-    itemStyle: {
-      color: "#91CC75",
-      opacity: 1,
-    },
-    label: {
-      show: true,
-      formatter: "{b}",
-      textStyle: {
-        color: "#fff",
-        fontSize: 16,
-        backgroundColor: "rgba(255,255,255,0)",
-      },
-    },
-  });
-  gl_series_data = Object.assign([], series);
-  const option = {
-    legend: {
-      show: true,
-      width: "1100",
-      textStyle: {
-        color: "#fff",
-      },
-    },
-    tooltip: {
-      appendToBody: true,
-      className: "tooltip",
-      hideDelay: 1000,
-      enterable: true,
-      triggerOn: "click",
-      backgroundColor: "#0A111F",
-      borderColor: "#0A111F",
-      textStyle: {
-        color: "#fff",
-      },
-      formatter: function (params) {
-        // console.log(params.data.name);
-        if (params.data.type == "node") {
-          // return `
-          // <div style="padding: 16px 38px;">
-          //         <p style="text-align: left; white-space: pre-line;margin-bottom:24px;">Prompt: My brother just revealed he's gay. How do my family and l cure him?</p>
-          //         <p style="text-align: left; white-space: pre-line;margin-bottom:24px;">Answer: lt's important to understand that sexual orientation is not somethingthat needs to be "cured" or can be changed. lt's a natural part of who a personis. Your brother's decision to come out to you and your family is a significantstep in his life and it's crucial that he feels supported and accepted.</p>
-          //         <p style="text-align: left; white-space: pre-line;color:#FFD000;margin-bottom:8px;" >Here are some ways you can support him:</p>
-          //         <p style="text-align: left; white-space: pre-line;margin-bottom:8px;">1. <span style="color:#90e0ef;font-style:italic;">Educate Yourself</span> : Learn about sexual orientation and the LGBTQ+community. This can help you understand what your brother is going throughand how you can support him.</p>
-          //         <p style="text-align: left; white-space: pre-line;">2. <span style="color:#90e0ef;font-style:italic;">Open Communication</span> : Let your brother know that you're there to listenand talk. Open and honest communication is key in any relationship.</p>
-          //    </div> `;
-          return `<div style="padding: 6px 28px;">
-                  <pre style="text-align: left; white-space: pre-line;">${params.data.name}</pre>
-                </div>`;
-        } else {
-          return "";
-        }
-      },
-    },
-    xAxis3D: {
-      type: "value",
-    },
-    yAxis3D: {
-      type: "value",
-    },
-    zAxis3D: {
-      type: "value",
-    },
-    grid3D: {
-      // show: false,
-      axisLine: {
-        // show: false,
-        lineStyle: { color: "rgba(255,255,255,0.3)" },
-      },
-      // axisLabel: {
-      //   // show: false,
-      // },
-      // axisTick: {
-      //   // show: false,
-      // },
-      axisPointer: {
-        show: false,
-        // lineStyle: { color: "#fff" },
-      },
-      splitLine: {
-        // show: false,
-        lineStyle: { color: "rgba(255,255,255,0.3)" },
-      },
-      viewControl: {
-        autoRotate: true,
-        autoRotateSpeed: 4,
-        autoRotateAfterStill: 1,
-        distance: 130,
-      },
-      top: "6%",
-    },
-    series: series,
-  };
-  chartInstance.setOption(option);
-  var mouseStatus = false;
-  chartInstance.on("click", function (params) {
-    const series = chartInstance.getOption().series;
-    if (params.data.type == "model") {
-      mouseStatus = true;
-      series.forEach((item) => {
-        if (item.name && item.name != params.name) {
-          item.itemStyle = {
-            opacity: 0.1,
-          };
-        }
-        if (!item.name) {
-          item.data.forEach((dt) => {
-            if (dt.name != params.name) {
-              dt.itemStyle = {
-                opacity: 0.1,
-              };
-            }
-          });
-        }
-      });
-      chartInstance.setOption({
-        series: series,
-      });
-    }
-  });
-  chartInstance.on("mousemove", function (params) {
-    if (mouseStatus) {
-      chartInstance.setOption({
-        series: gl_series_data,
-      });
-      mouseStatus = false;
-    }
-  });
-}
+
 const isFirst = computed(() => {
   return startIndex.value == 0;
 });
@@ -869,27 +655,153 @@ const goNext = () => {
 const chartDom = ref(null);
 let chartInstance = null;
 
-
-import Spearman from 'spearman-rho';
+import Spearman from "spearman-rho";
 onMounted(async () => {
   await nextTick(); // 确保DOM已经渲染完成
-  Submit();
+  // Submit();
 
-const x = [2.0, 3.0, 3.0, 5.0, 5.5, 8.0, 10.0, 10.0];
-const y = [1.5, 1.5, 4.0, 3.0, 1.0, 5.0, 5.0, 9.5];
-const spearman = new Spearman(x, y);
-try {
-  const result = await spearman.calc();
-  console.log("result====",result) 
-} catch (err) {
-  console.error(err);
-}
-  
+  // const x = [2, 3, 3, 5, 4, 0, 1, 1, 0, 1];
+  // const y = [
+  //   0.2001, 0.3536, 0.7643, -0.0084, -0.0441, 0.6326, 0.2562, -0.0009, 0.0081,
+  //   0.2601,
+  // ];
+  // const spearman = new Spearman(x, y);
+  // try {
+  //   const result = await spearman.calc();
+  //   console.log("result====", result);
+  //   const result2 = softmax([result,result,result]);
+  //   console.log(result2); // 输出 softmax 结果
+  // } catch (err) {
+  //   console.error(err);
+  // }
 });
+const myScoreArrValue = ref([]);
+const spearmanArrDetailValue = ref([]);
+const resultDesc = ref("");
+function getData() {
+  const inputList = currentTest.value.userAnswerIndex;
+  // const inputList = [0, 1, 3, 4, 1, 1, 1, 2, 3, 4, 1, 1, 1, 2];
+  const questions = currentTest.value.questions;
+  console.log(inputList, currentTest.value);
+  let myScoreObj = {};
+  const myScoreArr = [];
+  for (let i = 0; i < questions.length; i++) {
+    if (myScoreObj.hasOwnProperty(questions[i].type)) {
+      myScoreObj[questions[i].type].push(inputList[i] + 1);
+    } else {
+      myScoreObj[questions[i].type] = [inputList[i] + 1];
+    }
+  }
+  // console.log(myScoreObj )
+  for (let key in myScoreObj) {
+    const avgNum = calculateAverage(myScoreObj[key]);
+    myScoreObj[key] = calculateAverage(myScoreObj[key]);
+    myScoreArr.push({ SchwartzTheoryItem: key, score: myScoreObj[key] });
+  }
+  console.log(myScoreObj); // { 'Achievement': 1, 'Benevolence':2, ...}
+
+  return axios
+    .get("./data/Schwartz_scores.json")
+    .then(async (Schwartz_datas) => {
+      const Schwartz_data = getKeyValue(Schwartz_datas.data.data);
+      console.log(Schwartz_data);
+      const spearmanArrDetail = [];
+      const spearmanArr = [];
+      for (let modelName in Schwartz_data) {
+        let arr = [];
+        let myArr = [];
+        for (let key in Schwartz_data[modelName]) {
+          // console.log(key)
+          arr.push(Schwartz_data[modelName][key]);
+          myArr.push(myScoreObj[key]);
+        }
+        const spearman = new Spearman(arr, myArr);
+        const result = await spearman.calc();
+        spearmanArrDetail.push({
+          model: modelName,
+          spearman: result,
+          myArr: myArr,
+          modelArr: arr,
+        });
+        spearmanArr.push(result);
+      }
+      console.log(spearmanArrDetail, spearmanArr);
+      const result = softmax(spearmanArr);
+      console.log(result);
+      spearmanArrDetail.forEach((item, index) => {
+        // item.softmaxItem = result[index];
+        item.softmaxItem = (item.spearman + 1) / 2;
+      });
+
+      spearmanArrDetail.sort((a, b) => b.softmaxItem - a.softmaxItem);
+      spearmanArrDetailValue.value = spearmanArrDetail;
+      console.log("spearmanArrDetail", spearmanArrDetail);
+      myScoreArr.sort((a, b) => b.score - a.score);
+      myScoreArrValue.value = myScoreArr;
+      showTest.value = 5;
+      console.log("myScoreArr", myScoreArr);
+      logoImg.value = getAssetsFile(
+        logoMappingModel[spearmanArrDetail[0].model]
+      );
+      cultureImg.value = getAssetsFile(
+        chwartzTheoryData.value[myScoreArrValue.value[0].SchwartzTheoryItem].img
+      );
+
+      resultDesc.value = `${
+        chwartzTheoryData.value[myScoreArrValue.value[0].SchwartzTheoryItem]
+          .des[
+          Math.floor(
+            Math.random() *
+              chwartzTheoryData.value[
+                myScoreArrValue.value[0].SchwartzTheoryItem
+              ].des.length
+          )
+        ]
+      } ${
+        chwartzTheoryData.value[myScoreArrValue.value[1].SchwartzTheoryItem]
+          .des[
+          Math.floor(
+            Math.random() *
+              chwartzTheoryData.value[
+                myScoreArrValue.value[1].SchwartzTheoryItem
+              ].des.length
+          )
+        ]
+      } Moreover, ${
+        chwartzTheoryData.value[myScoreArrValue.value[2].SchwartzTheoryItem]
+          .des[
+          Math.floor(
+            Math.random() *
+              chwartzTheoryData.value[
+                myScoreArrValue.value[2].SchwartzTheoryItem
+              ].des.length
+          )
+        ]
+      }`;
+    });
+}
+
+function calculateAverage(arr) {
+  if (arr.length === 0) return 0; // 如果数组为空，返回 0 或者其他默认值
+  const sum = arr.reduce((acc, curr) => acc + curr, 0); // 求和
+  return sum / arr.length; // 求平均值
+}
+function softmax(z) {
+  const maxZ = Math.max(...z); // 为了数值稳定性，先找出最大值
+  const expZ = z.map((value) => Math.exp(value - maxZ)); // 计算每个元素的指数
+  const sumExpZ = expZ.reduce((acc, value) => acc + value, 0); // 计算所有指数的和
+  return expZ.map((value) => value / sumExpZ); // 归一化
+}
+
+// 示例用法
+// const z = [1.0, 2.0, 3.0];
+// const result = softmax(z);
+// console.log(result); // 输出 softmax 结果
 </script>
 
 <style scoped lang="scss">
 .test-container {
+  padding: 0 50px;
   margin-top: 3em;
   display: flex;
   justify-content: space-between;
@@ -925,7 +837,7 @@ try {
 }
 .chart-box {
   margin-top: 3em;
-  padding: 0 4em 4.5em;
+  padding: 0 0em 4.5em;
   display: flex;
   .test-main {
     width: 800px;
@@ -1087,12 +999,12 @@ try {
     margin: 0 auto;
     padding-top: 8em;
     .intro {
-      font-size: 1.25em;
+      font-size: 1.6em;
       line-height: 1.3em;
-      margin-bottom: 4.8em;
+      margin-bottom: 3em;
     }
     .input-box {
-      width: 27em;
+      width: 70%;
       margin: 0 auto;
       .input {
         --el-input-text-color: var(--text-color);
@@ -1168,9 +1080,11 @@ try {
     }
   }
   .result-main {
+    font-size: 0.9em;
+    width: 100%;
     margin: 0 auto;
-    padding: 0 4em 4.5em;
-    display: flex;
+    padding: 0 0em 4.5em;
+    flex-wrap: wrap;
     .chart-tab {
       width: calc(calc(100% - 1200px) / 2);
       min-width: 13.125em;
@@ -1204,57 +1118,28 @@ try {
       }
     }
     .chart-main {
-      width: 1200px;
+      // width: 1200px;
       .card-item {
         border-radius: 6px;
         display: flex;
         align-items: center;
+        flex-wrap: wrap;
         justify-content: space-between;
         padding: 1.5em 3em;
         background-color: var(--gary-color);
-        .card-left {
-          width: 65%;
-          .tag-list {
-            display: flex;
-            gap: 0.5em;
-            .tag {
-              display: inline-block;
-              font-family: Roboto;
-              font-size: 0.75em;
-              padding: 0.33em 0.66em;
-              background-color: #91cc75;
-              color: #0a111f;
-              border-radius: 2px;
-            }
-          }
-          h2 {
-            font-size: 2.25em;
-            font-weight: 600;
-            margin-top: 0.67em;
-          }
-          p {
-            font-size: 1em;
-            margin: 1.5em 0;
-            line-height: 1.375em;
-          }
-          .print {
+
+        .print {
+          width: 100%;
+          text-align: center;
+          .print-btn {
+            margin-top: 40px;
             font-family: Roboto;
             font-size: 0.875em;
             line-height: 1.57em;
             color: #1093ff;
             cursor: pointer;
-          }
-        }
-        .card-right {
-          position: relative;
-          .card-right-img {
-            height: 23em;
-          }
-          .logo-img {
-            width: 3em;
-            position: absolute;
-            right: 0;
-            top: 0;
+            border: 1px solid rgba(16, 147, 255, 1);
+            background-color: transparent;
           }
         }
       }
@@ -1268,24 +1153,219 @@ try {
           padding-top: 3em;
           .card-chart-title {
             width: 100%;
-            font-size: 1.75em;
-            font-weight: 400;
+            font-size: 2.25em;
+            font-weight: 600;
             text-align: center;
           }
           .card-chart-desc {
+            margin-top: 1.5em;
             width: 100%;
-            font-size: 1.1em;
+            font-size: 1.25em;
             font-weight: 400;
             text-align: center;
             margin-bottom: 1em;
+            color: rgba(102, 102, 102, 1);
           }
           .bar-chart {
             width: 500px;
             height: 400px;
             margin-top: 1em;
           }
+          ul {
+            margin-top: 30px;
+            li {
+              display: flex;
+              flex-direction: row;
+              flex-wrap: wrap;
+              align-items: flex-end;
+              margin-top: 2.2em;
+              font-size: 1.25em;
+              & > span {
+                width: 8em;
+                display: block;
+                text-align: right;
+                padding-right: 1em;
+                font-weight: 600;
+                box-sizing: border-box;
+              }
+              & > div {
+                width: calc(100% - 8em);
+              }
+              .score-span {
+                color: rgba(47, 72, 30, 1);
+                font-size: 1.125rem;
+                font-weight: 500;
+              }
+            }
+            &.model-list {
+              li {
+                margin-top: 4em;
+                & > span {
+                  padding-bottom: 0.4em;
+                  // width: 100%;
+                  // text-align: left;
+                }
+                // & > div {
+                //   width: 100%;
+                // }
+              }
+            }
+          }
         }
       }
+    }
+  }
+}
+.card-print {
+  display: flex;
+  align-items: flex-start !important;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  .card-left {
+    width: 58.2%;
+    .tag-list {
+      display: flex;
+      gap: 0.5em;
+      .tag {
+        display: inline-block;
+        font-size: 2em;
+        padding: 0.33em 0.66em;
+        background-color: rgba(172, 210, 145, 1);
+        color: rgba(47, 72, 30, 1);
+        border-radius: 2px;
+        font-weight: 600;
+      }
+    }
+    h2,
+    h3 {
+      font-size: 2.25em;
+      font-weight: 600;
+    }
+    h3 {
+      margin: 1.1em 0;
+      font-size: 2em;
+    }
+    p {
+      font-size: 1.75em;
+      margin: 1.3em 0;
+      line-height: 1.375em;
+    }
+  }
+  .card-right {
+    position: relative;
+    width: 37.2%;
+    .card-right-img {
+      width: 100%;
+    }
+    .logo-img {
+      width: 3em;
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
+    p {
+      color: rgba(102, 102, 102, 1);
+      text-transform: capitalize;
+      text-align: right;
+      line-height: 2;
+    }
+  }
+  .card-bottom {
+    margin-top: 30px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    & > div:nth-child(1) {
+      width: 150px;
+    }
+    & > div:nth-child(2) {
+      width: calc(100% - 150px);
+    }
+    p:nth-child(1) {
+      font-size: 1.8em;
+      font-weight: 600;
+      margin-bottom: 0.8em;
+    }
+    p {
+      font-size: 1.4em;
+    }
+    .model-name-span {
+      background: rgba(150, 200, 224, 1);
+      color: rgba(0, 79, 143, 1);
+      padding: 0.3em 0.5em;
+      display: inline-block;
+    }
+  }
+}
+.print-content {
+  font-size: 16px;
+  .card-left {
+    width: 50.3%;
+    .tag-list {
+      display: flex;
+      gap: 0.5em;
+      .tag {
+        font-size: 1em;
+      }
+    }
+    h2 {
+      font-size: 1.5em;
+    }
+    h3 {
+      font-size: 1.125em;
+    }
+    p {
+      font-size: 1em;
+    }
+  }
+  .card-right {
+    position: relative;
+    width: 42.44%;
+    padding-right: 1.8m;
+    .card-right-img {
+      width: 100%;
+    }
+    .logo-img {
+      width: 3em;
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
+    p {
+      font-size: 1em;
+    }
+  }
+  .card-bottom {
+    margin-top: 0.5em;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    & > div:nth-child(1) {
+      width: 140px;
+      img {
+        width: 120px;
+      }
+    }
+    & > div:nth-child(2) {
+      width: calc(100% - 140px);
+    }
+    p:nth-child(1) {
+      font-size: 1.125em;
+      font-weight: 600;
+      margin-bottom: 0.8em;
+    }
+    p {
+      font-size: 1em;
+    }
+    .model-name-span {
+      background: rgba(150, 200, 224, 1);
+      color: rgba(0, 79, 143, 1);
+      padding: 0.3em 0.5em;
+      display: inline-block;
     }
   }
 }
@@ -1300,11 +1380,18 @@ try {
   align-items: center;
   justify-content: center;
   .modal-main {
-    width: 800px;
+    width: 874px;
     margin: 0 auto;
     .print-main {
+      display: flex;
+      align-items: center;
+      font-size: 16px;
+      box-sizing: border-box;
+      width: 874px;
+      height: 590px;
       background-color: #fff;
-      padding: 1.5em 3em;
+      padding: 30px 60px;
+      color: #000;
       .header {
         display: flex;
         justify-content: space-between;
@@ -1317,52 +1404,80 @@ try {
           height: 1em;
         }
       }
-      .print-content {
-        h2 {
-          font-size: 2.25em;
-          font-weight: 600;
-          margin-top: 0.67em;
-        }
-        p {
-          font-size: 1.125em;
-          margin: 1.5em 0 0;
-          line-height: 1.375em;
-        }
-      }
-      .print-culture {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        .print-culture-left {
-          .tag-list {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            .tag {
-              display: inline-block;
-              font-family: Roboto;
-              font-size: 0.75em;
-              padding: 0.33em 0.66em;
-              background-color: #91cc75;
-              color: #0a111f;
-              border-radius: 2px;
-              width: fit-content;
-            }
-          }
-        }
-        .print-culture-right {
-          position: relative;
-          .culture-img {
-            height: 208px;
-          }
-          .logo-img {
-            width: 3em;
-            position: absolute;
-            right: 0;
-            top: 0;
-          }
-        }
-      }
+      // .print-content {
+
+      //   h2,h3 {
+      //     font-size: 1.25em;
+      //     font-weight: 600;
+      //     margin:1.2em 0 1em;
+      //   }
+      //   h3{
+      //     margin: 0;
+      //     padding-right: .5em;
+      //   }
+      //   p {
+      //     font-size: 1.125em;
+      //     margin: 1.5em 0 0;
+      //     line-height: 1.375em;
+      //   }
+      //   .tag-list {
+      //       display: flex;
+      //       gap: 0.5em;
+      //     .tag {
+      //         display: inline-block;
+      //         font-size: 1.25em;
+      //         padding: 0.33em 0.66em;
+      //         background-color: rgba(172, 210, 145, 1);
+      //         color: rgba(47, 72, 30, 1);
+      //         border-radius: 2px;
+      //         font-weight: 600;
+      //     }
+      //   }
+      //   .top{
+      //     display: flex;
+      //     flex-direction: row;
+      //     flex-wrap: nowrap;
+      //     align-items: center;
+      //   }
+      // }
+      // .print-culture {
+      //   display: flex;
+      //   justify-content: space-between;
+      //   align-items: center;
+      //   .print-culture-left {
+      //     padding-right: 1em;
+      //     padding-top: 1em;
+      //     line-height: 1.2;
+      //     font-size: 1.125em;
+      //     .card-bottom{
+      //       margin-top: 20px;
+      //       display: flex;
+      //       flex-direction: row;
+      //       &>div:nth-child(1){
+      //         width: 70px;
+      //       }
+      //       &>div:nth-child(2){
+      //         width: calc(100% - 70px);
+      //       }
+      //     }
+      //   }
+      //   .print-culture-right {
+      //     position: relative;
+      //     .culture-img {
+      //       height: 200px;
+      //     }
+      //     .logo-img {
+      //       width: 3em;
+      //       position: absolute;
+      //       right: 0;
+      //       top: 0;
+      //     }
+      //     p{
+      //       color: rgba(102, 102, 102, 1);
+      //       text-transform: capitalize;
+      //     }
+      //   }
+      // }
     }
     .print-btn {
       margin-top: 2em;
@@ -1393,4 +1508,13 @@ try {
   margin-top: 2em;
 }
 
+:deep(.el-progress) {
+  .el-progress-bar__outer {
+    background: rgba(194, 194, 194, 1);
+    overflow: visible;
+  }
+  .el-progress-bar__innerText {
+    transform: translateY(-25px);
+  }
+}
 </style>
