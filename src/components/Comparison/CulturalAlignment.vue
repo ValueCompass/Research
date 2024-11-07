@@ -35,19 +35,18 @@ let countries = [];
 
 const getAllHeatMapData = async () => {
   return axios.get("./data/value_sim_heatmap.json").then((value_space_data) => {
-    console.log(value_space_data.data);
+    // console.log(value_space_data.data);
     allHeatMapData.value = value_space_data.data;
     const obj = {};
     for (let i = 0; i < value_space_data.data.models.length; i++) {
       obj[value_space_data.data.models[i]] =
         value_space_data.data.cosine_sim_matrix[i];
     }
-    console.log(obj);
+    // console.log(obj);
     allHeatMapDataObject.value = obj;
   });
 };
 const setHotChart = (modelNameList) => {
-  console.log("modelName",modelNameList)
   let allHeatMapDataFilter = [];
   if (modelNameList) {
     let cosine_sim_matrixArr = [];
@@ -80,7 +79,7 @@ const setHotChart = (modelNameList) => {
   const data = hotData.map(function (item) {
     return [item[1], item[0], (item[2]*100).toFixed(3) || "-"];
   });
-  console.log(hotData, "hotData", data);
+  // console.log(hotData, "hotData", data);
 
   chartInstance.setOption({
     yAxis: {
@@ -135,7 +134,7 @@ onMounted(async () => {
   await getAllHeatMapData();
 
   // const hours = ["Germany", "France", "USA", "Britain", "Russia", "China"];
-  console.log("allHeatMapData.value.countries", allHeatMapData.value);
+  // console.log("allHeatMapData.value.countries", allHeatMapData.value);
   countries = allHeatMapData.value.countries;
 
   // prettier-ignore
