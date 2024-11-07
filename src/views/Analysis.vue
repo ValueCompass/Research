@@ -115,7 +115,26 @@
                 @click="changeMenu(item)"
                 :class="{ active: currentChartTab == item }"
               >
-                {{ item }}
+                <template v-if="currentTab == 0">{{
+                  item.indexOf("-") > -1
+                    ? item
+                        .split("-")
+                        .map((x) => x[0].toUpperCase())
+                        .join("")
+                    : item.substring(0, 3)
+                }}</template>
+                <template v-else-if="currentTab == 1">{{
+                  item
+                    .split("-")
+                    .map((x) => x.charAt(0).toUpperCase() + x.slice(1))
+                    .join("/ ")
+                }}</template>
+                <template v-else-if="currentTab == 2">{{
+                  item
+                    .split(" ")
+                    .map((x) => x.charAt(0).toUpperCase())
+                    .join("")
+                }}</template>
               </li>
             </ul>
             <div class="chart-content">
@@ -135,8 +154,7 @@ import { ref, watch, onMounted, onUnmounted, nextTick } from "vue";
 import axios from "axios";
 import * as echarts from "echarts";
 import swiper from "../components/swiper.vue";
-import{getKeyValue} from "../utils/common.js"
-
+import { getKeyValue } from "../utils/common.js";
 
 const chartDom = ref(null);
 // const barChart = ref(null);
@@ -266,7 +284,6 @@ const fetchOtherData = async () => {
 };
 fetchData();
 fetchOtherData();
-
 
 function getCaseData(arr, model) {
   const arr1 = arr.filter((item) => {
@@ -646,15 +663,18 @@ onUnmounted(() => {
 .chart-box {
   margin-top: 4.5em;
   padding: 0 0 4.5em;
+  font-size: 1.125em;
   display: flex;
   .chart-tab {
-    width: 10em;
+    width: 9em;
+    padding-right: 1em;
     .chart-tab-title {
       font-size: 1em;
       font-weight: 700;
     }
     ul {
       li {
+        line-height: 1.35;
         font-size: 1em;
         font-weight: 400;
         margin-top: 1.5em;
@@ -698,12 +718,15 @@ onUnmounted(() => {
           display: flex;
           flex-wrap: wrap;
           justify-content: flex-start;
-          gap: 1.2em;
+          gap: 0.4em 1.2em;
+          align-items: flex-end;
           li {
+            max-width: 5.5em;
             font-size: 1em;
-            line-height: 1.5em;
+            line-height: 1.3em;
             padding: 0.25em 0;
             cursor: pointer;
+            border-bottom: 2px solid transparent;
 
             &.active {
               color: rgba(16, 147, 255, 1);
