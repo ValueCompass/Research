@@ -83,7 +83,7 @@
         </div>
       </div>
     </div>
-    <p
+    <!-- <p
       style="
         font-size: 2em;
         font-weight: 600;
@@ -92,7 +92,7 @@
       "
     >
       Comparison Direction
-    </p>
+    </p> -->
     <div class="chart-box">
       <div class="chart-tab">
         <el-tabs v-model="currentTab" @tab-click="tabSwitch">
@@ -139,7 +139,7 @@
               />
             </template>
           </el-table>
-          
+
           <h4>Moral Foundations Theory</h4>
           <el-table :data="MFT_table_data" border style="width: 100%">
             <el-table-column prop="model_name" label="Model" />
@@ -155,7 +155,7 @@
               />
             </template>
           </el-table>
-          
+
           <h4>Diverse Safety Risks</h4>
           <el-table :data="Risk_table_data" border style="width: 100%">
             <el-table-column prop="model_name" label="Model" />
@@ -171,7 +171,7 @@
               />
             </template>
           </el-table>
-          
+
           <!-- <h4>LLM Value System</h4> -->
         </div>
         <!-- echart -->
@@ -183,7 +183,9 @@
 
         <!-- Value Space -->
         <div v-show="currentTab == 3">
-          <ValueSpaceComponent ref="ValueSpaceComponentProps"></ValueSpaceComponent>
+          <ValueSpaceComponent
+            ref="ValueSpaceComponentProps"
+          ></ValueSpaceComponent>
         </div>
         <!-- Cultural Alignment -->
         <div v-show="currentTab == 2">
@@ -196,8 +198,17 @@
   </div>
 </template>
 <script setup>
-import { ref, reactive, watch, onMounted, onUnmounted, nextTick } from "vue";
+import {
+  ref,
+  reactive,
+  watch,
+  onMounted,
+  onActivated,
+  onUnmounted,
+  nextTick,
+} from "vue";
 import axios from "axios";
+import { useRoute } from "vue-router";
 import * as echarts from "echarts";
 import VisualizationComponent from "../components/Comparison/Visualization.vue";
 import TableComponent from "../components/Comparison/Table.vue";
@@ -208,7 +219,7 @@ import { getKeyValue, mergeObj, getAvaData } from "../utils/common.js";
 
 const VisualizationComponentProps = ref(null);
 const CulturalAlignmentComponentProps = ref(null);
-const ValueSpaceComponentProps = ref(null)
+const ValueSpaceComponentProps = ref(null);
 const TableComponentRef = ref(null);
 const colorList = [
   "rgba(16, 147, 255, 1)",
@@ -326,8 +337,11 @@ const fetchData = async () => {
           MFT_table_columns_checked.value = MFT_table_columns.value;
 
           //  默认选中第一个model
-
-          checkedModelNameList.value.push(modelNameList.value[0]);
+          if (setModelName) {
+            checkedModelNameList.value = [setModelName];
+          } else {
+            checkedModelNameList.value.push(modelNameList.value[0]);
+          }
           submit();
         })
       );
@@ -335,7 +349,7 @@ const fetchData = async () => {
     console.error("Fetch error:", error);
   }
 };
-fetchData();
+
 const formatter = (row, column) => {
   if (column.label == "model_name") {
     return row[column.label];
@@ -389,7 +403,7 @@ const getModelDetail = () => {
   if (checkedModelNameList.value.length > 5) {
     alert("最多可添加5个model");
   }
-  console.log("checkedModelNameList.value", checkedModelNameList.value); // ["GPT-4-Turbo","GPT-4-Turbo"]
+  // console.log("checkedModelNameList.value", checkedModelNameList.value); // ["GPT-4-Turbo","GPT-4-Turbo"]
   var colorHas = []; // colorList
   for (let i = 0; i < checkedModelNameList.value.length; i++) {
     if (i >= 5) {
@@ -458,11 +472,35 @@ const getModelDetail = () => {
   console.log("checkedModelDetailList.value", checkedModelDetailList.value);
 
   // for value space
-  ValueSpaceComponentProps.value.setValueSpacesData(checkedModelDetailList.value);
+  ValueSpaceComponentProps.value.setValueSpacesData(
+    checkedModelDetailList.value
+  );
 };
 
 // 销毁ECharts实例
 onUnmounted(() => {});
+
+let setModelName = null;
+const router = useRoute();
+let isFirstEnter = true;
+onMounted(() => {
+  console.log("首页传过来的modelName：" + router.query.modelName);
+  setModelName = router.query.modelName;
+  fetchData();
+});
+
+onActivated(() => {
+  if (isFirstEnter) {
+    isFirstEnter = false;
+  } else {
+    setModelName = router.query.modelName;
+    if (setModelName) {
+      console.log("首页传过来的modelName：" + router.query.modelName);
+      checkedModelNameList.value = [setModelName];
+      submit();
+    }
+  }
+});
 
 let mergeData = null;
 
@@ -539,6 +577,7 @@ const fitterChange = (filerData) => {
 }
 .title-content {
   margin-top: 3.56em;
+  margin-bottom: 3em;
   background: var(--gary-color);
   padding: 2.25em 3em;
   border-radius: 0.375em;
@@ -690,7 +729,7 @@ const fitterChange = (filerData) => {
       margin-top: 2em;
       h4 {
         font-size: 1.2em;
-        margin: 2em 0 .8em;
+        margin: 2em 0 0.8em;
         font-weight: 600;
         text-align: center;
       }

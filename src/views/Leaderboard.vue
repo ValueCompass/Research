@@ -277,10 +277,12 @@
                   <span
                     v-if="scope.row.type == 'Open'"
                     class="type-icon"
+                    @click="goComparisonPage(scope.row.modelName)"
                   ></span>
                   <span
                     v-if="scope.row.type == 'Close'"
                     class="type-close-icon"
+                    @click="goComparisonPage(scope.row.modelName)"
                   ></span>
                 </el-tooltip>
               </template>
@@ -296,6 +298,7 @@
 import { ref, watch, reactive, nextTick } from "vue";
 import axios from "axios";
 import { getKeyValue, mergeObj, getAvaData } from "../utils/common.js";
+import { useRouter } from "vue-router";
 
 var modelInfo = null;
 const Schwartz_data = ref(null);
@@ -593,6 +596,16 @@ const updateFilterHeight = () => {
   if (showFilter.value) {
     panel.value.style.maxHeight = panel.value.scrollHeight + "px";
   }
+};
+
+const router = useRouter();
+const goComparisonPage = (modelName) => {
+  router.push({
+    path: "/Comparison",
+    query: {
+      modelName: modelName,
+    },
+  });
 };
 </script>
 
