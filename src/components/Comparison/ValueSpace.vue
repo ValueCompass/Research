@@ -16,7 +16,7 @@
   </div>
 </template>
 <script setup>
-import { ref, computed, onMounted, onUnmounted, nextTick } from "vue";
+import { ref, computed, onMounted, onUnmounted, nextTick, defineExpose } from "vue";
 import axios from "axios";
 import * as echarts from "echarts";
 import "echarts-gl";
@@ -200,56 +200,66 @@ let chartInstance = null;
 const getAxiosData = (url) => {
   return axios.get(url);
 };
+const setValueSpacesData = async (modelNameList) => {
+  // console.log(modelNameList)
+  const modelName = modelNameList.map(function (item) {
+    return item.model_name;
+  });
+  console.log(modelName)
+  // const response = await axios.get("./data/value_space.json");
+  // console.log(response);
+  const response = await axios.post("http://20.163.194.92:5000/api/calculate_model_value", { input: modelName });
+
+  console.log(response.data);
+  let data = response.data;
+  let userTestData = data;
+  const gl_data = {
+    // culture: [],
+    // human: [
+    //   {
+    //     name: userTestData.tsne_human_caption,
+    //     value: userTestData.tsne_human,
+    //   },
+    // ],
+    model: [],
+    node: [],
+  };
+  // gl_data.culture = userTestData.tsne_cultures.map((item, index) => {
+  //   return {
+  //     name: userTestData.tsne_culture_caption[index],
+  //     value: item,
+  //   };
+  // });
+  gl_data.model = userTestData.tsne_models.map((item, index) => {
+    return {
+      name: userTestData.tsne_model_caption[index],
+      value: item,
+      type: "model",
+      itemStyle: {
+        color: colors[index],
+        opacity: 1,
+      },
+    };
+  });
+  gl_data.node = userTestData.tsne_nodes.map((item, index) => {
+    return {
+      name: userTestData.tsne_node_captions[index],
+      value: item,
+      type: "node",
+      model: userTestData.tsne_model_caption[Math.floor(index / 30)],
+    };
+  });
+  setGlChart(gl_data);
+};
+
+defineExpose({
+  setValueSpacesData,
+});
 onMounted(async () => {
   await nextTick(); // 确保DOM已经渲染完成
   // Submit();
 
-  try {
-    axios.get("./data/value_space.json").then((value_space_data) => {
-      console.log(value_space_data.data);
-      let data = value_space_data.data;
-      let userTestData = data;
-      const gl_data = {
-        // culture: [],
-        // human: [
-        //   {
-        //     name: userTestData.tsne_human_caption,
-        //     value: userTestData.tsne_human,
-        //   },
-        // ],
-        model: [],
-        node: [],
-      };
-      // gl_data.culture = userTestData.tsne_cultures.map((item, index) => {
-      //   return {
-      //     name: userTestData.tsne_culture_caption[index],
-      //     value: item,
-      //   };
-      // });
-      gl_data.model = userTestData.tsne_models.map((item, index) => {
-        return {
-          name: userTestData.tsne_model_caption[index],
-          value: item,
-          type: "model",
-          itemStyle: {
-            color: colors[index],
-            opacity: 1,
-          },
-        };
-      });
-      gl_data.node = userTestData.tsne_nodes.map((item, index) => {
-        return {
-          name: userTestData.tsne_node_captions[index],
-          value: item,
-          type: "node",
-          model: userTestData.tsne_model_caption[Math.floor(index / 30)],
-        };
-      });
-      setGlChart(gl_data);
-    });
-  } catch (error) {
-    console.error("Fetch error:", error);
-  }
+  // setValueSpacesData();
 });
 </script>
 
