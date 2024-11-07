@@ -77,6 +77,10 @@
             <span class="prop-content"
               ><a :href="currentModelInfo.report">{{
                 currentModelInfo.report
+                  ? currentModelInfo.report == "NaN"
+                    ? ""
+                    : currentModelInfo.report
+                  : ""
               }}</a></span
             >
           </div>
@@ -123,12 +127,22 @@
                         .join("")
                     : item.substring(0, 3)
                 }}</template>
-                <template v-else-if="currentTab == 1">{{
+                <!-- <template v-else-if="currentTab == 1">{{
                   item
                     .split("-")
                     .map((x) => x.charAt(0).toUpperCase() + x.slice(1))
-                    .join("/ ")
-                }}</template>
+                    .join("/<br>")
+                }}</template> -->
+                <template v-else-if="currentTab == 1">
+                  <span
+                    v-html="
+                      item
+                        .split('-')
+                        .map((x) => x.charAt(0).toUpperCase() + x.slice(1))
+                        .join('/<br>')
+                    "
+                  ></span>
+                </template>
                 <template v-else-if="currentTab == 2">{{
                   item
                     .split(" ")
@@ -452,7 +466,10 @@ onMounted(async () => {
         if (item.name != params.name && item.color == "rgba(16, 147, 255, 1)") {
           delete item.color;
         }
-        if (item.name == params.name && item.color !== "rgba(16, 147, 255, 1)") {
+        if (
+          item.name == params.name &&
+          item.color !== "rgba(16, 147, 255, 1)"
+        ) {
           item.color = "rgba(16, 147, 255, 1)";
           currentChartTab.value = item.name;
           currentCaseData.value = currentCase[currentChartTab.value];
@@ -480,7 +497,10 @@ onMounted(async () => {
     if (params.componentType === "radar" && params.targetType == "axisName") {
       const radar = chartInstance.getOption().radar[0];
       const indicator = radar.indicator.map((item) => {
-        if (item.name == params.name && item.color !== "rgba(16, 147, 255, 1)") {
+        if (
+          item.name == params.name &&
+          item.color !== "rgba(16, 147, 255, 1)"
+        ) {
           delete item.color;
         }
         return item;
