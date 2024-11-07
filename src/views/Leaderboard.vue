@@ -554,7 +554,7 @@ const handleChange = (value) => {
     arr.push({
       modelName: item.model,
       developer: item.developer,
-      points: point.toFixed(5),
+      points: (point * 100).toFixed(3),
       type: item.type,
       releaseDate: item["release date"].split(" ")[0],
     });

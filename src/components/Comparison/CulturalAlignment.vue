@@ -47,6 +47,7 @@ const getAllHeatMapData = async () => {
   });
 };
 const setHotChart = (modelNameList) => {
+  console.log("modelName",modelNameList)
   let allHeatMapDataFilter = [];
   if (modelNameList) {
     let cosine_sim_matrixArr = [];

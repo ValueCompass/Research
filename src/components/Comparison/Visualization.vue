@@ -20,14 +20,14 @@
           <p>Diverse Safety Risks</p>
           <EchartComponent ref="chartDom3"></EchartComponent>
         </div>
-        <div>
+        <!-- <div>
           <p>LLM Value System</p>
           <div
             class="chart"
             ref="chartDom4"
             style="width: 500px; height: 500px"
           ></div>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>

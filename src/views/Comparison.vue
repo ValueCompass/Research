@@ -124,7 +124,7 @@
         <!-- table -->
         <div class="table-box" v-show="currentTab == 0">
           <!-- <TableComponent ref="TableComponentRef"></TableComponent> -->
-
+          <h4>Schwartz Theory of Basic Values</h4>
           <el-table :data="Schwartz_table_data" border style="width: 100%">
             <el-table-column prop="model_name" label="Model" />
             <template
@@ -139,8 +139,8 @@
               />
             </template>
           </el-table>
-          <h4>Schwartz Theory of Basic Values</h4>
-
+          
+          <h4>Moral Foundations Theory</h4>
           <el-table :data="MFT_table_data" border style="width: 100%">
             <el-table-column prop="model_name" label="Model" />
             <template
@@ -155,8 +155,8 @@
               />
             </template>
           </el-table>
-          <h4>Moral Foundations Theory</h4>
-
+          
+          <h4>Diverse Safety Risks</h4>
           <el-table :data="Risk_table_data" border style="width: 100%">
             <el-table-column prop="model_name" label="Model" />
             <template
@@ -171,7 +171,7 @@
               />
             </template>
           </el-table>
-          <h4>Diverse Safety Risks</h4>
+          
           <!-- <h4>LLM Value System</h4> -->
         </div>
         <!-- echart -->
@@ -183,7 +183,7 @@
 
         <!-- Value Space -->
         <div v-show="currentTab == 3">
-          <ValueSpaceComponent></ValueSpaceComponent>
+          <ValueSpaceComponent ref="ValueSpaceComponentProps"></ValueSpaceComponent>
         </div>
         <!-- Cultural Alignment -->
         <div v-show="currentTab == 2">
@@ -208,6 +208,7 @@ import { getKeyValue, mergeObj, getAvaData } from "../utils/common.js";
 
 const VisualizationComponentProps = ref(null);
 const CulturalAlignmentComponentProps = ref(null);
+const ValueSpaceComponentProps = ref(null)
 const TableComponentRef = ref(null);
 const colorList = [
   "rgba(16, 147, 255, 1)",
@@ -455,6 +456,9 @@ const getModelDetail = () => {
   // for setHotChart
   CulturalAlignmentComponentProps.value.setHotChart(checkedModelNameList.value);
   console.log("checkedModelDetailList.value", checkedModelDetailList.value);
+
+  // for value space
+  ValueSpaceComponentProps.value.setValueSpacesData(checkedModelDetailList.value);
 };
 
 // 销毁ECharts实例
@@ -686,7 +690,7 @@ const fitterChange = (filerData) => {
       margin-top: 2em;
       h4 {
         font-size: 1.2em;
-        margin: 1em 0 2.5em;
+        margin: 2em 0 .8em;
         font-weight: 600;
         text-align: center;
       }

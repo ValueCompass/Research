@@ -115,7 +115,7 @@
                 @click="changeMenu(item)"
                 :class="{ active: currentChartTab == item }"
               >
-                {{ item.substring(0, 3) }}
+                {{ item }}
               </li>
             </ul>
             <div class="chart-content">
@@ -124,7 +124,7 @@
           </div>
         </div>
         <p class="chart-title">
-          Schwartz Value Theory Evaluation Results and cases
+          {{ tabList[currentTab].name }} Evaluation Results and cases
         </p>
       </div>
     </div>
@@ -175,10 +175,10 @@ const tabList = [
     name: "Diverse Safety Risks",
     index: 2,
   },
-  {
-    name: "LLMs’ Unique Values",
-    index: 3,
-  },
+  // {
+  //   name: "LLMs’ Unique Values",
+  //   index: 3,
+  // },
 ];
 const chartTabMenu = [
   "Benevolence",
@@ -696,6 +696,7 @@ onUnmounted(() => {
         .chart-menu {
           width: 100%;
           display: flex;
+          flex-wrap: wrap;
           justify-content: flex-start;
           gap: 1.2em;
           li {

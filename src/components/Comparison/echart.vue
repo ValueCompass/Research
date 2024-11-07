@@ -6,7 +6,7 @@
           <div
             class="chart"
             ref="chartDom"
-            style="width: 880px; height: 600px;margin:0 auto"
+            style="width: 880px; height: 638px; margin: 0 auto"
           ></div>
         </div>
       </div>
@@ -83,9 +83,9 @@ const setRadarChart = (modelList, MeasurementDimensionName, filerData) => {
       axisName: {
         fontSize: 16,
         color: "black",
-        // formatter: function (value) {
-        //   return value.split("&").join("&\n"); // 将换行符拆分为数组
-        // },
+        formatter: function (value) {
+          return value.split("&").join("&\n"); // 将换行符拆分为数组
+        },
       },
       triggerEvent: true,
       indicator: Schwartz_indicator,
