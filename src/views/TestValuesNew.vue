@@ -3,15 +3,13 @@
     <div v-show="showTest == 1">
       <div class="test-container">
         <div class="test-intro">
-          <h1>
-            Discover your cultural identity and explore your global mindset
-          </h1>
+          <h1>Discover Your Core Values and Meet Your Perfect LLM Match</h1>
           <p>
-            Ever wondered which cultural sphere your beliefs align with? By
-            answering 40 moral-based questions, we’ll help you uncover the data
-            model that most closely matches your way of thinking. Upon
-            completion, you'll also receive a personalized card that highlights
-            your unique cultural connection and cognitive traits.
+            Ever wonder which values shape your worldview? In just 14 quick
+            questions, uncover your core principles and reveal the LLM that best
+            aligns with your way of thinking. Plus, you'll also receive a
+            personalized card that highlights your unique value profile. Dive in
+            for a fun and eye-opening experience!
           </p>
           <button @click="toTest">Take the Test</button>
         </div>
@@ -539,10 +537,7 @@ const Submit = () => {
 };
 async function sendData() {
   // const inputList = currentTest.value.userAnswerIndex;
-  const inputList = [
-    1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5,
-    1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5,
-  ];
+  const inputList = [1, 2, 3, 4, 5, 4, 2, 1, 3, 5, 3, 2, 4, 5];
   console.log(inputList);
 
   try {
@@ -565,9 +560,9 @@ async function sendData() {
     logoImg.value = getAssetsFile(
       logoMappingModel[userTestData.most_similar_model]
     );
-    cultureInfo.value =
-      cultureMapping[userTestData.top_5_similar_culture[0][0]];
-    cultureImg.value = getAssetsFile(cultureInfo.value.img);
+    // cultureInfo.value =
+    //   cultureMapping[userTestData.top_5_similar_culture[0][0]];
+    // cultureImg.value = getAssetsFile(cultureInfo.value.img);
 
     const gl_data = {
       culture: [],
@@ -580,12 +575,12 @@ async function sendData() {
       model: [],
       node: [],
     };
-    gl_data.culture = userTestData.tsne_cultures.map((item, index) => {
-      return {
-        name: userTestData.tsne_culture_caption[index],
-        value: item,
-      };
-    });
+    // gl_data.culture = userTestData.tsne_cultures.map((item, index) => {
+    //   return {
+    //     name: userTestData.tsne_culture_caption[index],
+    //     value: item,
+    //   };
+    // });
     gl_data.model = userTestData.tsne_models.map((item, index) => {
       return {
         name: userTestData.tsne_model_caption[index],
@@ -597,14 +592,14 @@ async function sendData() {
         },
       };
     });
-    gl_data.node = userTestData.tsne_nodes.map((item, index) => {
-      return {
-        name: userTestData.tsne_node_captions[index],
-        value: item,
-        type: "node",
-        model: userTestData.tsne_model_caption[Math.floor(index / 30)],
-      };
-    });
+    // gl_data.node = userTestData.tsne_nodes.map((item, index) => {
+    //   return {
+    //     name: userTestData.tsne_node_captions[index],
+    //     value: item,
+    //     type: "node",
+    //     model: userTestData.tsne_model_caption[Math.floor(index / 30)],
+    //   };
+    // });
     setGlChart(gl_data);
   } catch (error) {
     console.error("Error:", error);
