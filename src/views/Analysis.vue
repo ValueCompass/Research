@@ -594,8 +594,10 @@ const router = useRoute();
 onActivated(() => {
   console.log("首页传过来的modelName：" + router.query.modelName);
   const setModelName = router.query.modelName;
-  checkedModel.value = setModelName;
-  currentModel.value = setModelName;
+  if (setModelName) {
+    checkedModel.value = setModelName;
+    currentModel.value = setModelName;
+  }
 });
 </script>
 
