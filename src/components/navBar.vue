@@ -19,6 +19,14 @@
         <li>
           <router-link to="/TestValues">Test Your Values</router-link>
         </li>
+        <li>
+          <a
+            class="homepage-a"
+            href="https://valuecompass.github.io/"
+            target="_blank"
+            >Homepage</a
+          >
+        </li>
       </ul>
     </div>
   </div>
@@ -63,6 +71,11 @@ export default {
         }
       }
     }
+  }
+  .homepage-a {
+    padding-right: 1.3em;
+    background: url(@/assets/images/goHomepageIcon.png) no-repeat right 0.1em;
+    background-size: 1.2em;
   }
 }
 </style>
