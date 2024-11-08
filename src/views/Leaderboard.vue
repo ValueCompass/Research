@@ -859,6 +859,7 @@ const handleRowClick = (row, column, event) => {
 }
 :deep(.el-table .el-table__cell) {
   padding: 18px 0;
+  cursor: pointer;
 }
 :deep(.el-table thead th) {
   font-weight: normal;
