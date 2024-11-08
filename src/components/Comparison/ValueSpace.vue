@@ -16,7 +16,14 @@
   </div>
 </template>
 <script setup>
-import { ref, computed, onMounted, onUnmounted, nextTick, defineExpose } from "vue";
+import {
+  ref,
+  computed,
+  onMounted,
+  onUnmounted,
+  nextTick,
+  defineExpose,
+} from "vue";
 import axios from "axios";
 import * as echarts from "echarts";
 import "echarts-gl";
@@ -78,6 +85,26 @@ function setGlChart(gl_data) {
         opacity: 1,
       },
     });
+  });
+
+  series.push({
+    name: "Geocultural sphere",
+    type: "scatter3D",
+    data: gl_data.culture,
+    symbolSize: 18,
+    itemStyle: {
+      opacity: 1,
+      color: "#1093FF",
+    },
+    label: {
+      show: true,
+      formatter: "{b}",
+      textStyle: {
+        color: "#fff",
+        fontSize: 16,
+        backgroundColor: "rgba(255,255,255,0)",
+      },
+    },
   });
 
   gl_series_data = Object.assign([], series);
@@ -205,16 +232,16 @@ const setValueSpacesData = async (modelNameList) => {
   const modelName = modelNameList.map(function (item) {
     return item.model_name;
   });
-  console.log(modelName)
-  // const response = await axios.get("./data/value_space.json");
+  console.log(modelName);
+  const response = await axios.get("./data/value_space.json");
   // console.log(response);
-  const response = await axios.post("http://20.163.194.92:5000/api/calculate_model_value", { input: modelName });
+  // const response = await axios.post("http://20.163.194.92:5000/api/calculate_model_value", { input: modelName });
 
   console.log(response.data);
   let data = response.data;
   let userTestData = data;
   const gl_data = {
-    // culture: [],
+    culture: [],
     // human: [
     //   {
     //     name: userTestData.tsne_human_caption,
@@ -224,12 +251,12 @@ const setValueSpacesData = async (modelNameList) => {
     model: [],
     node: [],
   };
-  // gl_data.culture = userTestData.tsne_cultures.map((item, index) => {
-  //   return {
-  //     name: userTestData.tsne_culture_caption[index],
-  //     value: item,
-  //   };
-  // });
+  gl_data.culture = userTestData.tsne_cultures.map((item, index) => {
+    return {
+      name: userTestData.tsne_culture_caption[index],
+      value: item,
+    };
+  });
   gl_data.model = userTestData.tsne_models.map((item, index) => {
     return {
       name: userTestData.tsne_model_caption[index],
@@ -241,14 +268,14 @@ const setValueSpacesData = async (modelNameList) => {
       },
     };
   });
-  gl_data.node = userTestData.tsne_nodes.map((item, index) => {
-    return {
-      name: userTestData.tsne_node_captions[index],
-      value: item,
-      type: "node",
-      model: userTestData.tsne_model_caption[Math.floor(index / 30)],
-    };
-  });
+  // gl_data.node = userTestData.tsne_nodes.map((item, index) => {
+  //   return {
+  //     name: userTestData.tsne_node_captions[index],
+  //     value: item,
+  //     type: "node",
+  //     model: userTestData.tsne_model_caption[Math.floor(index / 30)],
+  //   };
+  // });
   setGlChart(gl_data);
 };
 
