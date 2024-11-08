@@ -272,15 +272,15 @@
               <template #default="scope">
                 <el-tooltip
                   effect="customized"
-                  content="Open Source"
+                  :content="scope.row.type + ' Source'"
                   placement="top"
                 >
                   <span
-                    v-if="scope.row.type == 'Open'"
+                    v-if="scope.row.type.toLowerCase() == 'open'"
                     class="type-icon"
                   ></span>
                   <span
-                    v-if="scope.row.type == 'Close'"
+                    v-if="scope.row.type.toLowerCase() == 'close'"
                     class="type-close-icon"
                   ></span>
                 </el-tooltip>
