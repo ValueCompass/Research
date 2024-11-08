@@ -1,12 +1,12 @@
 <template>
   <div>
     <div class="">
-      <div class="model-title">
+      <!-- <div class="model-title">
         <div v-for="(item, index) in modelsList" :key="index">
           <span :style="{ 'background-color': item.color }" style=""></span>
           <span>{{ item.model_name }}</span>
         </div>
-      </div>
+      </div> -->
       <div class="echart-list">
         <div>
           <p>Schwartz Theory of Basic Values</p>
@@ -143,6 +143,7 @@ defineExpose({
     box-sizing: border-box;
     p {
       text-align: center;
+      margin-bottom: 1em;
     }
     font-weight: 600;
     font-size: 1.2em;

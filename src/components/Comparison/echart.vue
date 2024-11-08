@@ -6,7 +6,7 @@
           <div
             class="chart"
             ref="chartDom"
-            style="width: 880px; height: 638px; margin: 0 auto"
+            style="width: 1000px; height: 850px; margin: 0 auto"
           ></div>
         </div>
       </div>
@@ -49,6 +49,7 @@ const setRadarChart = (modelList, MeasurementDimensionName, filerData) => {
     });
 
   let Schwartz_data = [];
+  let legendName = []
   for (let i = 0; i < modelList.length; i++) {
     let item = [];
     for (let j = 0; j < Schwartz_indicator.length; j++) {
@@ -57,6 +58,7 @@ const setRadarChart = (modelList, MeasurementDimensionName, filerData) => {
       );
     }
     Schwartz_data.push({
+      name: modelList[i].model_name,
       value: item,
       areaStyle: {
         opacity: 0,
@@ -70,9 +72,17 @@ const setRadarChart = (modelList, MeasurementDimensionName, filerData) => {
         color: modelList[i].color,
       },
     });
+    legendName.push(modelList[i].model_name)
   }
-
   chartInstance.setOption({
+    legend: {
+      data: legendName,
+      // top: "0%",
+      textStyle: {
+        fontSize: 16,
+        color: "black",
+      },
+    },
     radar: {
       splitArea: {
         areaStyle: {
