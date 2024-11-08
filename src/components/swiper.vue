@@ -3,6 +3,7 @@
     :modules="modules"
     :navigation="true"
     :pagination="{ clickable: true }"
+    @swiper="onSwiper"
   >
     <swiper-slide
       class="swiper-slide"
@@ -23,7 +24,7 @@
         </div>
         <div class="chart-content-desc">
           <!-- <img src="@/assets/images/Avatar-A.png" alt="A" /> -->
-          <span class="span">Q</span>
+          <span class="span">A</span>
           <p class="highlight" v-html="item.highlight"></p>
         </div>
       </div>
@@ -59,8 +60,10 @@ export default {
     console.log("接收到的消息:", this.data); // 打印接收到的消息
   },
   setup(props) {
+    const swiperRef = ref(null);
     const onSwiper = (swiper) => {
       console.log(swiper);
+      swiperRef.value = swiper;
     };
     const onSlideChange = () => {
       console.log("slide change");
@@ -70,6 +73,9 @@ export default {
       () => props.data,
       (newMessage, oldMessage) => {
         caseData.value = newMessage;
+        if (swiperRef.value) {
+          swiperRef.value.slideTo(0);
+        }
         console.log(caseData.value);
       }
     );
@@ -103,7 +109,8 @@ export default {
   .chart-content-desc {
     display: flex;
     margin-top: 1.625em;
-    img,.span {
+    img,
+    .span {
       display: inline-block;
       width: 1.875em;
       height: 1.875em;
