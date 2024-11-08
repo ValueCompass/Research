@@ -137,7 +137,7 @@
                   <span
                     v-html="
                       item
-                        .split('-')
+                        .split('/')
                         .map((x) => x.charAt(0).toUpperCase() + x.slice(1))
                         .join('/<br>')
                     "
@@ -269,7 +269,8 @@ const fetchData = async () => {
           setRadarChart(Schwartz_data[currentModel.value]);
           currentCase = getCaseData(Schwartz_case, currentModel.value);
 
-          chartMenu.value = Object.keys(currentCase);
+          chartMenu.value = Object.keys(currentCase).sort();
+          changeMenu(chartMenu.value[0]);
           currentChartTab.value = chartMenu.value[0];
           currentCaseData.value = currentCase[currentChartTab.value];
         })
@@ -466,6 +467,7 @@ onMounted(async () => {
       // 修改雷达图的颜色
       const radar = chartInstance.getOption().radar[0];
       const indicator = radar.indicator.map((item) => {
+        params.name = params.name.replace(/[\r\n]/g, "");
         if (item.name != params.name && item.color == "rgba(16, 147, 255, 1)") {
           delete item.color;
         }
@@ -559,7 +561,8 @@ const submit = () => {
     currentCase = getCaseData(Risk_case, currentModel.value);
   }
   console.log(currentCase);
-  chartMenu.value = Object.keys(currentCase);
+  chartMenu.value = Object.keys(currentCase).sort();
+  changeMenu(chartMenu.value[0]);
   currentChartTab.value = chartMenu.value[0];
   currentCaseData.value = currentCase[currentChartTab.value];
 };
@@ -578,7 +581,8 @@ const tabSwitch = (index) => {
     currentCase = getCaseData(Risk_case, currentModel.value);
   }
 
-  chartMenu.value = Object.keys(currentCase);
+  chartMenu.value = Object.keys(currentCase).sort();
+  changeMenu(chartMenu.value[0]);
   currentChartTab.value = chartMenu.value[0];
   currentCaseData.value = currentCase[currentChartTab.value];
 };
