@@ -369,23 +369,23 @@ const options = [
     children: [
       {
         value: 0,
-        label: "Authority",
+        label: "Authority/Subversion",
       },
       {
         value: 1,
-        label: "Care",
+        label: "Care/Harm",
       },
       {
         value: 2,
-        label: "Fairness",
+        label: "Fairness/Cheating",
       },
       {
         value: 3,
-        label: "Loyalty",
+        label: "Loyalty/Betrayal",
       },
       {
         value: 4,
-        label: "Sanctity",
+        label: "Sanctity/Degradation",
       },
     ],
   },
@@ -459,10 +459,9 @@ const checkedDefault = () => {
   for (let i = 0; i < options[3].children.length; i++) {
     arr.push([3, i]);
   }
-  value2.value = arr;
-  console.log(value2.value);
+  return arr
 };
-checkedDefault();
+// checkedDefault();
 
 const value1 = ref("2024/7");
 const dates = [
@@ -505,7 +504,9 @@ const fetchData = async () => {
           mergeData = d;
           const arr = [];
 
-          handleChange(value2.value);
+          // handleChange(value2.value);
+          handleChange(checkedDefault())
+
           // modelInfo.forEach((item) => {
           //   const point = getAvaData(item.model, [], mergeData);
           //   arr.push({

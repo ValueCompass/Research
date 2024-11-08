@@ -185,23 +185,23 @@ const options = [
     children: [
       {
         value: 0,
-        label: "Authority",
+        label: "Authority/Subversion",
       },
       {
         value: 1,
-        label: "Care",
+        label: "Care/Harm",
       },
       {
         value: 2,
-        label: "Fairness",
+        label: "Fairness/Cheating",
       },
       {
         value: 3,
-        label: "Loyalty",
+        label: "Loyalty/Betrayal",
       },
       {
         value: 4,
-        label: "Sanctity",
+        label: "Sanctity/Degradation",
       },
     ],
   },
