@@ -227,7 +227,7 @@
             :data="tableData"
             :default-sort="{ prop: 'place' }"
             style="width: 100%"
-            @row-click="handleRowClick" 
+            @row-click="handleRowClick"
           >
             <el-table-column prop="place" label="Place" sortable width="120">
               <template #default="scope">
@@ -450,6 +450,20 @@ const options = [
     ],
   },
 ];
+
+const checkedDefault = () => {
+  const arr = [];
+  for (let i = 0; i < options[2].children.length; i++) {
+    arr.push([2, i]);
+  }
+  for (let i = 0; i < options[3].children.length; i++) {
+    arr.push([3, i]);
+  }
+  value2.value = arr;
+  console.log(value2.value);
+};
+checkedDefault();
+
 const value1 = ref("2024/7");
 const dates = [
   {
@@ -490,26 +504,28 @@ const fetchData = async () => {
           const d = mergeObj(a, b, c);
           mergeData = d;
           const arr = [];
-          modelInfo.forEach((item) => {
-            const point = getAvaData(item.model, [], mergeData);
-            arr.push({
-              modelName: item.model,
-              developer: item.developer,
-              points: (point * 100).toFixed(3),
-              type: item.type,
-              releaseDate: item["release date"].split(" ")[0],
-            });
-          });
-          arr.sort((a, b) => b.points - a.points);
-          arr.map((item, index) => {
-            item.place = index + 1;
-            return item;
-          });
-          top1.value = Object.assign({}, arr[0]);
-          top2.value = Object.assign({}, arr[1]);
-          top3.value = Object.assign({}, arr[2]);
 
-          tableData.value = arr;
+          handleChange(value2.value);
+          // modelInfo.forEach((item) => {
+          //   const point = getAvaData(item.model, [], mergeData);
+          //   arr.push({
+          //     modelName: item.model,
+          //     developer: item.developer,
+          //     points: (point * 100).toFixed(3),
+          //     type: item.type,
+          //     releaseDate: item["release date"].split(" ")[0],
+          //   });
+          // });
+          // arr.sort((a, b) => b.points - a.points);
+          // arr.map((item, index) => {
+          //   item.place = index + 1;
+          //   return item;
+          // });
+          // top1.value = Object.assign({}, arr[0]);
+          // top2.value = Object.assign({}, arr[1]);
+          // top3.value = Object.assign({}, arr[2]);
+
+          // tableData.value = arr;
         })
       );
   } catch (error) {
@@ -534,6 +550,7 @@ const dateChange = (value) => {
   });
 };
 const handleChange = (value) => {
+  console.log(value);
   filterCount.value = value.length;
   filterObj = {};
   const filterArr = [];
@@ -608,10 +625,9 @@ const goAnalysisPage = (modelName) => {
 };
 
 const handleRowClick = (row, column, event) => {
-  console.log(row)
-  goAnalysisPage(row.modelName)
-
-}
+  console.log(row);
+  goAnalysisPage(row.modelName);
+};
 </script>
 
 <style scoped lang="scss">
