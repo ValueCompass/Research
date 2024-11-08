@@ -135,6 +135,7 @@
                 }}</template> -->
                 <template v-else-if="currentTab == 1">
                   <span
+                    style="margin-right: 1em"
                     v-html="
                       item
                         .split('/')
