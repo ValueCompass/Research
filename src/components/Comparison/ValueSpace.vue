@@ -6,7 +6,7 @@
           <div class="card-item">
             <div
               class="chart"
-              style="width: 1100px; height: 800px"
+              style="width: 1180px; height: 900px"
               ref="chartDom"
             ></div>
           </div>
@@ -31,6 +31,26 @@ import "echarts-gl";
 var gl_series_data = null;
 
 var colors = [
+  "#71AD8A",
+  "#A27BBB",
+  "#7186C9",
+  "#ACD291",
+  "#E195D0",
+  "#ED8B5E",
+  "#96C8E0",
+  "#F3CF7F",
+  "#E38380",
+  "#C49361",
+  "#71AD8A",
+  "#A27BBB",
+  "#7186C9",
+  "#ACD291",
+  "#E195D0",
+  "#ED8B5E",
+  "#96C8E0",
+  "#F3CF7F",
+  "#E38380",
+  "#C49361",
   "#71AD8A",
   "#A27BBB",
   "#7186C9",
