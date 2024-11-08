@@ -164,7 +164,8 @@
   </div>
 </template>
 <script setup>
-import { ref, watch, onMounted, onUnmounted, nextTick } from "vue";
+import { ref, watch, onMounted, onActivated, onUnmounted, nextTick } from "vue";
+import { useRoute } from "vue-router";
 import axios from "axios";
 import * as echarts from "echarts";
 import swiper from "../components/swiper.vue";
@@ -260,8 +261,10 @@ const fetchData = async () => {
           Schwartz_case = Schwartz_cases.data.data;
           modellist.value = Object.keys(modelInfo);
 
-          checkedModel.value = modellist.value[0];
-          currentModel.value = modellist.value[0];
+          if (!checkedModel.value && !currentModel.value) {
+            checkedModel.value = modellist.value[0];
+            currentModel.value = modellist.value[0];
+          }
           currentModelInfo.value = modelInfo[currentModel.value];
           setRadarChart(Schwartz_data[currentModel.value]);
           currentCase = getCaseData(Schwartz_case, currentModel.value);
@@ -585,6 +588,14 @@ onUnmounted(() => {
   if (chartInstance != null && chartInstance.dispose) {
     chartInstance.dispose();
   }
+});
+
+const router = useRoute();
+onActivated(() => {
+  console.log("首页传过来的modelName：" + router.query.modelName);
+  const setModelName = router.query.modelName;
+  checkedModel.value = setModelName;
+  currentModel.value = setModelName;
 });
 </script>
 

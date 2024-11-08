@@ -227,6 +227,7 @@
             :data="tableData"
             :default-sort="{ prop: 'place' }"
             style="width: 100%"
+            @row-click="handleRowClick" 
           >
             <el-table-column prop="place" label="Place" sortable width="120">
               <template #default="scope">
@@ -277,12 +278,10 @@
                   <span
                     v-if="scope.row.type == 'Open'"
                     class="type-icon"
-                    @click="goComparisonPage(scope.row.modelName)"
                   ></span>
                   <span
                     v-if="scope.row.type == 'Close'"
                     class="type-close-icon"
-                    @click="goComparisonPage(scope.row.modelName)"
                   ></span>
                 </el-tooltip>
               </template>
@@ -599,14 +598,20 @@ const updateFilterHeight = () => {
 };
 
 const router = useRouter();
-const goComparisonPage = (modelName) => {
+const goAnalysisPage = (modelName) => {
   router.push({
-    path: "/Comparison",
+    path: "/Analysis",
     query: {
       modelName: modelName,
     },
   });
 };
+
+const handleRowClick = (row, column, event) => {
+  console.log(row)
+  goAnalysisPage(row.modelName)
+
+}
 </script>
 
 <style scoped lang="scss">
