@@ -758,7 +758,6 @@ const fitterChange = (filerData) => {
   .el-tabs__item {
     padding: 0;
     color: var(--sub-text-color);
-    font-size: 1.125em;
     &.is-active {
       color: rgba(16, 147, 255, 1);
     }

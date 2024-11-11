@@ -125,19 +125,17 @@
     </div>
     <div class="chart-box" v-show="showTest == 5">
       <div class="result-main">
-        <!-- <div class="chart-tab">
-          <div class="chart-tab-title">Test Result</div>
-          <ul>
-            <li
-              :class="{ active: currentTab == index }"
-              @click="tabSwitch(index)"
-              v-for="(tab, index) in resultList"
-              :key="index"
-            >
-              <span></span>{{ tab }}
-            </li>
-          </ul>
-        </div> -->
+        <div class="chart-tab" style="display: none">
+          <el-tabs v-model="currentTab" @tab-click="tabSwitch">
+            <el-tab-pane
+              v-for="tab in resultList"
+              :key="tab.index"
+              :label="'&nbsp;&nbsp;&nbsp;' + tab.name + '&nbsp;&nbsp;&nbsp;'"
+              :name="tab.index"
+            ></el-tab-pane>
+          </el-tabs>
+        </div>
+
         <div class="chart-main" v-show="currentTab == 0">
           <div class="card-item card-print" v-if="myScoreArrValue.length > 0">
             <div class="card-left">
@@ -241,7 +239,7 @@
           </div>
         </div>
 
-        <div class="chart-main" v-show="false">
+        <div class="chart-main" v-show="currentTab == 1">
           <div class="card-item valueSpace-container">
             <div
               class="chart"
@@ -336,7 +334,17 @@ const chwartzTheoryData = ref(SchwartzTheoryDes["chwartz Theory Item"]);
 
 const tabList = ["PVQ40 IVM", "Moral Foundations Questionnaire", "Survey"];
 const currentTest = ref(testData[tabList[0]]);
-const resultList = ["Overview", "Value Space"];
+// const resultList = ["Overview", "Value Space"];
+const resultList = [
+  {
+    name: "Overview",
+    index: 0,
+  },
+  {
+    name: "Value Space",
+    index: 1,
+  },
+];
 const startIndex = ref(0);
 const total = ref(currentTest.value.questions.length);
 currentTest.value.userAnswers = [];
@@ -483,11 +491,11 @@ var logoMappingModel = {
   "Phi-3-medium-instruct": "LOGO/Microsoft.png",
   "Phi-3.5-mini-instruct": "LOGO/Microsoft.png",
   "Phi-3.5-MoE-instruct": "LOGO/Microsoft.png",
-  "sea-lion-7b-instruct": "LOGO/aisingapore.png",
-  "llama3-8b-cpt-sea-lionv2.1-instruct": "LOGO/aisingapore.png",
+  "SEA-lion-7b-instruct": "LOGO/aisingapore.png",
+  "LLaMA3 8B CPT SEA-Lionv2.1 Instruct": "LOGO/aisingapore.png",
   "Yi-Large": "LOGO/01-AI.png",
   "Qwen-Max": "LOGO/Alibaba.png",
-  Baichuan4: "LOGO/BaichuanAI.png",
+  "Baichuan4": "LOGO/BaichuanAI.png",
   "Deepseek-v2": "LOGO/deepseek.png",
   "Moonshot-v1": "LOGO/Moonshot.png",
   "GLM-4": "LOGO/TsinghuaUniversity.png",
@@ -500,7 +508,7 @@ const capture = ref(null);
 
 const mostSimilarModel = ref("");
 const tabSwitch = (index) => {
-  currentTab.value = index;
+  currentTab.value = index.index;
 };
 const toTest = () => {
   testNumber.value = 0;
@@ -536,8 +544,9 @@ const Submit = () => {
   getData();
 };
 async function sendData() {
-  // const inputList = currentTest.value.userAnswerIndex;
-  const inputList = [1, 2, 3, 4, 5, 4, 2, 1, 3, 5, 3, 2, 4, 5];
+  let inputList = currentTest.value.userAnswerIndex;
+  inputList = inputList.map((item) => item + 1);
+  // const inputList = [1, 2, 3, 4, 5, 4, 2, 1, 3, 5, 3, 2, 4, 5];
   console.log(inputList);
 
   try {
@@ -557,9 +566,9 @@ async function sendData() {
     //   userTestData.most_similar_model_value,
     //   userTestData.human_value
     // );
-    logoImg.value = getAssetsFile(
-      logoMappingModel[userTestData.most_similar_model]
-    );
+    // logoImg.value = getAssetsFile(
+    //   logoMappingModel[userTestData.most_similar_model]
+    // );
     // cultureInfo.value =
     //   cultureMapping[userTestData.top_5_similar_culture[0][0]];
     // cultureImg.value = getAssetsFile(cultureInfo.value.img);
@@ -876,7 +885,8 @@ const myScoreArrValue = ref([]);
 const spearmanArrDetailValue = ref([]);
 const resultDesc = ref("");
 function getData() {
-  const inputList = currentTest.value.userAnswerIndex;
+  let inputList = currentTest.value.userAnswerIndex;
+  inputList = inputList.map((item) => item + 1);
   // const inputList = [0, 1, 3, 4, 1, 1, 1, 2, 3, 4, 1, 1, 1, 2];
   const questions = currentTest.value.questions;
   console.log(inputList, currentTest.value);
@@ -884,9 +894,9 @@ function getData() {
   const myScoreArr = [];
   for (let i = 0; i < questions.length; i++) {
     if (myScoreObj.hasOwnProperty(questions[i].type)) {
-      myScoreObj[questions[i].type].push(inputList[i] + 1);
+      myScoreObj[questions[i].type].push(inputList[i]);
     } else {
-      myScoreObj[questions[i].type] = [inputList[i] + 1];
+      myScoreObj[questions[i].type] = [inputList[i]];
     }
   }
   // console.log(myScoreObj )
@@ -897,7 +907,7 @@ function getData() {
   }
   console.log(myScoreObj); // { 'Achievement': 1, 'Benevolence':2, ...}
 
-  // sendData()
+  sendData();
   return axios
     .get("./data/Schwartz_scores.json")
     .then(async (Schwartz_datas) => {
@@ -941,6 +951,7 @@ function getData() {
       logoImg.value = getAssetsFile(
         logoMappingModel[spearmanArrDetail[0].model]
       );
+      console.log(spearmanArrDetail[0].model);
       cultureImg.value = getAssetsFile(
         chwartzTheoryData.value[myScoreArrValue.value[0].SchwartzTheoryItem].img
       );
@@ -1284,8 +1295,8 @@ function softmax(z) {
     padding: 0 0em 4.5em;
     flex-wrap: wrap;
     .chart-tab {
-      width: calc(calc(100% - 1200px) / 2);
-      min-width: 13.125em;
+      width: 100%;
+      margin-bottom: 0.8em;
       .chart-tab-title {
         font-size: 1em;
         font-weight: 700;
@@ -1500,6 +1511,7 @@ function softmax(z) {
 }
 
 .modal-box {
+  z-index: 5;
   position: fixed;
   width: 100%;
   height: 100%;
@@ -1695,5 +1707,16 @@ function softmax(z) {
 }
 .valueSpace-container {
   background: #121f37 !important;
+}
+
+:deep(.el-tabs__header) {
+  --el-font-size-base: 20px;
+  .el-tabs__item {
+    padding: 0;
+    color: var(--sub-text-color);
+    &.is-active {
+      color: rgba(16, 147, 255, 1);
+    }
+  }
 }
 </style>
