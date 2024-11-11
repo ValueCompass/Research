@@ -6,7 +6,7 @@
           <div class="card-item">
             <div
               class="chart"
-              style="width: 1180px; height: 900px"
+              style="width: 1180px; height: 850px"
               ref="chartDom"
             ></div>
           </div>
@@ -200,7 +200,7 @@ function setGlChart(gl_data) {
       },
       viewControl: {
         autoRotate: true, //自动旋转
-        autoRotateSpeed: 4,
+        autoRotateSpeed: 2,
         autoRotateAfterStill: 1,
         distance: 130,
       },

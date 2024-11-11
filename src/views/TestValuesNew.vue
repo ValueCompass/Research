@@ -243,7 +243,7 @@
           <div class="card-item valueSpace-container">
             <div
               class="chart"
-              style="width: 1100px; height: 800px"
+              style="width: 1130px; height: 850px"
               ref="chartDom"
             ></div>
           </div>
@@ -577,7 +577,8 @@ async function sendData() {
       culture: [],
       human: [
         {
-          name: userTestData.tsne_human_caption,
+          // name: userTestData.tsne_human_caption,
+          name: input.value ? input.value : "User",
           value: userTestData.tsne_human,
         },
       ],
@@ -659,25 +660,25 @@ function setGlChart(gl_data) {
       },
     });
   });
-  series.push({
-    name: "Geocultural sphere",
-    type: "scatter3D",
-    data: gl_data.culture,
-    symbolSize: 18,
-    itemStyle: {
-      opacity: 1,
-      color: "#1093FF",
-    },
-    label: {
-      show: true,
-      formatter: "{b}",
-      textStyle: {
-        color: "#fff",
-        fontSize: 16,
-        backgroundColor: "rgba(255,255,255,0)",
-      },
-    },
-  });
+  // series.push({
+  //   name: "Geocultural sphere",
+  //   type: "scatter3D",
+  //   data: gl_data.culture,
+  //   symbolSize: 18,
+  //   itemStyle: {
+  //     opacity: 1,
+  //     color: "#1093FF",
+  //   },
+  //   label: {
+  //     show: true,
+  //     formatter: "{b}",
+  //     textStyle: {
+  //       color: "#fff",
+  //       fontSize: 16,
+  //       backgroundColor: "rgba(255,255,255,0)",
+  //     },
+  //   },
+  // });
   series.push({
     name: "You",
     type: "scatter3D",
@@ -702,7 +703,7 @@ function setGlChart(gl_data) {
   const option = {
     legend: {
       show: true,
-      width: "1100",
+      width: "1130",
       textStyle: {
         color: "#fff",
       },
@@ -768,7 +769,7 @@ function setGlChart(gl_data) {
       },
       viewControl: {
         autoRotate: true,
-        autoRotateSpeed: 4,
+        autoRotateSpeed: 2,
         autoRotateAfterStill: 1,
         distance: 130,
       },
@@ -1327,7 +1328,7 @@ function softmax(z) {
       }
     }
     .chart-main {
-      // width: 1200px;
+      // width: 1130px;
       .card-item {
         border-radius: 6px;
         display: flex;
@@ -1707,10 +1708,13 @@ function softmax(z) {
 }
 .valueSpace-container {
   background: #121f37 !important;
+  display: flex;
+  flex-direction: row;
+  justify-content: center !important;
 }
 
 :deep(.el-tabs__header) {
-  --el-font-size-base: 1.25em;
+  --el-font-size-base: 20px;
   .el-tabs__item {
     padding: 0;
     color: var(--sub-text-color);
