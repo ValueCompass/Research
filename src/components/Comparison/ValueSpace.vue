@@ -65,6 +65,9 @@ var colors = [
 
 function setGlChart(gl_data) {
   console.log(gl_data);
+  if (chartInstance != null && chartInstance.dispose) {
+    chartInstance.dispose();
+  }
   chartInstance = echarts.init(chartDom.value);
   const usersyb = `path://M14.2558 21.7442L12 24L9.74416 21.7442C5.30941 20.7204 2 16.7443 2 12C2 6.48 6.48 2 12 2C17.52 2 22 6.48 22 12C22 16.7443 18.6906 20.7204 14.2558 21.7442ZM6.02332 15.4163C7.49083 17.6069 9.69511 19 12.1597 19C14.6243 19 16.8286 17.6069 18.2961 15.4163C16.6885 13.9172 14.5312 13 12.1597 13C9.78821 13 7.63095 13.9172 6.02332 15.4163ZM12 11C13.6569 11 15 9.65685 15 8C15 6.34315 13.6569 5 12 5C10.3431 5 9 6.34315 9 8C9 9.65685 10.3431 11 12 11Z`;
   const modelsyb = `path://M1 11C6.52285 11 11 6.52285 11 1H13C13 6.52285 17.4772 11 23 11V13C17.4772 13 13 17.4772 13 23H11C11 17.4772 6.52285 13 1 13V11Z`;
@@ -253,9 +256,9 @@ const setValueSpacesData = async (modelNameList) => {
     return item.model_name;
   });
   console.log(modelName);
-  const response = await axios.get("./data/value_space.json");
+  // const response = await axios.get("./data/value_space.json");
   // console.log(response);
-  // const response = await axios.post("http://20.163.194.92:5000/api/calculate_model_value", { input: modelName });
+  const response = await axios.post("https://tab2024.valuecompass.site/api/calculate_model_value", { input: modelName });
 
   console.log(response.data);
   let data = response.data;

@@ -754,7 +754,7 @@ const fitterChange = (filerData) => {
 }
 
 :deep(.el-tabs__header) {
-  --el-font-size-base: 20px;
+  --el-font-size-base: 1.25em;
   .el-tabs__item {
     padding: 0;
     color: var(--sub-text-color);

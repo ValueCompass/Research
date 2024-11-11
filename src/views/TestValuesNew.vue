@@ -125,7 +125,7 @@
     </div>
     <div class="chart-box" v-show="showTest == 5">
       <div class="result-main">
-        <div class="chart-tab" style="display: none">
+        <div class="chart-tab">
           <el-tabs v-model="currentTab" @tab-click="tabSwitch">
             <el-tab-pane
               v-for="tab in resultList"
@@ -553,7 +553,7 @@ async function sendData() {
     // const response = await axios.get("./data/value_space.json");
     // console.log(response);
     const response = await axios.post(
-      "http://20.163.194.92:5000/api/calculate_human_value",
+      "https://tab2024.valuecompass.site/api/calculate_human_value",
       { input: inputList }
     );
     const data = response.data;
@@ -1710,7 +1710,7 @@ function softmax(z) {
 }
 
 :deep(.el-tabs__header) {
-  --el-font-size-base: 20px;
+  --el-font-size-base: 1.25em;
   .el-tabs__item {
     padding: 0;
     color: var(--sub-text-color);
