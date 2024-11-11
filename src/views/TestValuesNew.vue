@@ -964,7 +964,7 @@ function getData() {
         chwartzTheoryData.value[myScoreArrValue.value[0].SchwartzTheoryItem].img
       );
 
-      resultDesc.value = `${
+      const des1 =
         chwartzTheoryData.value[myScoreArrValue.value[0].SchwartzTheoryItem]
           .des[
           Math.floor(
@@ -973,8 +973,8 @@ function getData() {
                 myScoreArrValue.value[0].SchwartzTheoryItem
               ].des.length
           )
-        ]
-      } ${
+        ];
+      const des2 =
         chwartzTheoryData.value[myScoreArrValue.value[1].SchwartzTheoryItem]
           .des[
           Math.floor(
@@ -983,8 +983,8 @@ function getData() {
                 myScoreArrValue.value[1].SchwartzTheoryItem
               ].des.length
           )
-        ]
-      } Moreover, ${
+        ];
+      const des3 =
         chwartzTheoryData.value[myScoreArrValue.value[2].SchwartzTheoryItem]
           .des[
           Math.floor(
@@ -993,8 +993,11 @@ function getData() {
                 myScoreArrValue.value[2].SchwartzTheoryItem
               ].des.length
           )
-        ]
-      }`;
+        ];
+      resultDesc.value = `${des1} ${des2} Moreover, ${des3.replace(
+        des3[0],
+        des3[0].toLowerCase()
+      )}`;
     });
 }
 
@@ -1053,8 +1056,9 @@ function softmax(z) {
   }
 }
 .chart-box {
-  margin-top: 3em;
   padding: 0 0em 4.5em;
+  max-width: 1300px;
+  margin: 3em auto 0;
   display: flex;
   .test-main {
     width: 840px;
@@ -1213,13 +1217,16 @@ function softmax(z) {
     }
   }
   .test-user-main {
-    width: 870px;
+    width: 770px;
     margin: 0 auto;
     padding-top: 8em;
     .intro {
-      font-size: 1.8em;
+      font-size: 1.6em;
       line-height: 1.3em;
       margin-bottom: 3em;
+      p {
+        margin-bottom: 0.2em;
+      }
     }
     .input-box {
       width: 70%;
@@ -1300,7 +1307,7 @@ function softmax(z) {
     }
   }
   .result-main {
-    font-size: 0.9em;
+    font-size: 0.85em;
     width: 100%;
     margin: 0 auto;
     padding: 0 0em 4.5em;
@@ -1345,7 +1352,7 @@ function softmax(z) {
         align-items: center;
         flex-wrap: wrap;
         justify-content: space-between;
-        padding: 1.5em 3em;
+        padding: 5em 5em;
         background-color: var(--gary-color);
 
         .print {
@@ -1370,7 +1377,6 @@ function softmax(z) {
         .card-item {
           display: block;
           width: 50%;
-          padding-top: 3em;
           .card-chart-title {
             width: 100%;
             font-size: 2.25em;
@@ -1401,7 +1407,7 @@ function softmax(z) {
               margin-top: 2.2em;
               font-size: 1.25em;
               & > span {
-                width: 8em;
+                width: 9em;
                 display: block;
                 text-align: right;
                 padding-right: 1em;
@@ -1409,7 +1415,7 @@ function softmax(z) {
                 box-sizing: border-box;
               }
               & > div {
-                width: calc(100% - 8em);
+                flex: 1;
               }
               .score-span {
                 color: rgba(47, 72, 30, 1);
@@ -1422,6 +1428,7 @@ function softmax(z) {
                 margin-top: 4em;
                 & > span {
                   padding-bottom: 0.4em;
+                  width: 10em;
                   // width: 100%;
                   // text-align: left;
                 }
@@ -1445,6 +1452,7 @@ function softmax(z) {
     width: 58.2%;
     .tag-list {
       display: flex;
+      flex-wrap: wrap;
       gap: 0.5em;
       .tag {
         display: inline-block;
@@ -1512,7 +1520,7 @@ function softmax(z) {
       margin-bottom: 0.8em;
     }
     p {
-      font-size: 1.4em;
+      font-size: 1.75em;
     }
     .model-name-span {
       background: rgba(150, 200, 224, 1);

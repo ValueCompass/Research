@@ -10,8 +10,11 @@ declare module 'vue' {
     CulturalAlignment: typeof import('./src/components/Comparison/CulturalAlignment.vue')['default']
     Echart: typeof import('./src/components/Comparison/echart.vue')['default']
     ElCascader: typeof import('element-plus/es')['ElCascader']
+    ElCheckbox: typeof import('element-plus/es')['ElCheckbox']
+    ElCheckboxGroup: typeof import('element-plus/es')['ElCheckboxGroup']
     ElInput: typeof import('element-plus/es')['ElInput']
     ElOption: typeof import('element-plus/es')['ElOption']
+    ElPopover: typeof import('element-plus/es')['ElPopover']
     ElProgress: typeof import('element-plus/es')['ElProgress']
     ElRadio: typeof import('element-plus/es')['ElRadio']
     ElRadioGroup: typeof import('element-plus/es')['ElRadioGroup']
@@ -34,5 +37,8 @@ declare module 'vue' {
     Table: typeof import('./src/components/Comparison/Table.vue')['default']
     ValueSpace: typeof import('./src/components/Comparison/ValueSpace.vue')['default']
     Visualization: typeof import('./src/components/Comparison/Visualization.vue')['default']
+  }
+  export interface ComponentCustomProperties {
+    vPopover: typeof import('element-plus/es')['ElPopoverDirective']
   }
 }
