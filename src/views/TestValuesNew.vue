@@ -257,11 +257,11 @@
             <h2>Hi, {{ input ? input : "User" }}</h2>
             <div>
               <img src="@/assets/images/main-logo.png" alt="logo" />
-              <img
+              <!-- <img
                 class="QRCodeImg"
                 src="@/assets/images/QRCodeImg.png"
                 alt=""
-              />
+              /> -->
               <!-- <SvgIcon
                 class="close"
                 name="close"
@@ -303,11 +303,18 @@
                       : ""
                   }}</span>
                   seamlessly with your value priorities,
+                  <span
+                    >resonating with your mindset and core belief —— much like 
+                    finding a close friend.</span
+                  >
                 </p>
-                <p>
-                  resonating with your mindset and core belief —— much like 
-                  finding a close friend.
-                </p>
+              </div>
+              <div>
+                <img
+                  class="QRCodeImg"
+                  src="@/assets/images/QRCodeImg.png"
+                  alt=""
+                />
               </div>
             </div>
           </div>
@@ -1050,7 +1057,7 @@ function softmax(z) {
   padding: 0 0em 4.5em;
   display: flex;
   .test-main {
-    width: 800px;
+    width: 840px;
     margin: 0 auto;
     h2 {
       font-size: 1.8em;
@@ -1082,7 +1089,8 @@ function softmax(z) {
       font-weight: 600;
       line-height: 1.33em;
       text-align: left;
-      margin: 2.5em 0;
+      margin: 2.5em 0 1em;
+      min-height: 3em;
     }
     .q-q {
       font-size: 1.125em;
@@ -1205,11 +1213,11 @@ function softmax(z) {
     }
   }
   .test-user-main {
-    width: 800px;
+    width: 870px;
     margin: 0 auto;
     padding-top: 8em;
     .intro {
-      font-size: 1.6em;
+      font-size: 1.8em;
       line-height: 1.3em;
       margin-bottom: 3em;
     }
@@ -1217,6 +1225,8 @@ function softmax(z) {
       width: 70%;
       margin: 0 auto;
       .input {
+        font-size: 1.25em;
+        height: 2em;
         --el-input-text-color: var(--text-color);
         --el-input-bg-color: var(--bg-color) !important;
         --el-input-border-color: rgba(194, 194, 194, 1) !important;
@@ -1439,11 +1449,13 @@ function softmax(z) {
       .tag {
         display: inline-block;
         font-size: 2em;
-        padding: 0.33em 0.66em;
+        padding: 0 0.66em;
         background-color: rgba(172, 210, 145, 1);
         color: rgba(47, 72, 30, 1);
         border-radius: 2px;
         font-weight: 600;
+        height: 2em;
+        line-height: 2em;
       }
     }
     h2,
@@ -1605,27 +1617,36 @@ function softmax(z) {
           flex-wrap: wrap;
           align-items: center;
           & > div:nth-child(1) {
-            width: 140px;
-            img {
-              width: 120px;
-            }
+            width: 100px;
+          }
+          img {
+            width: 100px;
           }
           & > div:nth-child(2) {
-            width: calc(100% - 140px);
+            width: calc(100% - 200px);
+            padding: 0 1em;
+            box-sizing: border-box;
           }
           p:nth-child(1) {
+            line-height: 1.5;
             font-size: 1.125em;
             font-weight: 600;
             margin-bottom: 0.8em;
+            span {
+              font-size: 0.9em;
+              font-weight: normal;
+            }
+            .model-name-span {
+              background: rgba(150, 200, 224, 1);
+              color: rgba(0, 79, 143, 1);
+              padding: 0.3em 0.5em;
+              display: inline-block;
+              font-size: 1em;
+              font-weight: 600;
+            }
           }
           p {
             font-size: 1em;
-          }
-          .model-name-span {
-            background: rgba(150, 200, 224, 1);
-            color: rgba(0, 79, 143, 1);
-            padding: 0.3em 0.5em;
-            display: inline-block;
           }
         }
       }
