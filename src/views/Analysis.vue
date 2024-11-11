@@ -595,6 +595,7 @@ onUnmounted(() => {
   }
 });
 
+let isFirstEnter = true
 const router = useRoute();
 onActivated(() => {
   console.log("首页传过来的modelName：" + router.query.modelName);
@@ -602,6 +603,11 @@ onActivated(() => {
   if (setModelName) {
     checkedModel.value = setModelName;
     currentModel.value = setModelName;
+    if(isFirstEnter){
+      isFirstEnter = false
+    }else{
+      submit()
+    }
   }
 });
 </script>
