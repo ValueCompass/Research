@@ -168,11 +168,11 @@
                       ? spearmanArrDetailValue[0].model
                       : ""
                   }}</span>
-                  seamlessly with your value priorities,
-                </p>
-                <p>
-                  resonating with your mindset and core belief —— much like 
-                  finding a close friend.
+                  aligns seamlessly with your value priorities,
+                  <span
+                    >resonating with your mindset and core belief —— much
+                    like finding a close friend.</span
+                  >
                 </p>
               </div>
             </div>
@@ -302,7 +302,7 @@
                       ? spearmanArrDetailValue[0].model
                       : ""
                   }}</span>
-                  seamlessly with your value priorities,
+                  aligns seamlessly with your value priorities,
                   <span
                     >resonating with your mindset and core belief —— much like 
                     finding a close friend.</span
@@ -1476,7 +1476,7 @@ function softmax(z) {
       font-size: 2em;
     }
     p {
-      font-size: 1.75em;
+      font-size: 1.7em;
       margin: 1.3em 0;
       line-height: 1.375em;
     }
@@ -1515,18 +1515,20 @@ function softmax(z) {
       width: calc(100% - 150px);
     }
     p:nth-child(1) {
+      line-height: 1.8;
       font-size: 1.8em;
       font-weight: 600;
       margin-bottom: 0.8em;
-    }
-    p {
-      font-size: 1.75em;
-    }
-    .model-name-span {
-      background: rgba(150, 200, 224, 1);
-      color: rgba(0, 79, 143, 1);
-      padding: 0.3em 0.5em;
-      display: inline-block;
+      span {
+        font-size: 0.94em;
+        font-weight: normal;
+      }
+      .model-name-span {
+        background: rgba(150, 200, 224, 1);
+        color: rgba(0, 79, 143, 1);
+        padding: 0.3em 0.5em;
+        display: inline-block;
+      }
     }
   }
 }
