@@ -1022,7 +1022,7 @@ function softmax(z) {
 <style scoped lang="scss">
 .test-container {
   padding: 0 50px;
-  margin-top: 3em;
+  padding-top: 3em;
   display: flex;
   justify-content: space-between;
   align-items: center;

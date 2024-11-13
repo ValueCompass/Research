@@ -25,6 +25,7 @@ declare module 'vue' {
     ElTabs: typeof import('element-plus/es')['ElTabs']
     ElTag: typeof import('element-plus/es')['ElTag']
     ElTooltip: typeof import('element-plus/es')['ElTooltip']
+    Footer: typeof import('./src/components/Footer.vue')['default']
     Loading: typeof import('./src/components/loading.vue')['default']
     NavBar: typeof import('./src/components/navBar.vue')['default']
     RadarChart: typeof import('./src/components/radar-chart.vue')['default']
