@@ -68,6 +68,7 @@ export default {
         }
         .router-link-exact-active {
           color: #1093ff;
+          font-weight: 700;
         }
       }
     }

@@ -20,6 +20,7 @@
             placeholder="Measurement Date"
             @change="dateChange"
             style="width: 200px"
+            aria-label="Measurement Date"
           >
             <el-radio-group v-model="value1" style="width: 100%">
               <el-option
@@ -667,7 +668,7 @@ const handleRowClick = (row, column, event) => {
       font-size: 0.875em;
       font-weight: 400;
       line-height: 1.57em;
-      color: rgba(16, 147, 255, 1);
+      color: #0c76ce;
       margin-left: 1.9em;
       cursor: pointer;
     }

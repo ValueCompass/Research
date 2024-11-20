@@ -10,7 +10,7 @@
       v-for="(item, index) in caseData"
       :key="item.model + index"
     >
-      <div class="swiper-main">
+      <div class="swiper-main" tabindex=0>
         <p class="title">
           <span>Score：</span>{{ item.score.toFixed(4) }}
         </p>
@@ -103,7 +103,7 @@ export default {
     font-size: 1em;
     line-height: 2em;
     span {
-      color: var(--theme-color);
+      color: #0b70c3;
     }
   }
   .chart-content-desc {

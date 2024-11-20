@@ -699,6 +699,7 @@ onActivated(() => {
         font-size: 1.125em;
         a {
           text-decoration: underline;
+          color: #657171;
         }
       }
     }
@@ -719,7 +720,7 @@ onActivated(() => {
     ul {
       li {
         line-height: 1.35;
-        font-size: 1em;
+        font-size: 1.11em;
         font-weight: 400;
         margin-top: 1.5em;
         display: flex;
@@ -773,7 +774,7 @@ onActivated(() => {
             border-bottom: 2px solid transparent;
 
             &.active {
-              color: rgba(16, 147, 255, 1);
+              color: #0c76ce;
               border-bottom: 2px solid rgba(16, 147, 255, 1);
             }
           }

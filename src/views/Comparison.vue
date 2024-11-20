@@ -6,6 +6,7 @@
         <div class="compare-model-list">
           <ul>
             <li
+              class="model-li"
               v-for="(item, index) in checkedModelDetailList"
               :key="item"
               :style="{ 'border-color': item.color }"
@@ -36,10 +37,10 @@
                 }}</span>
               </div>
             </li>
-            <div v-if="checkedModelDetailList.length >= 5" class="max-num-tip">
+            <li v-if="checkedModelDetailList.length >= 5" class="max-num-tip">
               <p style="">The maximum number of comparisons supported is 5</p>
-            </div>
-            <div
+            </li>
+            <li
               v-if="checkedModelDetailList.length < 5"
               class="add-model"
               v-popover="popoverRef"
@@ -47,7 +48,7 @@
             >
               <img src="@/assets/images/add-model.svg" alt="add-model" />
               <p>Add</p>
-            </div>
+            </li>
             <el-popover
               ref="popoverRef"
               :visible="visible"
@@ -468,14 +469,15 @@ const getModelDetail = () => {
   // for echart
   VisualizationComponentProps.value.setRadarChart(checkedModelDetailList.value);
 
-  // for setHotChart
-  CulturalAlignmentComponentProps.value.setHotChart(checkedModelNameList.value);
-  console.log("checkedModelDetailList.value", checkedModelDetailList.value);
-
   // for value space
   ValueSpaceComponentProps.value.setValueSpacesData(
     checkedModelDetailList.value
   );
+
+  // for setHotChart
+  CulturalAlignmentComponentProps.value.setHotChart(checkedModelNameList.value);
+  console.log("checkedModelDetailList.value", checkedModelDetailList.value);
+
 };
 
 // 销毁ECharts实例
@@ -595,7 +597,7 @@ const fitterChange = (filerData) => {
       gap: 0.75em;
       align-items: center;
       align-items: stretch;
-      li {
+      li.model-li {
         width: 13em;
         // height: 7.5em;
         padding: 1.125em 1.5em;
@@ -673,7 +675,7 @@ const fitterChange = (filerData) => {
         align-items: center;
         border: 3px dashed rgba(194, 194, 194, 1);
         border-radius: 0.75em;
-        color: rgba(194, 194, 194, 1);
+        color: #6b6b6b;
         cursor: pointer;
       }
       .max-num-tip {

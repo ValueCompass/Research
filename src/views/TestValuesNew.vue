@@ -66,6 +66,7 @@
               :percentage="percentage"
               :show-text="false"
               color="#ffd000"
+              aria-label="progress"
             />
           </div>
           <p class="q-t">
@@ -195,6 +196,7 @@
                       :stroke-width="12"
                       :percentage="(item.score / 6) * 100"
                       color="rgba(172, 210, 145, 1)"
+                      :aria-label="item.SchwartzTheoryItem + 'progress'"
                     >
                       <span
                         class="score-span"
@@ -225,6 +227,7 @@
                       :stroke-width="24"
                       :percentage="item.softmaxItem * 100"
                       color="rgba(172, 210, 145, 1)"
+                      :aria-label="item.model + 'progress'"
                     >
                       <span
                         class="score-span"
@@ -1047,8 +1050,10 @@ function softmax(z) {
       height: 2.28em;
       color: #fff;
       font-size: 1.25em;
+      font-weight: bold;
       cursor: pointer;
       margin-top: 3.43em;
+      margin-bottom: 2em;
       &:hover {
         background: #50b8ff;
       }
@@ -1181,10 +1186,10 @@ function softmax(z) {
         cursor: pointer;
         font-size: 0.875em;
         line-height: 1.57em;
-        color: var(--theme-color);
+        color: #0c76ce;
         display: flex;
         align-items: center;
-        border: 1px solid var(--theme-color);
+        border: 1px solid #0c76ce;
         background: transparent;
         &.blue {
           background: rgba(16, 147, 255, 1);
@@ -1197,7 +1202,7 @@ function softmax(z) {
 
         &.disabled {
           border-color: #c3c3c3;
-          color: rgba(0, 0, 0, 0.15);
+          color: #565656;
           background: #d0d0d0;
           cursor: not-allowed;
           pointer-events: none;
@@ -1259,8 +1264,8 @@ function softmax(z) {
       button {
         width: 10em;
         height: 2.29em;
-        border: 1px solid var(--theme-color);
-        color: var(--theme-color);
+        border: 1px solid #0c76ce;
+        color: #0c76ce;
         background: transparent;
         font-size: 0.875em;
         display: flex;
@@ -1276,7 +1281,7 @@ function softmax(z) {
         }
         &.disabled {
           border-color: #c3c3c3;
-          color: rgba(0, 0, 0, 0.15);
+          color: #565656;
           background: #d0d0d0;
           cursor: not-allowed;
           pointer-events: none;
@@ -1361,9 +1366,9 @@ function softmax(z) {
           .print-btn {
             margin-top: 40px;
             font-family: Roboto;
-            font-size: 0.875em;
+            font-size: 1em;
             line-height: 1.57em;
-            color: #1093ff;
+            color: #0b70c3;
             cursor: pointer;
             border: 1px solid rgba(16, 147, 255, 1);
             background-color: transparent;
@@ -1714,6 +1719,7 @@ function softmax(z) {
       .cancel {
         border: 1px solid #fff;
         background-color: transparent;
+        background: #737373;
       }
       .print {
         border: 1px solid #1093ff;
