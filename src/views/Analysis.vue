@@ -109,8 +109,11 @@
         </ul>
       </div>
       <div class="chart-main">
-        <div class="chart-main-chart">
-          <div class="chart" ref="chartDom"></div>
+        <div class="chart-main-chart" :class="openCaseStatus ? '' : 'close'">
+          <span class="case-open-btn" @click="openCase(true)">Cases</span>
+          <div class="chart-container">
+            <div class="chart" ref="chartDom"></div>
+          </div>
           <div class="chart-text-main">
             <ul class="chart-menu">
               <li
@@ -153,6 +156,7 @@
               </li>
             </ul>
             <div class="chart-content">
+              <span class="case-close-btn" @click="openCase(false)"></span>
               <swiper :data="currentCaseData"></swiper>
             </div>
           </div>
@@ -588,6 +592,11 @@ const tabSwitch = (index) => {
   currentCaseData.value = currentCase[currentChartTab.value];
 };
 
+const openCaseStatus = ref(false);
+const openCase = (bool) => {
+  openCaseStatus.value = bool;
+};
+
 // 销毁ECharts实例
 onUnmounted(() => {
   if (chartInstance != null && chartInstance.dispose) {
@@ -595,7 +604,7 @@ onUnmounted(() => {
   }
 });
 
-let isFirstEnter = true
+let isFirstEnter = true;
 const router = useRoute();
 onActivated(() => {
   console.log("首页传过来的modelName：" + router.query.modelName);
@@ -603,10 +612,10 @@ onActivated(() => {
   if (setModelName) {
     checkedModel.value = setModelName;
     currentModel.value = setModelName;
-    if(isFirstEnter){
-      isFirstEnter = false
-    }else{
-      submit()
+    if (isFirstEnter) {
+      isFirstEnter = false;
+    } else {
+      submit();
     }
   }
 });
@@ -746,16 +755,47 @@ onActivated(() => {
   .chart-main {
     flex: 1;
     overflow: hidden;
+
     .chart-main-chart {
+      transition: all 0.2s;
+      height: 33em;
+      position: relative;
       display: flex;
-      align-items: center;
-      .chart {
+      // align-items: center;
+      .case-open-btn {
+        opacity: 0;
+        z-index: -1;
+        transition: all 0.2s;
+        font-size: 0.9em;
+        cursor: pointer;
+        position: absolute;
+        top: 1em;
+        left: 80%;
+        background: var(--gary-color) url(@/assets/images/toggle.png) no-repeat
+          3.5em center;
+        background-size: 0.8em auto;
+        padding: 5px 30px 5px 10px;
+      }
+      .chart-container {
+        transition: all 0.2s;
         width: 54%;
-        height: 30em;
-        min-width: 640px;
+        padding-bottom: 36%;
+        height: 0;
+        // min-width: 640px;
         // flex: 1;
+        position: relative;
+        .chart{
+          z-index: 2;
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 100%;
+        }
       }
       .chart-text-main {
+        padding-left: 1em;
+        transition: all 0.2s;
         flex: 1;
         overflow: hidden;
         .chart-menu {
@@ -780,11 +820,26 @@ onActivated(() => {
           }
         }
         .chart-content {
+          position: relative;
           width: 100%;
           background: var(--gary-color);
           border-radius: 0.375em;
           margin-top: 0.75em;
           padding-bottom: 2em;
+          .case-close-btn {
+            cursor: pointer;
+            position: absolute;
+            left: 1em;
+            top: 1em;
+            z-index: 10;
+            background: var(--gary-color) url(@/assets/images/toggle.png)
+              no-repeat center;
+            background-size: 0.8em auto;
+            display: inline-block;
+            width: 2em;
+            height: 1.2em;
+            transform: rotate(180deg);
+          }
 
           .title {
             color: rgba(16, 147, 255, 1);
@@ -808,11 +863,29 @@ onActivated(() => {
         }
       }
     }
+
+    .chart-main-chart.close {
+      height: 34em;
+      .case-open-btn {
+        opacity: 1;
+        z-index: 1;
+      }
+      .chart-container {
+        transform: translate(38%, 16%) scale(1.2);
+      }
+      .chart-text-main {
+        transform: scaleX(0);
+      }
+    }
+    .chart-main-chart.close + .chart-title {
+      // transform: translateY(.2em);
+    }
     .chart-title {
       font-size: 1em;
       font-weight: 600;
       text-align: center;
       margin-top: 1em;
+      line-height: 2;
     }
     .chart-main-bar {
       .bar-chart {
