@@ -332,6 +332,7 @@
 </template>
 <script setup>
 import { getKeyValue, mergeObj, getAvaData } from "../utils/common.js";
+import { calculateHumanValue } from "@/service/api";
 
 import { ref, computed, onMounted, onUnmounted, nextTick } from "vue";
 import axios from "axios";
@@ -560,67 +561,68 @@ async function sendData() {
   console.log(inputList);
 
   try {
-    // const response = await axios.get("./data/value_space.json");
-    // console.log(response);
-    const response = await axios.post(
-      "https://tab2024.valuecompass.site/api/calculate_human_value",
-      { input: inputList }
-    );
-    const data = response.data;
-    showTest.value = 5;
-    userTestData = data;
-    console.log(data);
-    mostSimilarModel.value = userTestData.most_similar_model;
-    // setBarChart(userTestData.top_5_similar_culture);
-    // setRadarChart(
-    //   userTestData.most_similar_model_value,
-    //   userTestData.human_value
-    // );
-    // logoImg.value = getAssetsFile(
-    //   logoMappingModel[userTestData.most_similar_model]
-    // );
-    // cultureInfo.value =
-    //   cultureMapping[userTestData.top_5_similar_culture[0][0]];
-    // cultureImg.value = getAssetsFile(cultureInfo.value.img);
+    calculateHumanValue({ input: inputList })
+      .then((response) => {
+        const data = response.data;
+        showTest.value = 5;
+        userTestData = data;
+        console.log(data);
+        mostSimilarModel.value = userTestData.most_similar_model;
+        // setBarChart(userTestData.top_5_similar_culture);
+        // setRadarChart(
+        //   userTestData.most_similar_model_value,
+        //   userTestData.human_value
+        // );
+        // logoImg.value = getAssetsFile(
+        //   logoMappingModel[userTestData.most_similar_model]
+        // );
+        // cultureInfo.value =
+        //   cultureMapping[userTestData.top_5_similar_culture[0][0]];
+        // cultureImg.value = getAssetsFile(cultureInfo.value.img);
 
-    const gl_data = {
-      culture: [],
-      human: [
-        {
-          // name: userTestData.tsne_human_caption,
-          name: input.value ? input.value : "User",
-          value: userTestData.tsne_human,
-        },
-      ],
-      model: [],
-      node: [],
-    };
-    // gl_data.culture = userTestData.tsne_cultures.map((item, index) => {
-    //   return {
-    //     name: userTestData.tsne_culture_caption[index],
-    //     value: item,
-    //   };
-    // });
-    gl_data.model = userTestData.tsne_models.map((item, index) => {
-      return {
-        name: userTestData.tsne_model_caption[index],
-        value: item,
-        type: "model",
-        itemStyle: {
-          color: colors[index],
-          opacity: 1,
-        },
-      };
-    });
-    // gl_data.node = userTestData.tsne_nodes.map((item, index) => {
-    //   return {
-    //     name: userTestData.tsne_node_captions[index],
-    //     value: item,
-    //     type: "node",
-    //     model: userTestData.tsne_model_caption[Math.floor(index / 30)],
-    //   };
-    // });
-    setGlChart(gl_data);
+        const gl_data = {
+          culture: [],
+          human: [
+            {
+              // name: userTestData.tsne_human_caption,
+              name: input.value ? input.value : "User",
+              value: userTestData.tsne_human,
+            },
+          ],
+          model: [],
+          node: [],
+        };
+        // gl_data.culture = userTestData.tsne_cultures.map((item, index) => {
+        //   return {
+        //     name: userTestData.tsne_culture_caption[index],
+        //     value: item,
+        //   };
+        // });
+        gl_data.model = userTestData.tsne_models.map((item, index) => {
+          return {
+            name: userTestData.tsne_model_caption[index],
+            value: item,
+            type: "model",
+            itemStyle: {
+              color: colors[index],
+              opacity: 1,
+            },
+          };
+        });
+        // gl_data.node = userTestData.tsne_nodes.map((item, index) => {
+        //   return {
+        //     name: userTestData.tsne_node_captions[index],
+        //     value: item,
+        //     type: "node",
+        //     model: userTestData.tsne_model_caption[Math.floor(index / 30)],
+        //   };
+        // });
+        setGlChart(gl_data);
+      })
+      .catch((err) => {
+        console.log("err");
+      })
+      .finally(() => {});
   } catch (error) {
     console.error("Error:", error);
     // document.getElementById("result").innerText =

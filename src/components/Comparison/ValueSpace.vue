@@ -3,7 +3,12 @@
     <div class="chart-box">
       <div class="result-main">
         <div class="chart-main">
-          <div class="card-item">
+          <div
+            class="card-item"
+            v-loading="loading"
+            element-loading-text="Loading..."
+            element-loading-background="rgba(122, 122, 122, 0)"
+          >
             <div
               class="chart"
               style="width: 1180px; height: 850px"
@@ -24,9 +29,11 @@ import {
   nextTick,
   defineExpose,
 } from "vue";
+import { calculateModelValue } from "@/service/api";
 import axios from "axios";
 import * as echarts from "echarts";
 import "echarts-gl";
+const loading = ref(false);
 
 var gl_series_data = null;
 
@@ -256,50 +263,56 @@ const setValueSpacesData = async (modelNameList) => {
     return item.model_name;
   });
   console.log(modelName);
-  // const response = await axios.get("./data/value_space.json");
-  // console.log(response);
-  const response = await axios.post("https://tab2024.valuecompass.site/api/calculate_model_value", { input: modelName });
-
-  console.log(response.data);
-  let data = response.data;
-  let userTestData = data;
-  const gl_data = {
-    culture: [],
-    // human: [
-    //   {
-    //     name: userTestData.tsne_human_caption,
-    //     value: userTestData.tsne_human,
-    //   },
-    // ],
-    model: [],
-    node: [],
-  };
-  gl_data.culture = userTestData.tsne_cultures.map((item, index) => {
-    return {
-      name: userTestData.tsne_culture_caption[index],
-      value: item,
-    };
-  });
-  gl_data.model = userTestData.tsne_models.map((item, index) => {
-    return {
-      name: userTestData.tsne_model_caption[index],
-      value: item,
-      type: "model",
-      itemStyle: {
-        color: colors[index],
-        opacity: 1,
-      },
-    };
-  });
-  // gl_data.node = userTestData.tsne_nodes.map((item, index) => {
-  //   return {
-  //     name: userTestData.tsne_node_captions[index],
-  //     value: item,
-  //     type: "node",
-  //     model: userTestData.tsne_model_caption[Math.floor(index / 30)],
-  //   };
-  // });
-  setGlChart(gl_data);
+  loading.value = true;
+  calculateModelValue({ input: modelName })
+    .then((response) => {
+      console.log(response);
+      let data = response.data;
+      let userTestData = data;
+      const gl_data = {
+        culture: [],
+        // human: [
+        //   {
+        //     name: userTestData.tsne_human_caption,
+        //     value: userTestData.tsne_human,
+        //   },
+        // ],
+        model: [],
+        node: [],
+      };
+      gl_data.culture = userTestData.tsne_cultures.map((item, index) => {
+        return {
+          name: userTestData.tsne_culture_caption[index],
+          value: item,
+        };
+      });
+      gl_data.model = userTestData.tsne_models.map((item, index) => {
+        return {
+          name: userTestData.tsne_model_caption[index],
+          value: item,
+          type: "model",
+          itemStyle: {
+            color: colors[index],
+            opacity: 1,
+          },
+        };
+      });
+      // gl_data.node = userTestData.tsne_nodes.map((item, index) => {
+      //   return {
+      //     name: userTestData.tsne_node_captions[index],
+      //     value: item,
+      //     type: "node",
+      //     model: userTestData.tsne_model_caption[Math.floor(index / 30)],
+      //   };
+      // });
+      setGlChart(gl_data);
+    })
+    .catch((err) => {
+      console.log("err");
+    })
+    .finally(() => {
+      loading.value = false;
+    });
 };
 
 defineExpose({
