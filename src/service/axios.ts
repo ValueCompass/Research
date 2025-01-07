@@ -1,5 +1,5 @@
 import axios, { AxiosRequestConfig, AxiosInstance, AxiosResponse } from 'axios';
-import { ElMessage } from "element-plus";
+// import { ElMessage } from "element-plus";
 
 
 export const createAxios = (
@@ -20,13 +20,13 @@ export const createAxios = (
 
     //添加请求拦截器
     instance.interceptors.request.use(
-        function (config: AxiosRequestConfig) {
+        config => {
             // console.log("请求拦截器config:", config);
             // config.headers.TASKMATRIX_KEY = TASKMATRIX_KEY   //设置请求头token
 
             return config;
         },
-        function (error :any) {
+        error => {
             // 请求错误
             return Promise.reject(error)
         }
