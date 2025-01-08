@@ -10,7 +10,7 @@
   .article__date{
     line-height: 3;
     font-size: .94em;
-    width: 18em;
+    width: 360px;
     color: #747474 ;
   }
 
@@ -118,8 +118,10 @@
   .line{
     display: inline-block;
     line-height: 1.9em;
-    width: 2em;
-    background: url(/images/Line.png) no-repeat center;
+    width: 1em;
+    // background: url(/images/Line.png) no-repeat center;
+    background-repeat: no-repeat;
+    background-position: center;
     background-size: auto 70%;
     color: transparent;
     text-align: center;
@@ -193,7 +195,7 @@
     }
     .article__content{
       align-self: center;
-      width: calc(100% - 18em);
+      width: calc(100% - 360px);
       padding:  0 0 0 5%;
       align-self: center;
       .article__title{
