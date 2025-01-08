@@ -103,13 +103,14 @@
 }
   .article__tag {
     display: inline-block;
-    font-size: 1em;
+    font-size: 24px;
+    font-weight: bold;
     letter-spacing: 0.5px;
     font-weight: 600;
     // text-transform: uppercase;
     margin-bottom: 1em;
-    color: #50B8FF;
-    background: #F1F1F1;
+    color: #0f8bf2;
+    background: #f6f6f6;
     border-radius: 999px;
     line-height: 1.9em;
     padding: 0 1em;
