@@ -2,6 +2,7 @@
 layout: team
 title: Team
 permalink: team_info
+autogen: false
 nav_order: 4
 employees:
   - name: Xing Xie

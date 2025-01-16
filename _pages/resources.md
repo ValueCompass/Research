@@ -1,6 +1,6 @@
 ---
 layout: paper-list
-title: resources
+title: Documents
 permalink: resources
 nav_order: 3
 ---

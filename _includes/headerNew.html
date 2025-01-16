@@ -1,0 +1,107 @@
+<div class="header-component main-container container">
+  <div class="nav">
+    <router-link to="/">
+      <div class="logo-container">
+        <img src="{{ site.baseurl }}/images/{{ site.data.settings.logo }}" alt="{{ site.data.settings.title }}"
+          alt="Microsoft logo" />
+      </div>
+    </router-link>
+    <ul class="nav-ul">
+      <li>
+        <a href="https://valuecompass.github.io">Home</a>
+        <!-- <a href="">Home</a> -->
+      </li>
+      <li onmouseenter="mouseenter(event)" onmouseleave="mouseleave(event)" class="has-child-nav active">
+        <a href="https://valuecompass.github.io/papers">Resources</a><span class="down-arrow"
+          src="{{site.baseurl}}/images/arrow-down.svg" alt=""></span>
+        <ul class="nav-child-ul">
+          {% assign sorted_pages = site.pages | sort: 'nav_order' %}
+          {% for node in sorted_pages %}
+          <!-- {% unless node.name == 'tags.html' or node.name == '404.html' %} -->
+          {% if node.autogen == null %}
+          {% if node.title %}
+          <li class="nav__item{% if page.url contains node.url %} active{% endif %}" onclick="toggleNav(event)">
+            {% if node.permalink contains '/papers/' %}
+            {% assign url = '/papers/' %}
+            {% else %}
+            {% assign url = node.url %}
+            {% endif %}
+            <a href="{{ url | prepend: site.baseurl }}" class="nav__link">{{ node.title }}</a>
+            <span style="display: none;">{{node.permalink}}</span>
+          </li>
+          {% endif %}
+          {% endif %}
+          <!-- {% endunless %} -->
+          {% endfor %}
+          <!-- <li>
+            <a href="https://valuecompass.github.io/Research/papers/"
+              >Papers</a
+            >
+          </li>
+          <li>
+            <a href="https://valuecompass.github.io/Research/talks"
+              >Talks</a
+            >
+          </li>
+          <li>
+            <a href="https://valuecompass.github.io/Research/resources"
+              >Documents</a
+            >
+          </li> -->
+        </ul>
+      </li>
+      <li onmouseenter="mouseenter(event)" onmouseleave="mouseleave(event)" class="has-child-nav"
+        :class="{ active: $route.path.indexOf('/leaderboard/') != -1 }">
+        <a>Leaderboard</a><span class="down-arrow" src="{{site.baseurl}}/images/arrow-down.svg" alt=""></span>
+        <ul class="nav-child-ul">
+          <li onclick="toggleNav(event)">
+            <!-- <router-link to="/leaderboard/leaderboard"
+              >Alignment Leaderboard</router-link
+            > -->
+            <a href="https://valuecompass.github.io/#/leaderboard/leaderboard">Alignment Leaderboard</a>
+          </li>
+          <li onclick="toggleNav(event)">
+            <!-- <router-link to="/leaderboard/valueAnalysis"
+              >Value Analysis</router-link
+            > -->
+            <a href="https://valuecompass.github.io/#/leaderboard/valueAnalysis">Value Analysis</a>
+          </li>
+          <li onclick="toggleNav(event)">
+            <!-- <router-link to="/leaderboard/valueComparison"
+              >Value Comparison</router-link
+            > -->
+            <a href="https://valuecompass.github.io/#/leaderboard/valueComparison">Value Comparison</a>
+          </li>
+        </ul>
+      </li>
+
+      <li>
+        <!-- <router-link to="/TestValues">Test Your Values</router-link> -->
+        <a href="https://valuecompass.github.io/#/TestValues">Test Your Values</a>
+      </li>
+      <li>
+        <!-- <router-link to="/AboutUs">About Us</router-link> -->
+        <a href="https://valuecompass.github.io/#/AboutUs">About Us</a>
+      </li>
+    </ul>
+  </div>
+</div>
+<script>
+  function mouseenter(e) {
+    console.log("mouseenter")
+    e.currentTarget.classList.add("enter-active");
+  }
+
+  const mouseleave = (e) => {
+    console.log("mouseleave");
+    e.currentTarget.classList.remove("enter-active");
+  };
+
+  function toggleNav(e) {
+    console.log(e.currentTarget.parentElement);
+    // const liNode = e.currentTarget.parentElement.parentElement;
+    // liNode.classList.remove("enter-active");
+    // opacity: 0;
+    //         transform: scaleY(0);
+  };
+</script>
