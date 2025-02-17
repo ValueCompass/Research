@@ -1,6 +1,6 @@
 ---
 layout: paper-list
-title: Documents
+title: Related Works
 permalink: resources
 nav_order: 3
 ---

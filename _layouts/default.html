@@ -5,7 +5,7 @@
 
 <body>
 
-  <div class="body-box">
+  <div class="body-box" style="padding-top: 6.375em;height:100%;box-sizing: border-box;overflow:auto">
     {% if site.data.settings.google-analytics %}
     {% include google-analytics.html %}
     {% endif %}
@@ -13,7 +13,7 @@
     {% include headerNew.html %}
 
     <!-- begin content -->
-    <main class="content" aria-label="Content" style="min-height: calc(100vh - 146px)">
+    <main class="content" aria-label="Content" style="min-height:calc(100% - 40px)">
       {{ content }}
     </main>
     <!-- end content -->
@@ -26,7 +26,6 @@
 
 
   </div>
-  {% include login.html %}
 </body>
 
 </html>

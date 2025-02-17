@@ -1,5 +1,5 @@
-<div class="header-component main-container container">
-  <div class="nav">
+<div class="header-component main-container">
+  <div class="nav container">
     <router-link to="/">
       <div class="logo-container">
         <img src="{{ site.baseurl }}/images/{{ site.data.settings.logo }}" alt="{{ site.data.settings.title }}"
@@ -12,7 +12,7 @@
         <!-- <a href="">Home</a> -->
       </li>
       <li onmouseenter="mouseenter(event)" onmouseleave="mouseleave(event)" class="has-child-nav active">
-        <a href="https://valuecompass.github.io/papers">Resources</a><span class="down-arrow"
+        <a href="https://valuecompass.github.io/papers">Research</a><span class="down-arrow"
           src="{{site.baseurl}}/images/arrow-down.svg" alt=""></span>
         <ul class="nav-child-ul">
           {% assign sorted_pages = site.pages | sort: 'nav_order' %}
@@ -50,29 +50,10 @@
           </li> -->
         </ul>
       </li>
-      <li onmouseenter="mouseenter(event)" onmouseleave="mouseleave(event)" class="has-child-nav"
+      <li onmouseenter="mouseenter(event)" onmouseleave="mouseleave(event)"
         :class="{ active: $route.path.indexOf('/leaderboard/') != -1 }">
-        <a>Leaderboard</a><span class="down-arrow" src="{{site.baseurl}}/images/arrow-down.svg" alt=""></span>
-        <ul class="nav-child-ul">
-          <li onclick="toggleNav(event)">
-            <!-- <router-link to="/leaderboard/leaderboard"
-              >Alignment Leaderboard</router-link
-            > -->
-            <a href="https://valuecompass.github.io/#/leaderboard/leaderboard">Alignment Leaderboard</a>
-          </li>
-          <li onclick="toggleNav(event)">
-            <!-- <router-link to="/leaderboard/valueAnalysis"
-              >Value Analysis</router-link
-            > -->
-            <a href="https://valuecompass.github.io/#/leaderboard/valueAnalysis">Value Analysis</a>
-          </li>
-          <li onclick="toggleNav(event)">
-            <!-- <router-link to="/leaderboard/valueComparison"
-              >Value Comparison</router-link
-            > -->
-            <a href="https://valuecompass.github.io/#/leaderboard/valueComparison">Value Comparison</a>
-          </li>
-        </ul>
+        <a href="https://valuecompass.github.io/#/leaderboard/leaderboard">Leaderboard</a>
+        
       </li>
 
       <li>
@@ -82,6 +63,13 @@
       <li>
         <!-- <router-link to="/AboutUs">About Us</router-link> -->
         <a href="https://valuecompass.github.io/#/AboutUs">About Us</a>
+      </li>
+      <li class="icon-li nav__item_email">
+        <a class="SvgIcon nav__link"></a>
+        <span class="tip" style="display: none;">Copy: <span class="email_text">{{ site.data.settings.project.email }}</span></span>
+      </li>
+      <li class="icon-li">
+        <a class="SvgIcon github" href="https://github.com/microsoft/ValueCompass.git"></SvgIcon></a>
       </li>
     </ul>
   </div>
