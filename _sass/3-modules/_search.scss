@@ -4,8 +4,7 @@
   background: $white;
   transition: all 250ms ease;
   max-width: 1100px;
-  margin: 0 auto;
-  margin-bottom: 4em;
+  margin: 3em auto 3em;
 
   &.is-visible {
     transform: scale(1);
@@ -35,9 +34,9 @@
   margin: 0 2em;
   position: relative;
   border: solid 2px transparent;
-  border-radius: 30px;
+  border-radius: 1em;
   background-image: linear-gradient(#fff, #fff),
-    linear-gradient(to right, #0078D4, #8661C5);
+    linear-gradient(to right, #8661C5, #0078D4);
   background-origin: border-box;
   background-clip: content-box, border-box;
   overflow: hidden;
