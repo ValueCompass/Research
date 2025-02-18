@@ -7,10 +7,11 @@
 html,body,.body-box{
   height: 100%;
   width: 100%;
-  overflow: hidden;
+  position: relative;
 }
 
 body {
+  min-width: 1280px;
   font-family: $base-font-family;
   font-size: $base-font-size;
   line-height: $base-line-height;
@@ -204,6 +205,6 @@ ul {
 
 @media(max-width: $desktop) {
   .container{
-    width: 98%;
+    // width: 98%;
   }
 }

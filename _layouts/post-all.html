@@ -11,16 +11,37 @@ layout: default
     before: 1 # The number of links before the current page
     after: 3 # The number of links after the current page -->
 ---
-<div style="padding-bottom: 5em;">
+<div style="padding-bottom: 5em;" class="">
   <!-- begin c-hero -->
-  <div class="talk-intro">
-    <h1 class="hreo_name"><span>{{ site.data.settings.PagesPage.name }}</span></h1>
-    <p class="hero__subtitle">{{ site.data.settings.PagesPage.description }}</p>
+  <div class="container">
+    <div class="talk-intro">
+      <h1 class="hreo_name"><span>{{ site.data.settings.PagesPage.name }}</span></h1>
+      <p class="hero__subtitle">{{ site.data.settings.PagesPage.description }}</p>
+    </div>
   </div>
   <!-- end hero -->
-  <div class="container">
+  <div class="">
     {% include search.html %}
-    <div class="row" style="border-top: 2px solid rgba(243, 245, 246, 1);">
+
+    <div class="papers-tags-nav-container">
+      <ul class="nav-child-ul container">
+
+			
+        <li>
+          <a class="{% if  page.title == 'Papers' %} router-link-active{% endif %}" href="{{ site.baseurl }}/papers">
+            <span>All</span>
+          </a>
+        </li>
+        {% for module in site.modules %}
+        <li>
+          <a  class="{% if  page.title == module.title %} router-link-active{% endif %}"  href="{{ site.baseurl }}{{ module.url | downcase | replace: " ", "-" }}">
+            <span>{{module.title}}</span>
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+    <div class="container" style="border-top: 2px solid rgba(243, 245, 246, 1);">
       <!-- {% if page.pagination.enabled %}
         {% assign postlist = paginator.posts %}
       {% else %}
@@ -29,7 +50,14 @@ layout: default
       {% assign postlist = site.posts %}
       
       {% for post in postlist %}
-        {% include article-brief.html %}
+        {% if page.title == 'Papers' %}
+          {% include article-brief-new.html %}
+        {% else %}
+        {% if post.tags contains page.title %}
+          {% include article-brief-new.html %}
+        {% endif %}
+        {% endif %}
+        
       {% endfor %}
     </div>
   </div>

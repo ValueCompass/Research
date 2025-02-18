@@ -1,5 +1,5 @@
 ---
-layout: module
+layout: post-all
 title: Evaluation
 description: Brief description of the evaluation module
 permalink: /evaluation/

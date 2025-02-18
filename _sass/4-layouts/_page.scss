@@ -62,3 +62,51 @@
     }
   }
 }
+
+
+.papers-tags-nav-container {
+  width: 100%;
+  border-bottom: 2px solid rgba(16, 147, 255, 1);
+  background: #fff;
+  padding-top: 2em;
+
+  .nav-child-ul {
+    display: flex;
+    flex-direction: row;
+    li {
+      margin-right: 1px;
+      list-style: none;
+      a {
+        cursor: pointer;
+        display: block;
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: center;
+        align-items: center;
+        font-size: 1em;
+        line-height: 1.4;
+        padding: 1em 3em;
+        border-width: 2px 2px 0px 2px;
+        border-radius: 1em 1em 0 0;
+  
+        border-style: solid;
+  
+        border-color: #c2c2c2;
+        color: #727272;
+        &:hover {
+          color: #1093ff;
+        }
+        &.router-link-active {
+          background: #1093ff;
+          color: #ffffff;
+          border-color: #1093ff;
+        }
+        .svg-icon {
+          margin-right: 0.6em;
+          width: 1.25em;
+          height: 1.25em;
+        }
+      }
+    }
+  }
+}

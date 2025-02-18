@@ -13,7 +13,7 @@ layout: default
       {% if page.tags.size >= 1 %}
       
         {% for tag in page.tags %}
-          <a href="{{ site.baseurl }}{{ tag | downcase | replace: " ", "-" }}" class="post__tags-tag">{{ tag }}</a>
+          <a href="{{ site.baseurl }}/{{ tag | downcase | replace: " ", "-" }}" class="post__tags-tag">{{ tag }}</a>
           {% if page.tags.size != forloop.index %}
           ・
           {% endif %}

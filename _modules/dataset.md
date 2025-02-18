@@ -1,5 +1,5 @@
 ---
-layout: module
+layout: post-all
 title: Dataset
 description: Brief description of the dataset module
 permalink: /dataset/

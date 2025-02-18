@@ -1,5 +1,5 @@
 ---
-layout: module
+layout: post-all
 title: Alignment
 description: Brief description of the alignment module
 permalink: /alignment/

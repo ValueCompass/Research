@@ -1,5 +1,5 @@
 ---
-layout: module
+layout: post-all
 title: Analysis
 description: Brief description of the analysis module
 permalink: /analysis/
