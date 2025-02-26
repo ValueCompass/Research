@@ -5,22 +5,24 @@
 
 <body>
 
-  <div class="body-box" style="padding-top: 6.375em;height:100%;box-sizing: border-box;overflow:auto">
+  <div class="body-box" style="height:100%;box-sizing: border-box;overflow:auto">
     {% if site.data.settings.google-analytics %}
     {% include google-analytics.html %}
     {% endif %}
 
     {% include headerNew.html %}
 
-    <!-- begin content -->
-    <main class="content" aria-label="Content" style="min-height:calc(100% - 40px)">
-      {{ content }}
-    </main>
-    <!-- end content -->
+    <div id="content" style="padding-top: 6.375em;height: 100%;overflow-x: hidden;overflow-y: auto;">
+      <!-- begin content -->
+      <main class="content" aria-label="Content" style="min-height:calc(100% - 40px)">
+        {{ content }}
+      </main>
+      <!-- end content -->
 
-    <div class="top ion ion-ios-arrow-up" title="Top"></div>
+      <div class="top ion ion-ios-arrow-up" title="Top"></div>
 
-    {% include footer.html %}
+      {% include footer.html %}
+    </div>
 
     {% include javascripts.html %}
 
