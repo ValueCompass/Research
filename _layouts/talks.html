@@ -85,7 +85,7 @@ layout: default
                         </a> -->
                         <span class="article__tag"><h4>{{talk.title}}</h4></span>
                         <span><time datetime="{{ talk.date | date_to_xmlschema }}">{% assign date_format =
-                                site.minima.date_format | default: "%B %-d, %Y" %}{{ talk.date | date: date_format
+                                site.minima.date_format | default: "%B %-d, %Y" %}{{ talk.date | date: '%b %d, %Y'
                                 }}</time>
                         </span>
                     </div>

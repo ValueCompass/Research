@@ -27,7 +27,7 @@
       <div class="article__date">
         
         <span><time datetime="{{ post.date | date_to_xmlschema }}">{% assign date_format =
-            site.minima.date_format | default: "%B %-d, %Y" %}{{ post.date | date: date_format }}</time>
+            site.minima.date_format | default: "%B %-d, %Y" %}{{ post.date | date: '%b %d, %Y' }}</time>
         </span>
 
       </div>
