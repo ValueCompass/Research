@@ -17,12 +17,12 @@ project:
 #-------------------------------
 # PapersPage Settings
 PagesPage: 
-  name: Publications Hub 
+  name: Publication
   description: This page houses a collection of published papers covering various topics within the Value Compass project. It provides a detailed overview of our research progress and findings, focusing on interdisciplinary analysis, benchmarks, value evaluation and alignment techniques.
   image: pages_cover.png
 
 TalksPage:
-  name: Events & Insights
+  name: Blog
   description: This page offers a repository of interviews, conference presentations, and workshop discussions. It delivers our understanding and insights about the latest trends and developments in the fields of AI ethics and value alignment.
 
 ResourcesPage:

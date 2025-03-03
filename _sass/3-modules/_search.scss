@@ -3,8 +3,9 @@
   z-index: 2;
   background: $white;
   transition: all 250ms ease;
-  max-width: 1100px;
-  margin: 3em auto 3em;
+  max-width: 1328px;
+  width: 90%;
+  margin: 0em auto 2em;
 
   &.is-visible {
     transform: scale(1);
@@ -31,7 +32,6 @@
 }
 
 .search__group {
-  margin: 0 2em;
   position: relative;
   border: solid 2px transparent;
   border-radius: 1em;
