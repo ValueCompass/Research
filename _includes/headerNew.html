@@ -66,9 +66,12 @@
         <!-- <router-link to="/AboutUs">About Us</router-link> -->
         <a href="https://valuecompass.github.io/#/AboutUs">About Us</a>
       </li>
-      <li class="icon-li nav__item_email">
+      <!-- <li class="icon-li nav__item_email">
         <a class="SvgIcon nav__link"></a>
         <span class="tip" style="display: none;">Copy: <span class="email_text">{{ site.data.settings.project.email }}</span></span>
+      </li> -->
+      <li class="icon-li">
+        <a class="SvgIcon nav__link" href="mailto:{{ site.data.settings.project.email }}"></a>
       </li>
       <li class="icon-li">
         <a class="SvgIcon github" href="https://github.com/microsoft/ValueCompass.git"></SvgIcon></a>
