@@ -26,7 +26,7 @@ TalksPage:
   description: This page offers a repository of interviews, conference presentations, and workshop discussions. It delivers our understanding and insights about the latest trends and developments in the fields of AI ethics and value alignment.
 
 ResourcesPage:
-  name: "Research Resources: Up-to-date Survey of LLM Value Alignment"
+  name: "Related Works: Up-to-date Survey of LLM Value Alignment"
   description: This page consolidates key resources about large language models (LLMs) value alignment, including research papers, benchmarks and open-sourced projects. It aims to engage more researchers and facilitate an easy entry into this critical research area.
   image: resource_cover.png
 

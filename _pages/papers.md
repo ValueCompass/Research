@@ -1,6 +1,6 @@
 ---
 layout: post-all
-title: Papers
+title: Publication
 permalink: /papers/
 nav_order: 1
 pagination:

@@ -50,7 +50,7 @@ layout: default
       {% assign postlist = site.posts %}
       
       {% for post in postlist %}
-        {% if page.title == 'Papers' %}
+        {% if page.title == 'Publication' %}
           {% include article-brief-new.html %}
         {% else %}
         {% if post.tags contains page.title %}

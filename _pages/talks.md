@@ -1,6 +1,6 @@
 ---
 layout: talks
-title: Talks
+title: Blog
 permalink: talks
 nav_order: 2
 ---
