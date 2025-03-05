@@ -4,7 +4,7 @@
       <div class="logo-container">
         <a href="https://valuecompass.github.io/">
           <img src="{{ site.baseurl }}/images/{{ site.data.settings.logo }}" alt="{{ site.data.settings.title }}"
-          alt="Microsoft logo" />
+            alt="Microsoft logo" />
         </a>
       </div>
     </router-link>
@@ -14,8 +14,16 @@
         <!-- <a href="">Home</a> -->
       </li>
       <li onmouseenter="mouseenter(event)" onmouseleave="mouseleave(event)" class="has-child-nav active">
-        <a href="/Research/papers">Research</a><span class="down-arrow"
-          src="{{site.baseurl}}/images/arrow-down.svg" alt=""></span>
+        <a href="/Research/papers">Research</a>
+        <!-- <span class="down-arrow"
+          src="{{site.baseurl}}/images/arrow-down.svg" alt=""></span> -->
+        <svg class="down-arrow" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g id="Frame">
+            <path id="Vector"
+              d="M12.7744 13.6714L17.7242 8.72168L19.1384 10.1359L12.7744 16.4999L6.41052 10.1359L7.82473 8.72168L12.7744 13.6714Z"
+              fill="currentColor" />
+          </g>
+        </svg>
         <ul class="nav-child-ul">
           {% assign sorted_pages = site.pages | sort: 'nav_order' %}
           {% for node in sorted_pages %}
@@ -55,7 +63,7 @@
       <li onmouseenter="mouseenter(event)" onmouseleave="mouseleave(event)"
         :class="{ active: $route.path.indexOf('/leaderboard/') != -1 }">
         <a href="https://valuecompass.github.io/#/leaderboard/leaderboard">Leaderboard</a>
-        
+
       </li>
 
       <li>
@@ -71,10 +79,11 @@
         <span class="tip" style="display: none;">Copy: <span class="email_text">{{ site.data.settings.project.email }}</span></span>
       </li> -->
       <li class="icon-li">
-        <a class="SvgIcon nav__link" href="mailto:{{ site.data.settings.project.email }}"></a>
+        <a class="SvgIcon nav__link" aria-label="Email" href="mailto:{{ site.data.settings.project.email }}"></a>
       </li>
       <li class="icon-li">
-        <a class="SvgIcon github" href="https://github.com/microsoft/ValueCompass.git"></SvgIcon></a>
+        <a class="SvgIcon github" aria-label="Github" href="https://github.com/microsoft/ValueCompass.git"></SvgIcon>
+          </a>
       </li>
     </ul>
   </div>

@@ -66,7 +66,7 @@
 
 .papers-tags-nav-container {
   width: 100%;
-  border-bottom: 2px solid rgba(16, 147, 255, 1);
+  border-bottom: 2px solid $theme-color;
   background: #fff;
   padding-top: 2em;
 
@@ -94,12 +94,12 @@
         border-color: #c2c2c2;
         color: #727272;
         &:hover {
-          color: #1093ff;
+          color: $theme-color;
         }
         &.router-link-active {
-          background: #1093ff;
+          background: $theme-color;
           color: #ffffff;
-          border-color: #1093ff;
+          border-color: $theme-color;
         }
         .svg-icon {
           margin-right: 0.6em;

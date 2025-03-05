@@ -288,12 +288,7 @@
 
           &>a,
           svg {
-            color: #1093ff;
-          }
-
-          .down-arrow {
-            background: url(/Research/images/arrow-down-hover.svg) no-repeat center;
-            background-size: 58% auto;
+            color: $theme-color;
           }
         }
 
@@ -320,7 +315,7 @@
         }
 
         .router-link-exact-active {
-          color: #1093ff !important;
+          color: $theme-color !important;
           font-weight: 700;
         }
 
@@ -328,7 +323,7 @@
 
           &>a,
           svg {
-            color: #1093ff !important;
+            color: $theme-color !important;
           }
 
           .down-arrow {
@@ -378,11 +373,11 @@
 
             &:hover {
               &>a {
-                color: #1093ff;
+                color: $theme-color;
               }
             }
             &.active a{
-              color: #1093ff !important;
+              color: $theme-color !important;
             }
           }
         }

@@ -8,8 +8,9 @@
     margin: 0 auto;
   }
   .post-nav{
-    font-size: 19px;
-    font-weight: bold;
+    font-size: 1.25em;
+    font-weight: 400;
+    color: #000;
     &>span{
       // padding-left: 2em;
       // background: url({{site.baseurl}}/images/icon_arrow_right.png) no-repeat left center;
@@ -21,7 +22,7 @@
       color: $dark;
     }
     .post__tags-tag{
-      color: $brand-color;
+      color: $theme-color;
     }
     .icon{
       width: 1em;
