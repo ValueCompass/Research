@@ -4,7 +4,7 @@ title: Embedding an Ethical Mind - Aligning Text-to-Image Synthesis via Lightwei
 authors: Xingqi Wang, Xiaoyuan Yi, Xing Xie, Jia Jia
 paper_url: https://export.arxiv.org/abs/2410.12700
 date: 2024-10-16 0
-image: images/posts/basic_value_space.png
+image: images/posts/Lightweight_Value_Optimization.png
 coverImage: images/posts/hand&arrow.png
 tags: Alignment 
 permalink: /text2image_alignment
