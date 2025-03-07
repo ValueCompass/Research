@@ -260,7 +260,7 @@
     ul.nav-ul {
       display: flex;
       flex-direction: row;
-
+      align-items: center;
       &>li {
         &.icon-li{
           padding: .5em 0;
@@ -301,17 +301,18 @@
           }
         }
 
-        padding: .5em 0.75em;
         margin-left: 2.68em;
 
         font-weight: 700;
         line-height: 1.68em;
         position: relative;
-        cursor: pointer;
+        // cursor: pointer;
 
         a {
           color: rgba(47, 47, 47, 1);
           font-size: 1.125em;
+          padding: 0.2em 0.45em;
+          line-height: 1.4;
         }
 
         .router-link-exact-active {
@@ -329,13 +330,13 @@
           .down-arrow {
             background: url(/Research/images/arrow-down-active.svg) no-repeat center;
             background-size: 58% auto;
+            margin-left: -0.2em;
           }
 
         }
 
         .down-arrow {
           vertical-align: middle;
-          margin-left: 0.4em;
           margin-top: -0.4em;
           width: 1.6em;
           height: 1.6em;
@@ -365,16 +366,13 @@
             font-weight: 700;
             margin-bottom: 1.5em;
             line-height: 1.2;
-            padding: 0 0.75em;
 
             &:last-child {
               margin-bottom: 0;
             }
 
-            &:hover {
-              &>a {
-                color: $theme-color;
-              }
+            a:hover {
+              color: $theme-color;
             }
             &.active a{
               color: $theme-color !important;
