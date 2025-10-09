@@ -6,7 +6,7 @@ paper_url: https://arxiv.org/abs/2504.08820
 date: 2025-04-09
 image: images/posts/caredio.png
 coverImage: images/posts/caredio.png
-tags: Alignment, Dataset
+tags: Alignment Dataset
 status: latest
 permalink: /caredio_cultural_alignment
 ---
