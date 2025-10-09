@@ -6,7 +6,7 @@ paper_url: https://arxiv.org/abs/2505.13531
 date: 2025-05-18
 image: images/posts/adaem.png
 coverImage: images/posts/adaem.png
-tags: Evaluation, Analysis
+tags: Evaluation Analysis
 status: latest
 permalink: /adaem_value_measurement
 ---
