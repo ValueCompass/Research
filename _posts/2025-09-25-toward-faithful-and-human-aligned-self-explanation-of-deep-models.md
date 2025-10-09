@@ -5,7 +5,7 @@ authors: Seungeon Lee, Xiting Wang, Ansen Zhang, Sungwon Han, Jing Yao, Xiaoyuan
 paper_url: https://www.nature.com/articles/s44387-025-00023-9.pdf
 date: 2025-09-25
 image: images/posts/self_explanation.png
-coverImage: images/posts/self_explanation.png
+coverImage: images/posts/hand&arrow.png
 tags: Alignment
 status: latest
 permalink: /self_explanation_models
