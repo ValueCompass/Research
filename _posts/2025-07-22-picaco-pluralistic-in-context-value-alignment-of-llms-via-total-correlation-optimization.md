@@ -6,7 +6,7 @@ paper_url: https://arxiv.org/abs/2507.16679
 date: 2025-07-22
 image: images/posts/picaco.png
 coverImage: images/posts/picaco.png
-tags: Alignment Analysis
+tags: Analysis
 status: latest
 permalink: /picaco_value_alignment
 ---
