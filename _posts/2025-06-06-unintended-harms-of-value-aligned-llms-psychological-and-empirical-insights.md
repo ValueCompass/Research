@@ -6,7 +6,7 @@ paper_url: https://arxiv.org/abs/2506.06404
 date: 2025-06-06
 image: images/posts/unintended_harms.png
 coverImage: images/posts/unintended_harms.png
-tags: Alignment
+tags: Alignment Analysis
 status: latest
 permalink: /unintended_harms
 ---
