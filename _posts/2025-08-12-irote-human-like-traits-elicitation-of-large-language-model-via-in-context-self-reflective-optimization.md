@@ -5,7 +5,7 @@ authors: Yuzhuo Bai, Shitong Duan, Muhua Huang, Jing Yao, Zhenghao Liu, Peng Zha
 paper_url: https://arxiv.org/abs/2508.08719
 date: 2025-08-12
 image: images/posts/irote.png
-coverImage: images/posts/irote.png
+coverImage: images/posts/hand.png
 tags: Evaluation Analysis
 status: latest
 permalink: /irote_llm_traits
