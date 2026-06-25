@@ -110,6 +110,44 @@ $(document).ready(function() {
         $("#talks-detail-list>div").eq(index).show().siblings().hide();
   });
 
+  // Arrow-key navigation for #talks-list-btns (a11y: keyboard users can
+  // move focus between items with Up/Down/Left/Right/Home/End instead of Tab).
+  $('#talks-list-btns').on('keydown', 'li', function(e) {
+    var $items = $('#talks-list-btns > li');
+    var currentIndex = $items.index(this);
+    var nextIndex = -1;
+
+    switch (e.key) {
+      case 'ArrowDown':
+      case 'ArrowRight':
+        nextIndex = (currentIndex + 1) % $items.length;
+        break;
+      case 'ArrowUp':
+      case 'ArrowLeft':
+        nextIndex = (currentIndex - 1 + $items.length) % $items.length;
+        break;
+      case 'Home':
+        nextIndex = 0;
+        break;
+      case 'End':
+        nextIndex = $items.length - 1;
+        break;
+      case 'Enter':
+      case ' ':
+      case 'Spacebar':
+        e.preventDefault();
+        $(this).trigger('click');
+        return;
+      default:
+        return;
+    }
+
+    if (nextIndex !== -1) {
+      e.preventDefault();
+      $items.eq(nextIndex).focus();
+    }
+  });
+
   $(".nav__item_email").click(function(){
     var text = $(this).find('.email_text').eq(0).text()
     copyText(text)
