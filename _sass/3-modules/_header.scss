@@ -388,4 +388,36 @@
     background: url(@/assets/images/goHomepageIcon.png) no-repeat right 0.1em;
     background-size: 1.2em;
   }
+
+  @media only screen and (max-width: $desktop) {
+    &>.nav {
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      row-gap: 0.6em;
+
+      .logo-container {
+        flex: 0 0 auto;
+      }
+
+      ul.nav-ul {
+        width: 100%;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        row-gap: 0.4em;
+
+        &>li {
+          margin-left: 0;
+          margin-right: 1.2em;
+
+          &:nth-child(1) {
+            margin-left: 0;
+          }
+
+          a {
+            white-space: nowrap;
+          }
+        }
+      }
+    }
+  }
 }
