@@ -268,14 +268,13 @@
             font-size: 1em;
           }
           .SvgIcon{
-            display: inline-block;
-            width: 1.5em;
-            height: 1.5em;
-            background: url(/Research/images/email-icon.svg) no-repeat center;
-            background-size: 95% auto;
-            &.github{
-              background: url(/Research/images/github-icon.svg) no-repeat center;
-            background-size: 95% auto;
+            display: inline-flex;
+            width: 2em;
+            height: 2em;
+
+            svg {
+              width: 100%;
+              height: 100%;
             }
           }
         }
@@ -287,7 +286,7 @@
         &:hover {
 
           &>a,
-          svg {
+          &>.down-arrow {
             color: $theme-color;
           }
         }
