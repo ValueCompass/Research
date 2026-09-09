@@ -148,34 +148,29 @@ $(document).ready(function() {
     }
   });
 
-  $(".nav__item_email").click(function(){
-    var text = $(this).find('.email_text').eq(0).text()
-    copyText(text)
-    var spanElement = $("<span></span>");
-    spanElement.text('"mailto: ' + text + '" copied to your clipboard');  // 添加文本内容
+  var emailStatusTimer;
 
-    // 设置样式
-    spanElement.css({
-        "color": "#fff",
-        "background": "#000",
-        "padding": ".5em 3em",
-        "border-radius": "4px",
-        "font-size": ".8em",
-        "position": "fixed",
-        "top": "8em",
-        "left": '50%',
-        "transform": "translateX(-50%)"
-    });
+  $(".nav__item_email, a.nav__link[aria-label='Email']").on("click", function(){
+    var text = $(this).find('.email_text').eq(0).text() || $(this).attr('href').replace(/^mailto:/, '');
+    copyText(text);
 
-    // 将 span 添加到 body 中
-    $("body").append(spanElement);
-    // 使用 delay 和 fadeOut 实现延迟消失，并在动画完成后移除元素
-    spanElement.delay(1500).fadeOut("slow", function() {
-      $(this).remove(); // 在动画完成后移除元素
+    var emailStatus = $("#copy-email-status");
+    clearTimeout(emailStatusTimer);
+    emailStatus.stop(true, true).show().text("");
+    window.setTimeout(function() {
+      emailStatus.text("Copied email");
+    }, 0);
+    emailStatusTimer = window.setTimeout(function() {
+      emailStatus.fadeOut("slow");
+    }, 1500);
   });
-    
 
-  })
+  $(".nav__item_email[role='button']").on("keydown", function(event) {
+    if (event.key === "Enter" || event.key === " " || event.key === "Spacebar") {
+      event.preventDefault();
+      $(this).trigger("click");
+    }
+  });
 
   function copyText(text){
     var textareaC = document.createElement('textarea');
