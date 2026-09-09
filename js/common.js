@@ -28,6 +28,7 @@ $(document).ready(function() {
     // searchClose();
     $("#js-search-input").val("")
     $("#js-results-container").html("")
+    $("#js-search-status").text("")
     searchCloseIcon.hide()
   });
 

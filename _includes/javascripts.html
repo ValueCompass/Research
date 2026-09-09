@@ -8,6 +8,29 @@
     searchResultTemplate: '<li class="search-results__item"><a class="search-results__link" href="{url}">{title}</a><br> <span class="search-results__date">{date}</span></li>',
     noResultsText: '<li class="no-results">No results found</li>'
   });
+
+  var searchInput = document.getElementById("js-search-input");
+  var searchResults = document.getElementById("js-results-container");
+  var searchStatus = document.getElementById("js-search-status");
+
+  if (searchInput && searchResults && searchStatus) {
+    searchInput.addEventListener("keyup", function() {
+      if (!searchInput.value.trim()) {
+        searchStatus.textContent = "";
+        return;
+      }
+
+      var resultCount = searchResults.querySelectorAll(".search-results__item").length;
+      var statusMessage = resultCount === 0
+        ? "No results found"
+        : resultCount + (resultCount === 1 ? " result found" : " results found");
+
+      searchStatus.textContent = "";
+      window.setTimeout(function() {
+        searchStatus.textContent = statusMessage;
+      }, 0);
+    });
+  }
 </script>
 <script src="{{ site.baseurl }}/js/vendors/transition.js"></script>
 <script src="{{ site.baseurl }}/js/vendors/zoom.min.js"></script>
