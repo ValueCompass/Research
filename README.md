@@ -83,12 +83,24 @@ permalink: /value_fulcra
 ### 添加talk页面
 参照_talks文件夹中的md文件
 例如
-```javascript
+```yaml
 layout: talks
 title: "TEDxBeijing演讲 | 价值观罗盘——以科技之光，照亮人机共生之路"
 date: 2024-05-23 0
 image: images/talks/talk2/stodownload.png     // 文章封面图，有video时，作为video封面图
-video: images/talks/talk2/1.mp4               // 展示video,没有不用写
+video: images/talks/talk2/1-caption-ready.mp4 // 展示不含烧录字幕的video,没有不用写
+video_languages:                              // 可切换的视频语言版本
+      - code: zh-CN
+            label: 中文
+            src: images/talks/talk2/1-caption-ready.mp4
+captions:                                     // WebVTT 字幕轨，可在播放器中开启、关闭或切换语言
+      - code: zh-CN
+            label: 中文
+            src: images/talks/talk2/captions.zh-CN.vtt
+            default: true
+      - code: en
+            label: English
+            src: images/talks/talk2/captions.en.vtt
 permalink: /talks/TEDxBeijing
 talk_url: "https://mp.weixin.qq.com/s?__biz=MzAwMTA3MzM4Nw==&mid=2649499917&idx=1&sn=09a98f428bbf1b6fff724d369dd08d2a&chksm=82c7c089b5b0499fb53214311350faacea5de741d3a4fc2611fec975ff9c533a0cc6e1811144&mpshare=1&scene=1&srcid=0607K3ZsjpwsJcgkawO8lSG2&sharer_shareinfo=6c79bf1d5b2ed02bf884e73866e0e001&sharer_shareinfo_first=6c79bf1d5b2ed02bf884e73866e0e001#rd"   // 文章详情链接
 ```

@@ -3,7 +3,19 @@ layout: talks
 title: "TEDxBeijing Talk | Value Compass: Illuminating the Path to Human-Machine Symbiosis with the Light of Technology"
 date: 2024-05-23 0
 image: images/talks/talk2/stodownload.png
-video: images/talks/talk2/1.mp4
+video: images/talks/talk2/1-caption-ready.mp4
+video_languages:
+  - code: zh-CN
+    label: 中文
+    src: images/talks/talk2/1-caption-ready.mp4
+captions:
+  - code: zh-CN
+    label: 中文
+    src: images/talks/talk2/captions.zh-CN.vtt
+    default: true
+  - code: en
+    label: English
+    src: images/talks/talk2/captions.en.vtt
 permalink: /talks/TEDxBeijing
 talk_url: https://mp.weixin.qq.com/s?__biz=MzAwMTA3MzM4Nw==&mid=2649499917&idx=1&sn=09a98f428bbf1b6fff724d369dd08d2a&chksm=82c7c089b5b0499fb53214311350faacea5de741d3a4fc2611fec975ff9c533a0cc6e1811144&mpshare=1&scene=1&srcid=0607K3ZsjpwsJcgkawO8lSG2&sharer_shareinfo=6c79bf1d5b2ed02bf884e73866e0e001&sharer_shareinfo_first=6c79bf1d5b2ed02bf884e73866e0e001#rd
 ---

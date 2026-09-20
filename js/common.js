@@ -149,6 +149,85 @@ $(document).ready(function() {
     }
   });
 
+  $('.accessible-video-player').each(function() {
+    var player = this;
+    var video = player.querySelector('video');
+    var captionButton = player.querySelector('.caption-menu-button');
+    var captionMenu = player.querySelector('.caption-menu');
+    var languageSelect = player.querySelector('.video-language-control select');
+
+    function setCaptionLanguage(language) {
+      Array.prototype.forEach.call(video.textTracks, function(track) {
+        track.mode = language !== 'off' && track.language === language ? 'showing' : 'disabled';
+      });
+      captionButton.classList.toggle('is-active', language !== 'off');
+    }
+
+    function closeCaptionMenu() {
+      captionMenu.hidden = true;
+      captionButton.setAttribute('aria-expanded', 'false');
+    }
+
+    if (!captionButton.disabled) {
+      captionButton.addEventListener('click', function() {
+        var opening = captionMenu.hidden;
+        captionMenu.hidden = !opening;
+        captionButton.setAttribute('aria-expanded', String(opening));
+        if (opening) {
+          captionMenu.querySelector('input:checked, input').focus();
+        }
+      });
+
+      captionMenu.addEventListener('change', function(event) {
+        if (event.target.matches('input[type="radio"]')) {
+          setCaptionLanguage(event.target.value);
+          closeCaptionMenu();
+          captionButton.focus();
+        }
+      });
+
+      player.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape' && !captionMenu.hidden) {
+          closeCaptionMenu();
+          captionButton.focus();
+        }
+      });
+
+      document.addEventListener('click', function(event) {
+        if (!player.contains(event.target)) {
+          closeCaptionMenu();
+        }
+      });
+
+      video.addEventListener('loadedmetadata', function() {
+        var selectedCaption = captionMenu.querySelector('input:checked');
+        setCaptionLanguage(selectedCaption ? selectedCaption.value : 'off');
+      });
+
+      var selectedCaption = captionMenu.querySelector('input:checked');
+      setCaptionLanguage(selectedCaption ? selectedCaption.value : 'off');
+    }
+
+    languageSelect.addEventListener('change', function() {
+      var option = languageSelect.options[languageSelect.selectedIndex];
+      var currentTime = video.currentTime;
+      var wasPaused = video.paused;
+      var volume = video.volume;
+      var muted = video.muted;
+
+      video.src = option.dataset.src;
+      video.load();
+      video.addEventListener('loadedmetadata', function restoreVideoState() {
+        video.currentTime = Math.min(currentTime, video.duration || currentTime);
+        video.volume = volume;
+        video.muted = muted;
+        if (!wasPaused) {
+          video.play();
+        }
+      }, { once: true });
+    });
+  });
+
   var emailStatusTimer;
 
   $(".nav__item_email, a.nav__link[aria-label='Email']").on("click", function(){

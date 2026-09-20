@@ -38,7 +38,51 @@ layout: default
                         <div class="talks_{{forloop.index}}" style="display: {{display_value}}">
                             <div class="img_container">
                                 {% if talk.video %}
-                                <video controls src="{{site.baseurl}}/{{talk.video}}" poster="{{site.baseurl}}/{{talk.image}}" x5-video-player-type="h5" x-webkit-airplay="allow" webkit-playsinline="true" x5-playsinline playsinline preload="auto" controlslist="nodownload"></video>
+                                {% assign video_languages = talk.video_languages %}
+                                {% assign captions = talk.captions %}
+                                <div class="accessible-video-player" data-video-player>
+                                    <video controls poster="{{site.baseurl}}/{{talk.image}}" x5-video-player-type="h5" x-webkit-airplay="allow" webkit-playsinline="true" x5-playsinline playsinline preload="metadata" controlslist="nodownload" aria-label="{{ talk.title | escape }}">
+                                        {% if video_languages and video_languages.size > 0 %}
+                                        <source src="{{site.baseurl}}/{{video_languages.first.src}}" type="{{ video_languages.first.type | default: 'video/mp4' }}">
+                                        {% else %}
+                                        <source src="{{site.baseurl}}/{{talk.video}}" type="video/mp4">
+                                        {% endif %}
+                                        {% if captions and captions.size > 0 %}
+                                            {% for caption in captions %}
+                                        <track kind="captions" src="{{site.baseurl}}/{{caption.src}}" srclang="{{caption.code}}" label="{{caption.label}}"{% if caption.default %} default{% endif %}>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </video>
+                                    <div class="video-accessibility-controls">
+                                        <div class="caption-control">
+                                            <button class="caption-menu-button" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="caption-menu-{{forloop.index}}"{% unless captions and captions.size > 0 %} disabled{% endunless %}>
+                                                <span aria-hidden="true">CC</span>
+                                                <span class="sr-only">{% if captions and captions.size > 0 %}Choose captions{% else %}Captions unavailable{% endif %}</span>
+                                            </button>
+                                            <div class="caption-menu" id="caption-menu-{{forloop.index}}" role="group" aria-labelledby="caption-menu-title-{{forloop.index}}" hidden>
+                                                <div class="caption-menu-title" id="caption-menu-title-{{forloop.index}}">Captions</div>
+                                                <label><input type="radio" name="captions-{{forloop.index}}" value="off"> Off</label>
+                                                {% if captions and captions.size > 0 %}
+                                                    {% for caption in captions %}
+                                                <label><input type="radio" name="captions-{{forloop.parentloop.index}}" value="{{caption.code}}"{% if caption.default %} checked{% endif %}> {{caption.label}}</label>
+                                                    {% endfor %}
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        <label class="video-language-control">
+                                            <span>Video language</span>
+                                            <select aria-label="Video language">
+                                                {% if video_languages and video_languages.size > 0 %}
+                                                    {% for language in video_languages %}
+                                                <option value="{{language.code}}" data-src="{{site.baseurl}}/{{language.src}}" data-type="{{ language.type | default: 'video/mp4' }}">{{language.label}}</option>
+                                                    {% endfor %}
+                                                {% else %}
+                                                <option value="und" data-src="{{site.baseurl}}/{{talk.video}}" data-type="video/mp4">Original</option>
+                                                {% endif %}
+                                            </select>
+                                        </label>
+                                    </div>
+                                </div>
                                 {% else %}
                                 <img src="{{site.baseurl}}/{{talk.image}}" alt="">
                                 {% endif %}
